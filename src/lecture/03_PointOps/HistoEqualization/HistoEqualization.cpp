@@ -12,7 +12,7 @@
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */
-#include "iputils.h"
+#include "Histograms.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -49,8 +49,8 @@ int main()
 	// Create histograms
 	Mat imageHistogram;
 	Mat procHistogram;
-	ip::histogramChart(image, imageHistogram);
-	ip::histogramChart(processed, procHistogram);
+	ip::createHistogramColored(image, imageHistogram);
+	ip::createHistogramColored(processed, procHistogram);
 
 	// Display images and histograms in named windows
 	imshow("Image", image);

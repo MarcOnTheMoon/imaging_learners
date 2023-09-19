@@ -8,11 +8,11 @@
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
-/* Compiler settings */
+ /* Compiler settings */
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */
-#include "iputils.h"
+#include "Histograms.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -43,8 +43,8 @@ int main()
 
 	// Create histograms
 	Mat imageHist, procHist;
-	ip::histogramChart(image, imageHist);
-	ip::histogramChart(processed, procHist);
+	ip::createHistogram(image, imageHist);
+	ip::createHistogram(processed, procHist);
 
 	// Display images and histograms in named windows
 	imshow("Image", image);

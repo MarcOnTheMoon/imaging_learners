@@ -13,8 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DisplayHistogram", "Display
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SameHistogram", "SameHistogram\SameHistogram.vcxproj", "{D1CAB9F6-1FE8-4E6A-99C9-216B3D1A44A2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaxContrast", "MaxContrast\MaxContrast.vcxproj", "{F0C50101-4B9A-42FE-B770-BAAB04151BED}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistoEqualization", "HistoEqualization\HistoEqualization.vcxproj", "{AA408284-F606-4417-91D6-9D7E13D88822}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{80340AEC-8C5D-444E-92B5-4999391F0284}"
@@ -34,6 +32,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mat_LoopPixelsAt", "Mat_LoopPixelsAt\Mat_LoopPixelsAt.vcxproj", "{9FA44294-0AFB-4E9E-AC75-8D81351CDBEA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mat_LoopPixelsPtr", "Mat_LoopPixelsPtr\Mat_LoopPixelsPtr.vcxproj", "{BEA0330D-3960-4C27-9D20-3A0D143D64A7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared", "Shared\Shared.vcxitems", "{CE69EAEC-2501-4BE9-98E2-9C1EFBB39664}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistoMaxContrast", "HistoMaxContrast\HistoMaxContrast.vcxproj", "{09FBAEF9-2681-4F38-85F7-0472A4D25662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,14 +85,6 @@ Global
 		{D1CAB9F6-1FE8-4E6A-99C9-216B3D1A44A2}.Release|x64.Build.0 = Release|x64
 		{D1CAB9F6-1FE8-4E6A-99C9-216B3D1A44A2}.Release|x86.ActiveCfg = Release|Win32
 		{D1CAB9F6-1FE8-4E6A-99C9-216B3D1A44A2}.Release|x86.Build.0 = Release|Win32
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Debug|x64.ActiveCfg = Debug|x64
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Debug|x64.Build.0 = Debug|x64
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Debug|x86.ActiveCfg = Debug|Win32
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Debug|x86.Build.0 = Debug|Win32
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Release|x64.ActiveCfg = Release|x64
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Release|x64.Build.0 = Release|x64
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Release|x86.ActiveCfg = Release|Win32
-		{F0C50101-4B9A-42FE-B770-BAAB04151BED}.Release|x86.Build.0 = Release|Win32
 		{AA408284-F606-4417-91D6-9D7E13D88822}.Debug|x64.ActiveCfg = Debug|x64
 		{AA408284-F606-4417-91D6-9D7E13D88822}.Debug|x64.Build.0 = Debug|x64
 		{AA408284-F606-4417-91D6-9D7E13D88822}.Debug|x86.ActiveCfg = Debug|Win32
@@ -171,11 +165,24 @@ Global
 		{BEA0330D-3960-4C27-9D20-3A0D143D64A7}.Release|x64.Build.0 = Release|x64
 		{BEA0330D-3960-4C27-9D20-3A0D143D64A7}.Release|x86.ActiveCfg = Release|Win32
 		{BEA0330D-3960-4C27-9D20-3A0D143D64A7}.Release|x86.Build.0 = Release|Win32
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Debug|x64.ActiveCfg = Debug|x64
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Debug|x64.Build.0 = Debug|x64
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Debug|x86.ActiveCfg = Debug|Win32
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Debug|x86.Build.0 = Debug|Win32
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Release|x64.ActiveCfg = Release|x64
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Release|x64.Build.0 = Release|x64
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Release|x86.ActiveCfg = Release|Win32
+		{09FBAEF9-2681-4F38-85F7-0472A4D25662}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D2C2FB85-D5B7-4E91-8645-B792D3C133A0}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.vcxitems*{09fbaef9-2681-4f38-85f7-0472a4d25662}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{aa408284-f606-4417-91d6-9d7e13d88822}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{ce69eaec-2501-4be9-98e2-9c1efbb39664}*SharedItemsImports = 9
 	EndGlobalSection
 EndGlobal

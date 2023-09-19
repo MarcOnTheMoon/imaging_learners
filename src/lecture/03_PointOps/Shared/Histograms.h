@@ -9,23 +9,27 @@
  *****************************************************************************************************/
 
 #pragma once
-#ifndef IP_UTILS_H
-#define IP_UTILS_H
+#ifndef IP_HISTOGRAMS_H
+#define IP_HISTOGRAMS_H
 
 /* Include files */
 #include <opencv2/core/core.hpp>
+
+using namespace cv;
 
 namespace ip
 {
 	/* Prototypes */
 	inline uchar clamp(int value, uchar min, uchar max);
-	void clamp(cv::Mat& image, uchar min, uchar max);
+	void clamp(Mat& image, uchar min, uchar max);
 
 	unsigned max(unsigned values[], int size);
-	void calcHistogram(const cv::Mat& image, unsigned histogram[256]);
-	void histogramChart(const cv::Mat& image, cv::Mat& histogram);
+	void calcHistogram(const Mat& image, unsigned histogram[256]);
+	void createHistogram(const Mat& image, Mat& histogram);
+	void createHistogramColored(const Mat& image, Mat& histogram, bool isCumulative = true);
 
-	void maximizeContrast(const cv::Mat& image, cv::Mat& processed, double p = 0.0);
+	void maximizeContrast(const Mat& image, Mat& processed, double p = 0.0);
+	void histogramEqualization(const Mat& image, Mat& processed);
 }
 
-#endif /* IP_UTILS_H */
+#endif /* IP_HISTOGRAMS_H */
