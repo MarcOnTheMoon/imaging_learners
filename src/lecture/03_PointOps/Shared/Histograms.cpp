@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
- * Version: 2023.09.19
+ * Version: 2023.09.20
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -224,25 +224,22 @@ namespace ip
 		calcHistogram(image, histogram);
 
 		// Find min and max values ignoring p percent of pixels, each
-		unsigned numberPixels = (unsigned)image.rows * image.cols;
+		unsigned numberPixels = (unsigned)(image.rows * image.cols);
 		unsigned quantileCount = (unsigned)((p / 100.0) * numberPixels);
 		unsigned minCount = quantileCount + 1;
 		unsigned maxCount = numberPixels - quantileCount;
-
 		unsigned cumulative = 0;
-		int min = 0, max = NUMBER_BINS;
+		int min, max;
 
-		for (int i = 0; i < NUMBER_BINS; i++) {
-			cumulative += histogram[i];
+		for (min = 0; min < NUMBER_BINS; min++) {
+			cumulative += histogram[min];
 			if (cumulative >= minCount) {
-				min = i;
 				break;
 			}
 		}
-		for (int i = min + 1; i < NUMBER_BINS; i++) {
-			cumulative += histogram[i];
+		for (max = min + 1; max < NUMBER_BINS; max++) {
+			cumulative += histogram[max];
 			if (cumulative >= maxCount) {
-				max = i;
 				break;
 			}
 		}
