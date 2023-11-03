@@ -8,7 +8,7 @@
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
- /* Compiler settings */
+/* Compiler settings */
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */
@@ -26,5 +26,11 @@ using namespace std;
 
 /* Main function */
 int main(void) {
+	cv::Mat image = cv::imread("D:/Docks.jpg", cv::IMREAD_GRAYSCALE);
+
+	cv::imshow("Image", image);
+	cv::imwrite("D:/Gray.jpg", image);
+
+	cv::waitKey(0);
 	return 0;
 }

@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
- * Version: 2023.09.27
+ * Version: 2023.10.30
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -69,14 +69,14 @@ int main()
 	imshow("Abolute gradient", gradAbs);
 
 	// Write images to file
-	if (IS_WRITE_IMAGES) {
+#if IS_WRITE_IMAGES == true
 		imwrite("D:/Gray.jpg", image);
 		imwrite("D:/_gradX.jpg", gradX);
 		imwrite("D:/_gradY.jpg", gradY);
 		imwrite("D:/_gradXAbs.jpg", gradXAbs);
 		imwrite("D:/_gradYAbs.jpg", gradYAbs);
 		imwrite("D:/_gradAbs.jpg", gradAbs);
-	}
+#endif
 
 	// Wait for keypress and terminate
 	waitKey(0);
@@ -121,7 +121,7 @@ void gradient(const Mat& image, Mat& gradAbs, Mat& gradX, Mat& gradY) {
 
 		for (int x = 0; x < image.cols; x++) {
 			int gx = (int)rowX[x], gy = (int)rowY[x];
-			rowAbs[x] = (uchar)(cv::sqrt(gx * gx + gy * gy));
+			rowAbs[x] = (uchar)(sqrt(gx * gx + gy * gy));
 		}
 	}
 }

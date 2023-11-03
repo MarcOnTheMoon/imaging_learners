@@ -2,35 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c36fea2c-1ff1-4435-9281-c4fa22c0864c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cleanup.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cleanup.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/02_Images.sln" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/02_Images.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Camera/Camera.vcxproj.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/EnvVariable/EnvVariable.vcxproj.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/OpenImage/OpenImage.vcxproj.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.vcxproj.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/SaveImage/SaveImage.vcxproj.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.vcxproj.filters" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.vcxproj.filters" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.vcxproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/VideoFile/VideoFile.vcxproj.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/03_PointOps/03_PointOps.sln" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/03_PointOps/03_PointOps.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/04_Filter/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/04_Filter/Sandbox/Sandbox.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/05_Edges/Canny/Canny.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/05_Edges/Canny/Canny.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/05_Edges/Gradient/Gradient.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/05_Edges/Gradient/Gradient.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -34,7 +34,7 @@ int main()
 		cout << "[ERROR] Cannot open image: " << inputImagePath << endl;
 		return 0;
 	}
-
+	
 	// Display image
 	imshow("Image", image);
 
