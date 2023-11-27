@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
- * Version: 2023.09.29
+ * Version: 2023.11.27
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -29,6 +29,7 @@
 #define INITIAL_THRESHOLD 127
 #define LOCAL_THRESH_MIN_CONTRAST 30
 #define LOCAL_THRESH_RADIUS 15
+#define BERNSEN_BACKGROUND 255
 
 /* Namespaces */
 using namespace std;
@@ -62,7 +63,7 @@ int main()
 
 	ip::threshold(image, binImageThresh, INITIAL_THRESHOLD);
 	ip::isodataThreshold(image, binImageGlobal, &adaptiveThresh);
-	ip::bernsenThreshold(image, binImageLocal, LOCAL_THRESH_RADIUS, LOCAL_THRESH_MIN_CONTRAST);
+	ip::bernsenThreshold(image, binImageLocal, LOCAL_THRESH_RADIUS, LOCAL_THRESH_MIN_CONTRAST, BERNSEN_BACKGROUND);
 
 	// Draw adaptive global threshold in histogram image
 	ip::addLineToHistogramImage(histogramImage, adaptiveThresh);
@@ -111,6 +112,6 @@ void onTrackbarLocalAdaptive(int valueNotUsed, void* pointerNotUsed) {
 	int kernelSize = getTrackbarPos(TRACKBAR_NAME_RADIUS, WINDOW_NAME_LOCAL);
 	int minContrast = getTrackbarPos(TRACKBAR_NAME_MIN_CONTRAST, WINDOW_NAME_LOCAL);
 
-	ip::bernsenThreshold(image, binImageLocal, kernelSize, minContrast);
+	ip::bernsenThreshold(image, binImageLocal, kernelSize, minContrast, BERNSEN_BACKGROUND);
 	imshow(WINDOW_NAME_LOCAL, binImageLocal);
 }

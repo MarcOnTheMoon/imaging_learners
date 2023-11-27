@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
- * Version: 2023.09.29
+ * Version: 2023.11.27
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -14,10 +14,11 @@
 /* Include files */
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include "Histogram.h"
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")			// Read environment variable ImagingData
-#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/LandingPad.jpg"	// Image file including relative path
+#define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
+#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Ton12.jpg"	// Image file including relative path
 
 /* Namespaces */
 using namespace std;
