@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c36fea2c-1ff1-4435-9281-c4fa22c0864c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/02_Images/Sandbox/Sandbox.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/03_PointOps/03_PointOps.sln" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/03_PointOps/03_PointOps.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/03_PointOps/Sandbox/Sandbox.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/04_Filter/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/04_Filter/Sandbox/Sandbox.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/05_Edges/Canny/Canny.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/05_Edges/Canny/Canny.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lecture/05_Edges/Gradient/Gradient.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/05_Edges/Gradient/Gradient.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/06_Binary/Sandbox/Sandbox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/06_Binary/Sandbox/Sandbox.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/10_Fourier/10_Fourier.sln" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/10_Fourier/10_Fourier.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lecture/10_Fourier/Shared/Fourier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lecture/10_Fourier/Shared/Fourier.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,16 +19,20 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
   <component name="ProjectId" id="2UzP81IYS0bCRWBlKafHtAPsc1p" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

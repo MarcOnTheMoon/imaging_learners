@@ -73,13 +73,13 @@ namespace ip {
 	void fourierInverse(const fourier& freqDomain, Mat& image) {
 		// Magnitude and phase to 2-channel complex image
 		Mat complex32F, realParts, imagParts;
-		cv::polarToCart(freqDomain.magnitude, freqDomain.phase, realParts, imagParts);
+		polarToCart(freqDomain.magnitude, freqDomain.phase, realParts, imagParts);
 
 		vector<Mat> complexVec = { realParts, imagParts };
 		merge(complexVec, complex32F);
 
 		// Inverse transform (8-bit grayscale)
-		cv::dft(complex32F, image, cv::DFT_INVERSE | cv::DFT_SCALE | cv::DFT_REAL_OUTPUT);
+		dft(complex32F, image, DFT_INVERSE | DFT_SCALE | DFT_REAL_OUTPUT);
 		image.convertTo(image, CV_8U);
 	}
 
@@ -95,11 +95,11 @@ namespace ip {
 		// Calculate log power spectrum
 		double normFactor = 1.0 / sqrt(freqDomain.magnitude.cols * freqDomain.magnitude.rows);
 		powerSpectrum = normFactor * freqDomain.magnitude + 1.0;
-		cv::log(powerSpectrum, powerSpectrum);
+		log(powerSpectrum, powerSpectrum);
 
 		// Map to CV_8U with values in [min, 255]
 		double maxValue;
-		cv::minMaxIdx(powerSpectrum, NULL, &maxValue);
+		minMaxIdx(powerSpectrum, NULL, &maxValue);
 		powerSpectrum.convertTo(powerSpectrum, CV_8U, 255.0 / maxValue);
 
 		// Shift frequency 0 to center
@@ -171,28 +171,28 @@ namespace ip {
 	*/
 	void fourierMultiply(const ip::fourier& src1, const ip::fourier& src2, ip::fourier& dst) {
 #if 1
-		cv::multiply(src1.magnitude, src2.magnitude, dst.magnitude);
+		multiply(src1.magnitude, src2.magnitude, dst.magnitude);
 		dst.phase = src1.phase + src2.phase;
 #else
 		/* Referance implementation using real and imaginary parts */
 		Mat real, imag, x1, y1, x2, y2;
 
 		// Complex numbers c = x + j * y
-		cv::polarToCart(src1.magnitude, src1.phase, x1, y1);
-		cv::polarToCart(src2.magnitude, src2.phase, x2, y2);
+		polarToCart(src1.magnitude, src1.phase, x1, y1);
+		polarToCart(src2.magnitude, src2.phase, x2, y2);
 
 		// Real part x = x1 * x2 - y1 * y2
-		cv::multiply(x1, x2, m1);
-		cv::multiply(y1, y2, m2);
+		multiply(x1, x2, m1);
+		multiply(y1, y2, m2);
 		real = m1 - m2;
 
 		// Imaginary part y = x1 * y2 + x2 * y1
-		cv::multiply(x1, y2, m1);
-		cv::multiply(y1, x2, m2);
+		multiply(x1, y2, m1);
+		multiply(y1, x2, m2);
 		imag = m1 + m2;
 
 		// Back to magnitude and phase
-		cv::cartToPolar(real, imag, dst.magnitude, dst.phase);
+		cartToPolar(real, imag, dst.magnitude, dst.phase);
 #endif
 	}
 }

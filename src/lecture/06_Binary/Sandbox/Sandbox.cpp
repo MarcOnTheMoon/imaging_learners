@@ -17,8 +17,8 @@
 #include "Histogram.h"
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
-#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Ton12.jpg"	// Image file including relative path
+#define IMAGE_DATA_PATH getenv("ImagingData")					// Read environment variable ImagingData
+#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/LandingPad.jpg"	// Image file including relative path
 
 /* Namespaces */
 using namespace std;
