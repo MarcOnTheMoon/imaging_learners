@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
- * Version: 2023.09.29
+ * Version: 2023.12.15
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -52,6 +52,7 @@ int main()
 	imshow(WIN_NAME_CAMERA, frame);
 	setMouseCallback(WIN_NAME_CAMERA, onMouse, reinterpret_cast<void*>(&roi));
 	createTrackbar(TRACKBAR_SIZE, WIN_NAME_CAMERA, NULL, 100, onTrackbarBoxSize, reinterpret_cast<void*>(&roi));
+	setTrackbarMin(TRACKBAR_SIZE, WIN_NAME_CAMERA, 1);
 	setTrackbarPos(TRACKBAR_SIZE, WIN_NAME_CAMERA, ROI_SIZE);
 
 	// Loop through frames

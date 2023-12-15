@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TemplateCam.cpp">
+    <ClCompile Include="TemplateDynamic.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -20,6 +20,7 @@
 #define IMAGE_DATA_PATH getenv("ImagingData")		// Read environment variable ImagingData
 #define FILE_PATH_1 "/images/misc/LandingPad.jpg"	// Image file including relative path
 #define FILE_PATH_2 "/images/misc/Emergency.jpg"
+#define SAVE_IMAGES false
 
 /* Namespaces */
 using namespace std;
@@ -63,6 +64,14 @@ int main()
 	imshow("Image 2", image2);
 	imshow("Magnitude 1 with phase 2", inverse1);
 	imshow("Magnitude 2 with phase 1", inverse2);
+
+#if SAVE_IMAGES == true
+	// Save images to file
+	imwrite("D:/Swap_image1.jpg", image1);
+	imwrite("D:/Swap_image2.jpg", image2);
+	imwrite("D:/Swap_inverse1.jpg", inverse1);
+	imwrite("D:/Swap_inverse2.jpg", inverse2);
+#endif
 
 	// Wait for keypress and terminate
 	waitKey(0);
