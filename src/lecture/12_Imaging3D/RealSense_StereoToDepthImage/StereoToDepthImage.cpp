@@ -45,6 +45,7 @@ int main()
 		if (key == 's') {
 			imwrite("D:/Dxxx_Left.png", leftFrame);
 			imwrite("D:/Dxxx_Right.png", rightFrame);
+			imwrite("D:/Dxxx_Depth.png", depthImage);
 		}
 		else if (key == 'q')
 			break;

@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.28
+ * Copyright: 2024, Marc Hensel
+ * Version: 2024.01.22
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -70,8 +70,9 @@ int main()
 		// Keyboard input (save or quit)
 		char c = cv::waitKey(1);
 		if (c == 's') {
-			imwrite("D:/Dxxx_Left.png", frameLeftIR);
-			imwrite("D:/Dxxx_Right.png", frameRightIR);
+			imwrite("D:/Dxxx_RGB.jpg", frameRGB);
+			imwrite("D:/Dxxx_Left.jpg", frameLeftIR);
+			imwrite("D:/Dxxx_Right.jpg", frameRightIR);
 		} else if (c == 'q')
 			break;
 	}
