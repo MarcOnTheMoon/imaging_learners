@@ -15,6 +15,4 @@ I will rework the material over the winter term 2023/24 and upload it as soon as
 - [ ] Lecture slides
 
 ## Contact
-Marc Hensel, University of Applied Sciences Hamburg (HAW Hamburg)
-
-http://www.haw-hamburg.de/marc-hensel
+[Marc Hensel](http://www.haw-hamburg.de/marc-hensel), University of Applied Sciences Hamburg (HAW Hamburg)
