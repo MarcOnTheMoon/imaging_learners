@@ -9,7 +9,7 @@ Meanwhile, I have created an imaging course for my Master students. So far it co
 > [!TIP]
 > Additional material such as lecture slide sets and scripts are available for students at HAW Hamburg. Please refer to the electronic classroom.
 
-## Contents
+## Contents and languages
 #### Topics covered
 Currently, the topics covered include digital images, point operations and histograms, filters, edges and contours, binary images (including morphological operations and regions), frequency-domain imaging, image sequences (including template matching), and 3D imaging. As said, the course is under active development. In this context, my objective is to add at least one additional topic each semester.
 
