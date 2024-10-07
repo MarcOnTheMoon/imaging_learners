@@ -25,7 +25,7 @@ There are some significant changes ahead:
 
 ## Uploaded material
 - [X] Image data ([images](image_data/images), [videos](image_data/images))
-- [X] Sample codes used in the lecture ([C++](src/lecture), Python)
+- [X] Sample codes used in the lecture ([C++](src/c++/lecture), Python)
 - [ ] Sample solutions for the exercises (C++, Python)
 - [ ] Imaging book (English, German)
 
