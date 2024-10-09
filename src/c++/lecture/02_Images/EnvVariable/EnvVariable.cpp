@@ -4,8 +4,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.09
+ * Copyright: 2024, Marc Hensel
+ * Version: 2024.10.09
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -22,8 +22,8 @@
 #define INPUT_IMAGE "/images/misc/Docks.jpg"
 
 /* Namespaces */
-using namespace std;
 using namespace cv;
+using namespace std;
 
 /* Main function */
 int main()

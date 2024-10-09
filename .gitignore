@@ -1,2 +1,5 @@
 # Define ignore directories
 *.ignore
+
+# Ignore temporary Python files
+__pycache__

@@ -1,6 +1,6 @@
 /*****************************************************************************************************
  * Lecture sample code.
- * Display a video file.
+ * Convert color to gray image.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
@@ -18,8 +18,8 @@
 #include <opencv2/opencv.hpp>
 
 /* Defines */
-#define DATA_ROOT_PATH getenv("ImagingData")
-#define VIDEO_PATH "/videos/SoccerShot.mp4"
+#define DATA_ROOT_PATH getenv("ImagingData")  // Read environment variable
+#define INPUT_IMAGE "/images/misc/Docks.jpg"
 
 /* Namespaces */
 using namespace cv;
@@ -28,40 +28,25 @@ using namespace std;
 /* Main function */
 int main()
 {
-	// Open video file
-	string inputVideoPath = string(DATA_ROOT_PATH).append(VIDEO_PATH);
-	VideoCapture video(inputVideoPath);
+	// Load image from file
+	string inputImagePath = string(DATA_ROOT_PATH).append(INPUT_IMAGE);
+	Mat colorImage = imread(inputImagePath);
+	Mat grayImage;
 
-	if (!video.isOpened()) {
-		cout << "ERROR: Cannot open video: " << inputVideoPath << endl;
+	if (colorImage.empty()) {
+		cout << "[ERROR] Cannot open image: " << inputImagePath << endl;
 		return 0;
 	}
 
-	// Get speed (fps)
-	double fps = video.get(CAP_PROP_FPS);
-	int waitTimeMs = (fps > 0.0) ? (int)(1000.0 / fps) : (int)(1000.0 / 30.0);
-	cout << "Frame rate: " << fps << " fps" << endl;
+	// Display image in named window and wait for keypress
+	imshow("Image", colorImage);
+	waitKey(0);
 
-	// Loop through frames
-	Mat frame;
+	// Convert image to grayscale and display in window
+	cvtColor(colorImage, grayImage, COLOR_BGR2GRAY);
+	imshow("Image", grayImage);
 
-	while (true) {
-		// Get next frame from file
-		video >> frame;
-
-		// Exit loop when no frame left
-		if (frame.empty())
-			break;
-
-		// Display frame in named window
-		imshow("Video [press any key to quit]", frame);
-
-		// Wait (exit loop on key press)
-		if (waitKey(waitTimeMs) >= 0)
-			break;
-	}
-
-	// Free resources
-	video.release();
+	// Wait for keypress and terminate
+	waitKey(0);
 	return 0;
 }
