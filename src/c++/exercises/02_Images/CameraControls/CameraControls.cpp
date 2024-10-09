@@ -59,5 +59,7 @@ int main()
 		}
 	}
 
+	// Free resources and terminate
+	camera.release();
 	return 0;
 }

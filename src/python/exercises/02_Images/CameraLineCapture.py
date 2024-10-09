@@ -39,9 +39,9 @@ for row in range(height):
     ret, frame = camera.read()
 
     # Copy gray frame to "preview" part of target image
-    grayImage = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    grayImage = cv2.cvtColor(grayImage, cv2.COLOR_GRAY2BGR)
-    image[row:, :, :] = grayImage[row:, :, :]
+    grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    grayFrame = cv2.cvtColor(grayFrame, cv2.COLOR_GRAY2BGR)
+    image[row:, :, :] = grayFrame[row:, :, :]
 
     # Copy current row to target image and display image
     image[row, :, :] = frame[row, :, :]
