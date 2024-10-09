@@ -18,17 +18,17 @@ waitTimeMs = int(1000.0 / 30.0)     # Set speed to 30 fps
 
 # -----------------------------------------------------------------------------
 
-# Open the first conencted camera found
-video = cv2.VideoCapture(0)
+# Open the first connected camera found
+camera = cv2.VideoCapture(0)
 
-if not video.isOpened():
+if not camera.isOpened():
     print('ERROR: Cannot open camera')
     exit()
 
 # Loop through frames
 while True:
     # Get current frame from camera
-    ret, frame = video.read()
+    ret, frame = camera.read()
         
     # Display frame in named window
     cv2.imshow('Camera [Press any key to quit]', frame)
@@ -38,5 +38,5 @@ while True:
         break
 
 # Free resources
-video.release()
+camera.release()
 cv2.destroyAllWindows()

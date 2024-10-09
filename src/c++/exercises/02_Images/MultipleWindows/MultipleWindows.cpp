@@ -1,6 +1,6 @@
 /*****************************************************************************************************
  * Lecture sample code.
- * Display color and gray image in separate windows.
+ * Open image as color and gray image and display in separate windows.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
@@ -38,7 +38,7 @@ int main()
 		return 0;
 	}
 
-	// Display images in named window
+	// Display images in named windows
 	imshow("Color image", colorImage);
 	imshow("Grayscale image", grayImage);
 

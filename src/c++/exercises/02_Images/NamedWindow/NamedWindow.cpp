@@ -1,6 +1,6 @@
 /*****************************************************************************************************
  * Lecture sample code.
- * Create named windows to display two images in.
+ * Create single named window to display two images in.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
