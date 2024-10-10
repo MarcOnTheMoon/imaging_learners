@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mat_PixelAccess", "Mat_Pixe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mat_PixelAccessRGB", "Mat_PixelAccessRGB\Mat_PixelAccessRGB.vcxproj", "{AD1FCB81-ED2F-4F57-BAA0-38AB46141C03}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mat_CopySubimage", "Mat_CopySubimage\Mat_CopySubimage.vcxproj", "{82337A60-0630-4C92-BEE5-DC05BACC750B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -135,6 +137,14 @@ Global
 		{AD1FCB81-ED2F-4F57-BAA0-38AB46141C03}.Release|x64.Build.0 = Release|x64
 		{AD1FCB81-ED2F-4F57-BAA0-38AB46141C03}.Release|x86.ActiveCfg = Release|Win32
 		{AD1FCB81-ED2F-4F57-BAA0-38AB46141C03}.Release|x86.Build.0 = Release|Win32
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Debug|x64.ActiveCfg = Debug|x64
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Debug|x64.Build.0 = Debug|x64
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Debug|x86.ActiveCfg = Debug|Win32
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Debug|x86.Build.0 = Debug|Win32
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Release|x64.ActiveCfg = Release|x64
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Release|x64.Build.0 = Release|x64
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Release|x86.ActiveCfg = Release|Win32
+		{82337A60-0630-4C92-BEE5-DC05BACC750B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +161,7 @@ Global
 		{BEA0330D-3960-4C27-9D20-3A0D143D64A7} = {11D166F1-CBB8-4711-B0D1-92177B389D90}
 		{8B4FB77F-8B37-44F8-A24E-8BC7A034EC44} = {11D166F1-CBB8-4711-B0D1-92177B389D90}
 		{AD1FCB81-ED2F-4F57-BAA0-38AB46141C03} = {11D166F1-CBB8-4711-B0D1-92177B389D90}
+		{82337A60-0630-4C92-BEE5-DC05BACC750B} = {11D166F1-CBB8-4711-B0D1-92177B389D90}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {90F3C28D-EFFA-4A19-B494-A65ED8A70AB3}
