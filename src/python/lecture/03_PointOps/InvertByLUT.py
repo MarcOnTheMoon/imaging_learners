@@ -1,5 +1,5 @@
 """
-Invert a grayscale image by direct pixel access and numpy.
+Invert a grayscale image using a LUT (direct pixel access and OpenCV method).
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
@@ -11,6 +11,7 @@ Invert a grayscale image by direct pixel access and numpy.
 
 import cv2
 import time
+import numpy as np
 
 import sys, os
 projectDir = os.path.dirname(os.path.abspath(__file__))
@@ -29,29 +30,26 @@ inputImage = 'misc/Cologne.jpg'
 inputImagePath =  ImageData.getImagePath(inputImage)
 image = cv2.imread(inputImagePath, cv2.IMREAD_GRAYSCALE)
 
-# Clone image and invert using direct pixel access
+# Prepare LUT
+lut = np.empty(256, dtype=np.uint8)
+for i in range(256):
+    lut[i] = 255 - i
+
+# Clone image and invert using direct pixel access and LUT
 rows, cols = image.shape[0:2]
 inverted = image.copy()
 startTime = time.time()
 for y in range(rows):
     for x in range(cols):
-        inverted[y][x] = 255 - inverted[y][x]
+        inverted[y][x] = lut[inverted[y][x]]
 print('Runtimes for different approches (only one sample execution):')
-print("Direct access   : {:.2f} s".format(time.time() - startTime))
+print("Direct access : {:.2f} s".format(time.time() - startTime))
 
-# Clone image and invert using numpy access
+# Clone image and invert using OpenCV LUT method
 inverted = image.copy()
 startTime = time.time()
-for y in range(rows):
-    for x in range(cols):
-        inverted.itemset((y, x), 255 - inverted.item(y, x))
-print("Numpy access    : {:.2f} s".format(time.time() - startTime))
-
-# Clone image and invert using numpy operation
-inverted = image.copy()
-startTime = time.time()
-inverted = 255 - inverted
-print("Numpy operation : {:.12f} s".format(time.time() - startTime))
+cv2.LUT(image, lut, inverted)
+print("OpenCV LUT    : {:.12f} s".format(time.time() - startTime))
 
 # Display images
 cv2.imshow('Image', image)

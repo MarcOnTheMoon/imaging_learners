@@ -37,6 +37,7 @@ for y in range(rows):
         inverted[y][x][0] = 255 - inverted[y][x][0]
         inverted[y][x][1] = 255 - inverted[y][x][1]
         inverted[y][x][2] = 255 - inverted[y][x][2]
+print('Runtimes for different approches (only one sample execution):')
 print("Direct access   : {:.2f} s".format(time.time() - startTime))
 
 # Clone image and invert using numpy access
