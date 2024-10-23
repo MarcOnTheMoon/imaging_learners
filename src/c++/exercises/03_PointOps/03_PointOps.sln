@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InvertImage", "InvertImage\InvertImage.vcxproj", "{2F14C439-C136-4EBD-8257-B27FAF90F7EB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GaussianNoise", "GaussianNoise\GaussianNoise.vcxproj", "{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistogramShaping", "HistogramShaping\HistogramShaping.vcxproj", "{BC812239-E1B0-4B52-9129-AA3DA58950F8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HisstogramRGB", "HisstogramRGB\HisstogramRGB.vcxproj", "{A3B11095-1B6F-43B9-A884-13D7F721813E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Debug|x64.ActiveCfg = Debug|x64
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Debug|x64.Build.0 = Debug|x64
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Debug|x86.ActiveCfg = Debug|Win32
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Debug|x86.Build.0 = Debug|Win32
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Release|x64.ActiveCfg = Release|x64
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Release|x64.Build.0 = Release|x64
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Release|x86.ActiveCfg = Release|Win32
+		{2F14C439-C136-4EBD-8257-B27FAF90F7EB}.Release|x86.Build.0 = Release|Win32
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Debug|x64.ActiveCfg = Debug|x64
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Debug|x64.Build.0 = Debug|x64
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Debug|x86.ActiveCfg = Debug|Win32
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Debug|x86.Build.0 = Debug|Win32
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Release|x64.ActiveCfg = Release|x64
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Release|x64.Build.0 = Release|x64
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Release|x86.ActiveCfg = Release|Win32
+		{B801A1FE-CC27-4B0B-B8B3-1E1D2A00E8D5}.Release|x86.Build.0 = Release|Win32
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Debug|x64.ActiveCfg = Debug|x64
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Debug|x64.Build.0 = Debug|x64
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Debug|x86.ActiveCfg = Debug|Win32
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Debug|x86.Build.0 = Debug|Win32
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Release|x64.ActiveCfg = Release|x64
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Release|x64.Build.0 = Release|x64
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Release|x86.ActiveCfg = Release|Win32
+		{BC812239-E1B0-4B52-9129-AA3DA58950F8}.Release|x86.Build.0 = Release|Win32
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Debug|x64.ActiveCfg = Debug|x64
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Debug|x64.Build.0 = Debug|x64
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Debug|x86.ActiveCfg = Debug|Win32
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Debug|x86.Build.0 = Debug|Win32
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Release|x64.ActiveCfg = Release|x64
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Release|x64.Build.0 = Release|x64
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Release|x86.ActiveCfg = Release|Win32
+		{A3B11095-1B6F-43B9-A884-13D7F721813E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48016B3E-90BA-4D4B-A918-4340A379FA6F}
+	EndGlobalSection
+EndGlobal
