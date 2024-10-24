@@ -15,16 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HistogrammRGB.cpp">
+    <ClCompile Include="HistSpecGaussian.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Histograms.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Histograms.h">
-      <Filter>Quelldateien</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
