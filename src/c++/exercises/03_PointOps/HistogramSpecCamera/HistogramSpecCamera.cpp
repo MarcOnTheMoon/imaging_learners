@@ -53,7 +53,7 @@ int main()
 		camera >> frame;
 		cvtColor(frame, image, COLOR_BGR2GRAY);
 
-		// Shape histogram
+		// Match histogram
 		ip::histogramSpecification(image, processed, cumulative);
 
 		// Diplay current frame and histogram
