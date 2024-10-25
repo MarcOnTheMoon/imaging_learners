@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2024, Marc Hensel
- * Version: 2024.10.24
+ * Version: 2024.10.25
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -239,12 +239,14 @@ namespace ip
 
 		// Create LUT
 		Mat lut(1, 256, CV_8U);
+		int gTarget = 0;
 		for (int gSource = 0; gSource < 256; gSource++) {
-			for (int gTarget = 0; gTarget < NUMBER_BINS; gTarget++) {
+			while (gTarget < NUMBER_BINS) {
 				if ((cumulative[gSource] <= targetCumulative[gTarget]) || (gTarget == (NUMBER_BINS - 1))) {
 					lut.at<uchar>(gSource) = gTarget;
 					break;
 				}
+				gTarget++;
 			}
 		}
 
