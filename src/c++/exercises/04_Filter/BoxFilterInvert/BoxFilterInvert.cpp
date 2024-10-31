@@ -5,11 +5,11 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2024, Marc Hensel
- * Version: 2024.10.25
+ * Version: 2024.10.31
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
- /* Compiler settings */
+/* Compiler settings */
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */

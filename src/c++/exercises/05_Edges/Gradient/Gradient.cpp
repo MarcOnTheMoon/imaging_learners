@@ -1,10 +1,11 @@
 /*****************************************************************************************************
  * Lecture sample code.
+ * Implement gradient filter using OpenCV methods.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2024, Marc Hensel
- * Version: 2024.10.28
+ * Version: 2024.10.31
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -13,46 +14,48 @@
 
 /* Include files */
 #include <iostream>
+#include <string>
 #include <opencv2/opencv.hpp>
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")			// Read environment variable ImagingData
-#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Docks.jpg"	// Image file including relative path
-#define SAVE_IMAGE_FILES false
+#define DATA_ROOT_PATH getenv("ImagingData")  // Read environment variable
+#define INPUT_IMAGE "/images/misc/Crane.jpg"
 
 /* Namespaces */
-using namespace std;
 using namespace cv;
+using namespace std;
 
 /* Main function */
 int main()
 {
 	// Load image from file
-	string inputImagePath = string(IMAGE_DATA_PATH).append(INPUT_IMAGE_RELATIVE_PATH);
-	Mat image = imread(inputImagePath);
+	string inputImagePath = string(DATA_ROOT_PATH).append(INPUT_IMAGE);
+	Mat image = imread(inputImagePath, IMREAD_GRAYSCALE);
 
 	if (image.empty()) {
 		cout << "[ERROR] Cannot open image: " << inputImagePath << endl;
 		return 0;
 	}
 
-	// Create 5x1 binomial kernel
-	Mat kernel = (Mat_<double>(5, 1) << 1, 4, 6, 4, 1);
-	kernel /= sum(kernel);
+	// Partial derivatives gradient_x and gradient_y
+	Mat image16S, gradX, gradY;
+	Mat kernel = (Mat_<double>(1, 3) << -1, 0, 1) / 2.0;
 
-	// Apply filter
-	Mat filtered;
-	sepFilter2D(image, filtered, image.depth(), kernel, kernel);
+	image.convertTo(image16S, CV_16S, 128);
+	filter2D(image16S, gradX, CV_16S, kernel);
+	filter2D(image16S, gradY, CV_16S, kernel.t());
+	gradX.convertTo(gradX, CV_8S, 1.0 / 128.0);
+	gradY.convertTo(gradY, CV_8S, 1.0 / 128.0);
 
-	// Display images in named windows
+	// Approximate gradient by grad = |grad_x| + |grad_y|
+	Mat grad = abs(gradX) + abs(gradY);
+	grad.convertTo(grad, CV_8U);
+
+	// Display images in named window
 	imshow("Image", image);
-	imshow("Binomial filter", filtered);
-
-#if SAVE_IMAGE_FILES == true
-	// Write images to file
-	imwrite("D:/RGB.jpg", image);
-	imwrite("D:/Binomial5x5_RGB.jpg", filtered);
-#endif
+	imshow("Gradient x", gradX);
+	imshow("Gradient y", gradY);
+	imshow("Gradient", grad);
 
 	// Wait for keypress and terminate
 	waitKey(0);

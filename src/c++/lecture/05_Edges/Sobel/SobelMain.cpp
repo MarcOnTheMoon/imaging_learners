@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.27
+ * Copyright: 2024, Marc Hensel
+ * Version: 2024.10.31
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -91,7 +91,7 @@ int main()
 * \param SobelY Signed Sobel edge image in y direction [-127, 127]
 */
 void sobel(const Mat& image, Mat& sobelAbs, Mat& sobelX, Mat& sobelY) {
-	// Filter kernels
+	// Filter kernels (sepFilter2D(): correlation, not convolution)
 	Mat kernelGradient = (Mat_<double>(1, 3) << -1, 0, 1) / 2.0;
 	Mat kernelBinomial = (Mat_<double>(1, 3) << 1, 2, 1) / 4.0;
 
