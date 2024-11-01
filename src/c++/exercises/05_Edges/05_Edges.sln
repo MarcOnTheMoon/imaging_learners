@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gradient", "Gradient\Gradie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LaplaceZeroCrossings", "LaplaceZeroCrossings\LaplaceZeroCrossings.vcxproj", "{B6E2163A-9A9E-4EAF-98A9-37695E536E53}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EdgeMaskedSmoothing", "EdgeMaskedSmoothing\EdgeMaskedSmoothing.vcxproj", "{A2B537C6-B711-4BE1-8D91-6D054CC402C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{B6E2163A-9A9E-4EAF-98A9-37695E536E53}.Release|x64.Build.0 = Release|x64
 		{B6E2163A-9A9E-4EAF-98A9-37695E536E53}.Release|x86.ActiveCfg = Release|Win32
 		{B6E2163A-9A9E-4EAF-98A9-37695E536E53}.Release|x86.Build.0 = Release|Win32
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Debug|x64.ActiveCfg = Debug|x64
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Debug|x64.Build.0 = Debug|x64
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Debug|x86.ActiveCfg = Debug|Win32
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Debug|x86.Build.0 = Debug|Win32
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Release|x64.ActiveCfg = Release|x64
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Release|x64.Build.0 = Release|x64
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Release|x86.ActiveCfg = Release|Win32
+		{A2B537C6-B711-4BE1-8D91-6D054CC402C0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
