@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hough-Transform", "Hough-Tr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Canny", "Canny\Canny.vcxproj", "{05EA9965-1A5B-47D8-94B5-7649317EB1DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1st order", "1st order", "{3D68792F-54ED-4D00-B1D9-A558A9C15D90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2nd order", "2nd order", "{FD9752D3-FFDF-43CD-9311-87CBE6281D5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -74,6 +78,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{02A3B346-B894-47B8-99C8-EB1A0B0943E4} = {3D68792F-54ED-4D00-B1D9-A558A9C15D90}
+		{DD7A7E41-3639-43CB-8C96-BC47EB00F9E4} = {3D68792F-54ED-4D00-B1D9-A558A9C15D90}
+		{93AA983D-9D2C-429A-AFC1-F322B51C83FE} = {FD9752D3-FFDF-43CD-9311-87CBE6281D5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA41C2F2-09A3-4B14-A169-5954F988E252}
