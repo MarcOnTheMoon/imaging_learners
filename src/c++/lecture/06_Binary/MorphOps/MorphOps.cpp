@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.29
+ * Copyright: 2024, Marc Hensel
+ * Version: 2024.11.25
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -145,7 +145,6 @@ void processAndDisplay(uchar thresh, int morphSize) {
 		imshow("Opened", binOpened);
 		imshow("Closed / opened", binClosedOpened);
 		imshow("Opened / closed", binOpenedClosed);
-		imshow("Binary - eroded", binImageThresh - binEroded);
 	}
 
 	// Remember last values to detect parameter changes

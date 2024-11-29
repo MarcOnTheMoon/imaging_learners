@@ -5,6 +5,12 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EdgeMaskedSmoothing", "EdgeMaskedSmoothing\EdgeMaskedSmoothing.vcxproj", "{5D66CE53-5521-4D6D-91D8-CD8CF8F7BF8D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThresholdTiles", "ThresholdTiles\ThresholdTiles.vcxproj", "{CCA1A0E5-208A-452D-AF44-01DC106AE836}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThresholdContrast", "ThresholdContrast\ThresholdContrast.vcxproj", "{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FastErodeDilate", "FastErodeDilate\FastErodeDilate.vcxproj", "{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +27,30 @@ Global
 		{5D66CE53-5521-4D6D-91D8-CD8CF8F7BF8D}.Release|x64.Build.0 = Release|x64
 		{5D66CE53-5521-4D6D-91D8-CD8CF8F7BF8D}.Release|x86.ActiveCfg = Release|Win32
 		{5D66CE53-5521-4D6D-91D8-CD8CF8F7BF8D}.Release|x86.Build.0 = Release|Win32
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Debug|x64.ActiveCfg = Debug|x64
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Debug|x64.Build.0 = Debug|x64
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Debug|x86.ActiveCfg = Debug|Win32
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Debug|x86.Build.0 = Debug|Win32
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Release|x64.ActiveCfg = Release|x64
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Release|x64.Build.0 = Release|x64
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Release|x86.ActiveCfg = Release|Win32
+		{CCA1A0E5-208A-452D-AF44-01DC106AE836}.Release|x86.Build.0 = Release|Win32
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Debug|x64.ActiveCfg = Debug|x64
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Debug|x64.Build.0 = Debug|x64
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Debug|x86.ActiveCfg = Debug|Win32
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Debug|x86.Build.0 = Debug|Win32
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Release|x64.ActiveCfg = Release|x64
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Release|x64.Build.0 = Release|x64
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Release|x86.ActiveCfg = Release|Win32
+		{ABD7FCB7-2AE4-475E-82D3-D883C5CC3826}.Release|x86.Build.0 = Release|Win32
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Debug|x64.ActiveCfg = Debug|x64
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Debug|x64.Build.0 = Debug|x64
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Debug|x86.ActiveCfg = Debug|Win32
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Debug|x86.Build.0 = Debug|Win32
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Release|x64.ActiveCfg = Release|x64
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Release|x64.Build.0 = Release|x64
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Release|x86.ActiveCfg = Release|Win32
+		{4884D6A4-D752-4953-8C5A-D73C40A4A9FA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

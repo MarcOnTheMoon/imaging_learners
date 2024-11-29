@@ -1,6 +1,6 @@
 /*****************************************************************************************************
  * Lecture sample code.
- * Region labeling using flood fill.
+ * Extract and annotate blob features.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
@@ -18,10 +18,10 @@
 #include "BinaryRegions.h"
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")			// Read environment variable ImagingData
-#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/LandingPad.jpg"	// Image file including relative path
+#define IMAGE_DATA_PATH getenv("ImagingData")					// Read environment variable ImagingData
+#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Hardware.jpg"	// Image file including relative path
 
-#define BINARY_THRESHOLD 205
+#define BINARY_THRESHOLD 80
 #define MORPH_SIZE 5
 #define IS_INVERT_BINARY false
 #define IS_SAVE_FILES false
@@ -49,6 +49,7 @@ int main()
 
 	// Remove small BLOBS
 	Mat structure = getStructuringElement(MORPH_RECT, Size(MORPH_SIZE, MORPH_SIZE));
+	morphologyEx(binary, binary, MORPH_CLOSE, structure);
 	morphologyEx(binary, binary, MORPH_OPEN, structure);
 
 	// Region labeling
@@ -57,22 +58,19 @@ int main()
 	ip::labelRegions(labeled);
 	ip::labels2RGB(labeled, labeledRGB);
 
-	// Maximize contrast of gray-valued labeled image
-	double min, max;
-	minMaxLoc(labeled, &min, &max);
-	labeled *= 255.0 / max;
+	// Annotate BLOB statistics
+	ip::blob blobs[256];
+	ip::labels2BlobFeatures(labeled, blobs);
+	ip::annotateBlobs(labeledRGB, blobs);
 
 	// Display images
 	imshow("Image", image);
-	imshow("Binary", binary);
-	imshow("Labeled (max. contrast)", labeled);
 	imshow("Labeled (colored)", labeledRGB);
 
 	// Save images to files
 #if IS_SAVE_FILES == true
 	string suffix = string("_t").append(to_string(BINARY_THRESHOLD)).append("_k").append(to_string(MORPH_SIZE)).append(".jpg");
-	imwrite(string("D:/_Binary").append(suffix), binary);
-	imwrite(string("D:/_GrayLabels").append(suffix), labeled);
+	imwrite(string("D:/_Annotated").append(suffix), labeledRGB);
 #endif
 
 	// Wait for keypress and terminate

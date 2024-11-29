@@ -19,7 +19,7 @@
 
 /* Defines */
 #define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
-#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/R_2K2.jpg"	// Image file including relative path
+#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Cologne.jpg"	// Image file including relative path
 
 #define WINDOW_NAME_THRESHOLD "Threshold"
 #define WINDOW_NAME_LOCAL "Locally adaptive threshold"

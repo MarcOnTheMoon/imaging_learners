@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FloodFill.cpp">
+    <ClCompile Include="ThresholdTiles.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
