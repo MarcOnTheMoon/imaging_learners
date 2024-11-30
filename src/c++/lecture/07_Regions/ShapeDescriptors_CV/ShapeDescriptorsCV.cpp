@@ -1,6 +1,6 @@
 /*****************************************************************************************************
  * Lecture sample code.
- * Demonstrate OpenCV's SimpleBlobDetector.
+ * Demonstrate OpenCV's shape descriptors for bounding boxes and convex hulls.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
@@ -50,25 +50,23 @@ int main()
 	morphologyEx(binary, binary, MORPH_CLOSE, morphStuct);
 	morphologyEx(binary, binary, MORPH_OPEN, morphStuct);
 
-	// Create blob detector
-	SimpleBlobDetector::Params params;
-	params.filterByArea = true;
-	params.filterByCircularity = false;
-	params.filterByColor = false;
-	params.filterByConvexity = false;
-	params.filterByInertia = false;
-	params.minArea = (float)BLOB_MIN_AREA;
-	params.maxArea = (float)binary.total();
-	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
+	// Extract external contours
+	vector<vector<Point>> contours;
+	findContours(binary, contours, RETR_EXTERNAL, CHAIN_APPROX_NONE);
 
-	// Detect and annotate blobs
-	vector<KeyPoint> keypoints;
-	detector->detect(binary, keypoints);
-	drawKeypoints(binary, keypoints, binary, Scalar(0, 0, 255));
+	// Determine and draw bounding boxes and convex hulls
+	cvtColor(binary, binary, COLOR_GRAY2BGR);
+	int lineThickness = 2;
 
-	for (KeyPoint point : keypoints) {
-		putText(binary, "r = " + to_string((int)(point.size / 2)), point.pt,	// String and position
-			FONT_HERSHEY_PLAIN, 2.0, Scalar(0, 0, 255), 2);						// Font
+	for (vector<Point> contour : contours) {
+		// Bounding box
+		Rect box = boundingRect(contour);
+		rectangle(binary, box, Scalar(0, 255, 255), lineThickness);
+
+		// Convex hull
+		vector<Point> hull;
+		convexHull(contour, hull);
+		polylines(binary, hull, true, Scalar(0, 0, 255), lineThickness);
 	}
 
 	// Display images
@@ -78,7 +76,7 @@ int main()
 	// Save images
 #if SAVE_IMAGES == true
 	imwrite("D:/Input.jpg", image);
-	imwrite("D:/SimpleBlobDetector.jpg", binary);
+	imwrite("D:/ShapeDescriptors.jpg", binary);
 #endif
 
 	// Wait for keypress and terminate

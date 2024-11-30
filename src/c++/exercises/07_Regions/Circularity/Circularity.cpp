@@ -1,6 +1,5 @@
 /*****************************************************************************************************
- * Lecture sample code.
- * Demonstrate OpenCV's SimpleBlobDetector.
+ * Annotate blobs with the circularity value.
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
@@ -50,35 +49,35 @@ int main()
 	morphologyEx(binary, binary, MORPH_CLOSE, morphStuct);
 	morphologyEx(binary, binary, MORPH_OPEN, morphStuct);
 
-	// Create blob detector
-	SimpleBlobDetector::Params params;
-	params.filterByArea = true;
-	params.filterByCircularity = false;
-	params.filterByColor = false;
-	params.filterByConvexity = false;
-	params.filterByInertia = false;
-	params.minArea = (float)BLOB_MIN_AREA;
-	params.maxArea = (float)binary.total();
-	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
+	// Extract external contours
+	vector<vector<Point>> contours;
+	findContours(binary, contours, RETR_EXTERNAL, CHAIN_APPROX_NONE);
 
-	// Detect and annotate blobs
-	vector<KeyPoint> keypoints;
-	detector->detect(binary, keypoints);
-	drawKeypoints(binary, keypoints, binary, Scalar(0, 0, 255));
+	// Annotate blobs with circularities
+	cvtColor(binary, binary, COLOR_GRAY2BGR);
+	for (vector<Point> contour : contours) {
+		// Calculate circularity
+		double area = contourArea(contour);
+		double perimeter = arcLength(contour, true);
+		double circularity = 4.0 * CV_PI * area / (perimeter * perimeter);
 
-	for (KeyPoint point : keypoints) {
-		putText(binary, "r = " + to_string((int)(point.size / 2)), point.pt,	// String and position
-			FONT_HERSHEY_PLAIN, 2.0, Scalar(0, 0, 255), 2);						// Font
+		// Format string
+		char stringBuffer[8];
+		sprintf(stringBuffer, "C: %4.2f", circularity);
+
+		// Annotate image
+		putText(binary, stringBuffer, contour[0],				// String and position
+			FONT_HERSHEY_PLAIN, 1.5, Scalar(0, 0, 255), 2);		// Font
 	}
 
 	// Display images
 	imshow("Image", image);
-	imshow("Binary", binary);
+	imshow("Binary (with circularities)", binary);
 
 	// Save images
 #if SAVE_IMAGES == true
 	imwrite("D:/Input.jpg", image);
-	imwrite("D:/SimpleBlobDetector.jpg", binary);
+	imwrite("D:/Circularity.jpg", binary);
 #endif
 
 	// Wait for keypress and terminate

@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Features", "3 Features", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlobFeatures", "BlobFeatures\BlobFeatures.vcxproj", "{91A1D565-07C0-41D3-89F3-EE81524741CA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShapeDescriptors_CV", "ShapeDescriptors_CV\ShapeDescriptors_CV.vcxproj", "{BA87AF51-0244-4618-9153-D5344F7193C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -89,6 +91,14 @@ Global
 		{91A1D565-07C0-41D3-89F3-EE81524741CA}.Release|x64.Build.0 = Release|x64
 		{91A1D565-07C0-41D3-89F3-EE81524741CA}.Release|x86.ActiveCfg = Release|Win32
 		{91A1D565-07C0-41D3-89F3-EE81524741CA}.Release|x86.Build.0 = Release|Win32
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Debug|x64.ActiveCfg = Debug|x64
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Debug|x64.Build.0 = Debug|x64
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Debug|x86.ActiveCfg = Debug|Win32
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Debug|x86.Build.0 = Debug|Win32
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Release|x64.ActiveCfg = Release|x64
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Release|x64.Build.0 = Release|x64
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Release|x86.ActiveCfg = Release|Win32
+		{BA87AF51-0244-4618-9153-D5344F7193C0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +110,7 @@ Global
 		{456F293F-CEDB-4E52-A8AD-E403E735D82B} = {F6BF7F7B-4C7C-4455-A2F5-8E10532A855A}
 		{B8A49718-13AD-47C8-AED0-297DF37196D2} = {69FFE854-BA81-4899-AAD1-B25F655F1395}
 		{91A1D565-07C0-41D3-89F3-EE81524741CA} = {F6BF7F7B-4C7C-4455-A2F5-8E10532A855A}
+		{BA87AF51-0244-4618-9153-D5344F7193C0} = {F6BF7F7B-4C7C-4455-A2F5-8E10532A855A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F104E73-AC66-4DB3-8B59-BCAD14C6B7AC}
