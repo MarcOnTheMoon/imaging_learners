@@ -8,7 +8,7 @@
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
- /* Compiler settings */
+/* Compiler settings */
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */
