@@ -5,9 +5,8 @@ Requires Daheng Imaging's gxipy library located in the respective sub folder.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
-
-@copyright: 2024, Marc Hensel
-@version: 2024.12.11
+@copyright: 2025
+@version: 2025.02.18
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -23,6 +22,11 @@ class DahengVenus(Camera):
         'VEN-505-36U3C-M01': 2592x1944, 36.9 fps
 
     """
+    
+    modes = {
+        'Off'           : gx.GxAutoEntry.OFF,
+        'Once'          : gx.GxAutoEntry.ONCE,
+        'Continuous'    : gx.GxAutoEntry.CONTINUOUS}
     
     # ========== Constructor ==================================================
 
@@ -105,6 +109,10 @@ class DahengVenus(Camera):
         """
         # Grab frame and correct defective pixels
         raw_image = self.__camera.data_stream[0].get_image()
+        if raw_image == None:
+            print('Warning: No frame grabbed')
+            return self.__last_frame
+        
         raw_image.defective_pixel_correct()
         
         # Convert to numpy array
@@ -113,9 +121,10 @@ class DahengVenus(Camera):
 
         # Return frame in correct pixel format
         if self.__is_mono8:
-            return cv2.cvtColor(np.asarray(numpy_image), cv2.COLOR_RGB2GRAY)
+            self.__last_frame = cv2.cvtColor(np.asarray(numpy_image), cv2.COLOR_RGB2GRAY)
         else:
-            return cv2.cvtColor(np.asarray(numpy_image), cv2.COLOR_RGB2BGR)
+            self.__last_frame = cv2.cvtColor(np.asarray(numpy_image), cv2.COLOR_RGB2BGR)
+        return np.copy(self.__last_frame)
 
     # ========== General properties ===========================================
 
@@ -273,14 +282,7 @@ class DahengVenus(Camera):
 
         """
         assert mode in Camera.modes
-        if mode == 'off':
-            self.__camera.ExposureAuto.set(gx.GxAutoEntry.OFF)
-        elif mode == 'once':
-            self.__camera.ExposureAuto.set(gx.GxAutoEntry.ONCE)
-        elif mode == 'continuous':
-            self.__camera.ExposureAuto.set(gx.GxAutoEntry.CONTINUOUS)
-        else:
-            print('WARNING: Unknown mode: {mode}')
+        self.__camera.ExposureAuto.set(DahengVenus.modes[mode])
 
     # -------------------------------------------------------------------------
     
@@ -299,14 +301,7 @@ class DahengVenus(Camera):
 
         """
         assert mode in Camera.modes
-        if mode == 'off':
-            self.__camera.GainAuto.set(gx.GxAutoEntry.OFF)
-        elif mode == 'once':
-            self.__camera.GainAuto.set(gx.GxAutoEntry.ONCE)
-        elif mode == 'continuous':
-            self.__camera.GainAuto.set(gx.GxAutoEntry.CONTINUOUS)
-        else:
-            print('WARNING: Unknown mode: {mode}')
+        self.__camera.GainAuto.set(DahengVenus.modes[mode])
 
     # -------------------------------------------------------------------------
     
@@ -325,12 +320,5 @@ class DahengVenus(Camera):
 
         """
         assert mode in Camera.modes
-        if mode == 'off':
-            self.__camera.BalanceWhiteAuto.set(gx.GxAutoEntry.OFF)
-        elif mode == 'once':
-            self.__camera.BalanceWhiteAuto.set(gx.GxAutoEntry.ONCE)
-        elif mode == 'continuous':
-            self.__camera.BalanceWhiteAuto.set(gx.GxAutoEntry.CONTINUOUS)
-        else:
-            print('WARNING: Unknown mode: {mode}')
+        self.__camera.BalanceWhiteAuto.set(DahengVenus.modes[mode])
             

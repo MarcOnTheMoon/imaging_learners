@@ -15,15 +15,16 @@ For installation call pip with <x.y.z> being the Vimba version:
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 
-@copyright: 2024, Marc Hensel
-@version: 2024.12.16
+@copyright: 2025, Marc Hensel
+@version: 2025.02.18
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
+from Camera import Camera
 from vmbpy import VmbSystem, PixelFormat, FrameStatus
 import cv2
 
-class AvAlvium():
+class AlliedAlvium():
     """
     Selected specifications:    
         'Alvium 1800 U-319': 2064×1544, 54 fps
@@ -33,19 +34,19 @@ class AvAlvium():
 
     # ========== Constructor ==================================================
 
-    def __init__(self, cameraID=0, pixelFormat='CV_BGR8', binX=1, binY=1):
+    def __init__(self, camera_id=0, pixel_format='CV_BGR8', bin_x=1, bin_y=1):
         """
         Initialize the camera.
         
         Parameters
         ----------
-        cameraID : int, optional
+        camera_id : int, optional
             Camera id within all detected Vimba cameras. The default is 0.
-        pixelFormat : string, optional
+        pixel_format : string, optional
             Grab 24-bit BGR color or 8-bit gray frames. The default is color ('CV_BGR8').
-        binX : int, optional
+        bin_x : int, optional
             Number of pixels to bin horizontally (e.g., 2 will half the width). The default is 1.
-        binY : int, optional
+        bin_y : int, optional
             Number of pixels to bin vertically (e.g., 2 will half the height). The default is 1.
 
         Returns
@@ -55,32 +56,32 @@ class AvAlvium():
         """
         # Get Vimba system
         self.__vimba = VmbSystem.get_instance()
+        self.__vimba.__enter__()
         
-        with self.__vimba:
-            # Find camera
-            self.__camera = self.__get_camera(cameraID)
+        # Find camera
+        self.__camera = self.__get_camera(camera_id)
+        self.__camera.__enter__()
 
-            # Setup camera
-            with self.__camera:
-                # Color or gray values
-                self.set_pixel_format(pixelFormat)
-                
-                # Acquisition
-                self.set_auto_exposure('Continuous')
-                self.set_auto_white_balance('Continuous')
+        # Init streaming
+        self.__handler = Handler()
+        self.__is_streaming = False
 
-                # Image size
-                self.set_binning(horizontal=binX, vertical=binY)
-                print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
-                print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
-            
-            # Init streaming
-            self.__handler = Handler()
-            self.__isStreaming = False
+        # Setup camera
+        # Color or gray values
+        self.set_pixel_format(pixel_format)
+        
+        # Acquisition
+        self.set_auto_exposure('Continuous')
+        self.set_auto_white_balance('Continuous')
+
+        # Image size
+        self.set_binning(x=bin_x, y=bin_y)
+        print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
+        print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
                                 
     # -------------------------------------------------------------------------
 
-    def __get_camera(self, cameraID):
+    def __get_camera(self, camera_id):
         """
         Get the Vimba camera.
         
@@ -90,7 +91,7 @@ class AvAlvium():
 
         Parameters
         ----------
-        cameraID : int
+        camera_id : int
             Camera id within all detected Vimba cameras
 
         Raises
@@ -105,8 +106,8 @@ class AvAlvium():
 
         """
         cameras = self.__vimba.get_all_cameras()
-        if len(cameras) > cameraID:
-            camera = cameras[cameraID]
+        if len(cameras) > camera_id:
+            camera = cameras[camera_id]
             print('Found camera : {}'.format(camera.get_name()))
         else:
             raise Exception('Alvium camera not found')
@@ -129,144 +130,28 @@ class AvAlvium():
         None.
 
         """
-        with self.__vimba:
-            with self.__camera:
-                print('Reset camera : {}'.format(self.__camera.get_name()))
-                self.__camera.DeviceReset.run()
+        print('Reset camera : {}'.format(self.__camera.get_name()))
+        self.__camera.DeviceReset.run()
+            
+        self.__camera.__exit__(None, None, None)
+        self.__vimba.__exit__(None, None, None)
 
-    # ========== Setters ======================================================
+    # ========== Frame grabbing ===============================================
     
-    def set_auto_exposure(self, mode='Continuous'):
+    def get_frame(self):
         """
-        Set the camera feature ExposureAuto.
-
-        Parameters
-        ----------
-        mode : string, optional
-            Value to be set. The default is 'Continuous'.
+        Grab the last frame from the camera stream.
 
         Returns
         -------
-        None.
+        numpy.ndarray
+            Frame in OpenCV compatible numpy format.
 
         """
-        self.__camera.ExposureAuto.set(mode)
+        return self.__handler.frame if (self.__is_streaming == True) else None
 
-    # -------------------------------------------------------------------------
+    # ========== General properties ===========================================
 
-    def set_auto_white_balance(self, mode='Continuous'):
-        """
-        Set the camera feature BalanceWhiteAuto.
-
-        Parameters
-        ----------
-        mode : string, optional
-            Value to be set. The default is 'Continuous'.
-
-        Returns
-        -------
-        None.
-
-        """
-        self.__camera.BalanceWhiteAuto.set(mode)
-
-    # -------------------------------------------------------------------------
-    
-    def set_binning(self, horizontal=1, vertical=1):
-        """
-        Set the pixel binning.
-        
-        Binning N combines N sensor pixels to a single frame pixel. For
-        instance, horizontal = 2 halves the frame width, while vertical = 2
-        halves the frame height.
-        
-        Note: Decreasing the binning, again, seems to have no effect until the
-        camera has been reseted and detected, again. The reset command is
-        called in the method release().
-
-        Parameters
-        ----------
-        horizontal : int, optional
-            Number of pixels to bin horizontally. The default is 1.
-        vertical : int, optional
-            Number of pixels to bin vertically. The default is 1.
-
-        Returns
-        -------
-        None.
-
-        """
-        self.__camera.BinningHorizontal.set(horizontal)
-        self.__camera.BinningVertical.set(vertical)
-
-    # -------------------------------------------------------------------------
-    
-    def set_pixel_format(self, pixelFormat):
-        """
-        Sets the pixel format of grabbed images.
-        
-        For use with OpenCV, following formats are supported:
-            'CV_UINT8' :  8-bit gray (= color format PixelFormat.Mono8)
-            'CV_BGR8'  : 24-bit BGR (= color format PixelFormat.Bgr8)
-        
-        Parameters
-        ----------
-        pixelFormat : string
-            Pixel format of grabbed frames. The default is color ('CV_BGR8').
-
-        Raises
-        ------
-        Exception
-            Raised if pixel format is not supported by the camera
-
-        Returns
-        -------
-        None.
-
-        """
-        assert pixelFormat in ['CV_UINT8', 'CV_BGR8']
-        
-        pixelFormat = PixelFormat.Bgr8 if (pixelFormat == 'CV_BGR8') else PixelFormat.Mono8
-        supportedFormats = self.__camera.get_pixel_formats()
-        
-        if pixelFormat in supportedFormats:
-            self.__camera.set_pixel_format(pixelFormat)
-            print('Pixel format : {} (OpenCV)'.format(pixelFormat))
-        else:
-            raise Exception('Pixel format {} (OpenCV) not supported'.format(pixelFormat))
-
-    # ========== Start / stop streaming =======================================
-
-    def start_streaming(self):
-        """
-        Start streaming frames.
-
-        Returns
-        -------
-        None.
-
-        """
-        if self.__isStreaming == False:
-            self.__camera.start_streaming(handler=self.__handler, buffer_count=10)
-            self.__isStreaming = True
-
-    # -------------------------------------------------------------------------
-
-    def stop_streaming(self):
-        """
-        Stop streaming frames.
-
-        Returns
-        -------
-        None.
-
-        """
-        if self.__isStreaming == True:
-            self.__camera.stop_streaming()
-            self.__isStreaming = False
-
-    # ========== Getters ======================================================
-    
     def get_name(self):
         """
         Get camera's name.
@@ -279,19 +164,261 @@ class AvAlvium():
         """
         return self.__camera.get_name()
 
-    # -------------------------------------------------------------------------
-    
-    def get_frame(self):
+    # ========== Image format =================================================
+
+    def get_resolution(self):
         """
-        Grab the last frame from the camera stream.
+        Get width and height of grabbed frames.
 
         Returns
         -------
-        numpy.ndarray
-            Frame in OpenCV compatible numpy format.
+        int
+            Width.
+        int
+            Height.
 
         """
-        return self.__handler.frame if (self.__isStreaming == True) else None
+        return int(self.__camera.Width.get()), int(self.__camera.Height.get())
+
+    # -------------------------------------------------------------------------
+
+    def set_resolution(self, name=None, width=None, height=None):
+        """
+        Set width and height of grabbed frames.
+        
+        A valid name (e.g., '1080p') or width and height must be passed to the
+        method.
+
+        Parameters
+        ----------
+        name : string, optional
+            Resolution type as declared in Camera.resolutions. The default is None.
+        width : int, optional
+            Width. The default is None.
+        height : int, optional
+            Height. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
+        # Look-up standard resolution (e.g., '1080p')
+        if name != None:
+            width = Camera.resolutions[name]['width']
+            height = Camera.resolutions[name]['height']
+            
+        # Set resolution
+        if width != None and height != None:
+            is_paused_stream = self.__is_streaming
+            self.stop_streaming()
+            self.__camera.Width.set(width)
+            self.__camera.Height.set(height)
+            if is_paused_stream:
+                self.start_streaming()
+
+    # -------------------------------------------------------------------------
+    
+    def set_binning(self, x=1, y=1):
+        """
+        Set the pixel binning.
+        
+        Binning N combines N sensor pixels to a single frame pixel. For
+        instance, x = 2 halves the frame width, while y = 2
+        halves the frame height.
+        
+        Note: Decreasing the binning, again, seems to have no effect until the
+        camera has been reseted and detected, again. The reset command is
+        called in the method release().
+
+        Parameters
+        ----------
+        x : int, optional
+            Number of pixels to bin horizontally. The default is 1.
+        y : int, optional
+            Number of pixels to bin vertically. The default is 1.
+
+        Returns
+        -------
+        None.
+
+        """
+        is_paused_stream = self.__is_streaming
+        self.stop_streaming()
+        self.__camera.BinningHorizontal.set(x)
+        self.__camera.BinningVertical.set(y)
+        if is_paused_stream:
+            self.start_streaming()
+
+    # ========== Frame rate ===================================================
+    
+    def get_fps(self):
+        """
+        Get the speed as frames per second.
+
+        Returns
+        -------
+        float
+            Frames per second.
+
+        """
+        return self.__camera.AcquisitionFrameRate.get()
+
+    # -------------------------------------------------------------------------
+
+    def set_fps(self, fps):
+        """
+        Set the speed as frames per second.
+
+        Parameters
+        ----------
+        fps : float
+            Frames per second.
+
+        Returns
+        -------
+        bool
+            Returns True if the speed has been set, else False.
+
+        """
+        self.__camera.AcquisitionFrameRate.set(fps)
+                
+        return self.get_fps() == fps
+
+
+    # ========== Auto acquisition adjustments =================================
+    
+    def set_autofocus(self, switch):
+        """
+        Enable/disable autofocus.
+
+        This feature is not supported.
+
+        """
+        print('WARNING: Autofocus not supported')
+
+    # -------------------------------------------------------------------------
+
+    def set_auto_exposure(self, mode):
+        """
+        Enable/disable auto exposure.
+
+        Parameters
+        ----------
+        mode : string
+            Mode as declared in Camera.modes.
+
+        Returns
+        -------
+        None.
+
+        """
+        assert mode in Camera.modes
+        self.__camera.ExposureAuto.set(mode)
+
+    # -------------------------------------------------------------------------
+    
+    def set_auto_gain(self, mode):
+        """
+        Enable/disable auto gain.
+
+        Parameters
+        ----------
+        mode : string
+            Mode as declared in Camera.modes.
+
+        Returns
+        -------
+        None.
+
+        """
+        assert mode in Camera.modes
+        self.__camera.GainAuto.set(mode)
+
+    # -------------------------------------------------------------------------
+
+    def set_auto_white_balance(self, mode):
+        """
+        Enable/disable auto white balance.
+
+        Parameters
+        ----------
+        mode : string
+            Mode as declared in Camera.modes.
+
+        Returns
+        -------
+        None.
+
+        """
+        assert mode in Camera.modes
+        self.__camera.BalanceWhiteAuto.set(mode)
+
+    # -------------------------------------------------------------------------
+    
+    def set_pixel_format(self, pixel_format):
+        """
+        Sets the pixel format of grabbed images.
+        
+        For use with OpenCV, following formats are supported:
+            'CV_UINT8' :  8-bit gray (= color format pixel_format.Mono8)
+            'CV_BGR8'  : 24-bit BGR (= color format pixel_format.Bgr8)
+        
+        Parameters
+        ----------
+        pixel_format : string
+            Pixel format of grabbed frames. The default is color ('CV_BGR8').
+
+        Raises
+        ------
+        Exception
+            Raised if pixel format is not supported by the camera
+
+        Returns
+        -------
+        None.
+
+        """
+        assert pixel_format in ['CV_UINT8', 'CV_BGR8']
+        
+        pixel_format = PixelFormat.Bgr8 if (pixel_format == 'CV_BGR8') else pixel_format.Mono8
+        supported_formats = self.__camera.get_pixel_formats()
+        
+        if pixel_format in supported_formats:
+            self.__camera.set_pixel_format(pixel_format)
+            print('Pixel format : {} (OpenCV)'.format(pixel_format))
+        else:
+            raise Exception('Pixel format {} (OpenCV) not supported'.format(pixel_format))
+
+    # ========== Start / stop streaming =======================================
+
+    def start_streaming(self):
+        """
+        Start streaming frames.
+
+        Returns
+        -------
+        None.
+
+        """
+        if self.__is_streaming == False:
+            self.__camera.start_streaming(handler=self.__handler, buffer_count=10)
+            self.__is_streaming = True
+
+    # -------------------------------------------------------------------------
+
+    def stop_streaming(self):
+        """
+        Stop streaming frames.
+
+        Returns
+        -------
+        None.
+
+        """
+        if self.__is_streaming == True:
+            self.__camera.stop_streaming()
+            self.__is_streaming = False
 
     # ========== Show camera stream ===========================================
     
@@ -306,21 +433,19 @@ class AvAlvium():
         None.
 
         """
-        with self.__vimba:
-            with self.__camera:
-                windowName = self.get_name() + ' (Press any key to terminate)'
-                self.start_streaming()
-                
-                while True:
-                    frame = self.get_frame()
-                    if frame is not None:
-                        cv2.imshow(windowName, frame)
-                    
-                    if cv2.waitKey(1) > 0:
-                        cv2.destroyWindow(windowName)
-                        break
-                    
-                self.stop_streaming()
+        windowName = self.get_name() + ' (Press any key to terminate)'
+        self.start_streaming()
+        
+        while True:
+            frame = self.get_frame()
+            if frame is not None:
+                cv2.imshow(windowName, frame)
+            
+            if cv2.waitKey(1) > 0:
+                cv2.destroyWindow(windowName)
+                break
+            
+        self.stop_streaming()
 
 # ========== Handler ==========================================================
 
@@ -345,6 +470,6 @@ class Handler():
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    alvium = AvAlvium(cameraID=0, pixelFormat='CV_BGR8', binX=2, binY=2)
+    alvium = AlliedAlvium(camera_id=0, bin_x=2, bin_y=2)
     alvium.show_stream()    
     alvium.release()

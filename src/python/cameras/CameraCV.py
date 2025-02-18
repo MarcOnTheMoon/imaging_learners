@@ -3,9 +3,8 @@ Standard OpenCV camera based on class VideoCapture.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
-
-@copyright: 2024, Marc Hensel
-@version: 2024.12.15
+@copyright: 2025
+@version: 2025.02.18
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -212,9 +211,9 @@ class CameraCV(Camera):
 
         """
         assert switch in Camera.switches
-        if switch == 'off':
+        if switch == 'Off':
             self.__camera.set(cv2.CAP_PROP_AUTOFOCUS, 0.0)
-        elif switch == 'on':
+        elif switch == 'On':
             self.__camera.set(cv2.CAP_PROP_AUTOFOCUS, 1.0)
         else:
             print('WARNING: Unknown switch: {switch}')
@@ -236,11 +235,11 @@ class CameraCV(Camera):
 
         """
         assert mode in Camera.modes
-        if mode == 'off':
+        if mode == 'Off':
             self.__camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.0)
-        elif mode == 'once':
+        elif mode == 'Once':
             print('WARNING: Auto exposure once not implemented')
-        elif mode == 'continuous':
+        elif mode == 'Continuous':
             self.__camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1.0)
         else:
             print('WARNING: Unknown mode: {mode}')
@@ -273,11 +272,11 @@ class CameraCV(Camera):
 
         """
         assert mode in Camera.modes
-        if mode == 'off':
+        if mode == 'Off':
             self.__camera.set(cv2.CAP_PROP_AUTO_WB, 0.0)
-        elif mode == 'once':
+        elif mode == 'Once':
             print('WARNING: Auto white balance once not implemented')
-        elif mode == 'continuous':
+        elif mode == 'Continuous':
             self.__camera.set(cv2.CAP_PROP_AUTO_WB, 1.0)
         else:
             print('WARNING: Unknown mode: {mode}')
