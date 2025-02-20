@@ -4,7 +4,7 @@ Abstract base class for cameras to be used with OpenCV.
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 
-@copyright: 2025, Marc Hensel
+@copyright: 2025
 @version: 2025.02.18
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """

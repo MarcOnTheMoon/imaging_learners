@@ -5,6 +5,7 @@ Requires Daheng Imaging's gxipy library located in the respective sub folder.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
+
 @copyright: 2025
 @version: 2025.02.18
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
@@ -322,3 +323,4 @@ class DahengVenus(Camera):
         assert mode in Camera.modes
         self.__camera.BalanceWhiteAuto.set(DahengVenus.modes[mode])
             
+        
