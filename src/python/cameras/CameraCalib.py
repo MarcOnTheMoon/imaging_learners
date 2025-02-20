@@ -14,6 +14,7 @@ Requires OpenCV library with contributions:
 """
 
 import cv2
+import numpy as np
 import json
 
 class CameraCalib():
@@ -100,9 +101,10 @@ class CameraCalib():
         detector = cv2.aruco.CharucoDetector(self.__board)
         corners, ids, marker_corners, marker_ids = detector.detectBoard(image)
  
-        # Visualize ArUco markers
+        # Visualize ArUco markers (scaled down by 1/2)
         marker_image = image.copy()
         cv2.aruco.drawDetectedMarkers(marker_image, marker_corners, marker_ids)
+        marker_image = cv2.resize(marker_image, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
         cv2.imshow('Detected ArUco markers', marker_image)
 
         # Add ChArUco corners and ids
@@ -150,9 +152,10 @@ class CameraCalib():
         # Loop through frames
         wait_time_ms = int(1000.0 / 24.0)
         while True:
-            # Show next frame
+            # Show next frame (scaled down by 1/2)
             frame = camera.get_frame()
-            cv2.imshow(window_name, frame)
+            display_frame = cv2.resize(frame, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
+            cv2.imshow(window_name, display_frame)
 
             # React to user input (key press)
             key = cv2.waitKey(wait_time_ms)
@@ -165,13 +168,80 @@ class CameraCalib():
         image_size = frame.shape[0:2]
         result, camera_matrix, dist_coeffs, rvecs, tvecs = cv2.aruco.calibrateCameraCharuco(self.__charuco_corners, self.__charuco_ids, self.__board, image_size, None, None)
         
-        # Write calibrated data to file
+        # Write camera matrix and distortion coefficients to file
+        self.__save_to_file(camera_name, lens_name, camera_matrix, dist_coeffs)
+
+    # ========== File input/output ============================================
+    
+    def __save_to_file(self, camera_name, lens_name, camera_matrix, dist_coeffs):
+        """
+        Save calibrated camera matrix and distortion coefficients in a *.json file.
+
+        Parameters
+        ----------
+        camera_name : string
+            Camera name, used for file name storing calibrated parameters.
+        lens_name : string
+            Lens name, used for file name storing calibrated parameters.
+        camera_matrix : numpy.ndarray
+            3x3 intrinsic camera matrix.
+        dist_coeffs : numpy.ndarray
+            1x5 distortion parameters (k1, k2, p1, p2, k3).
+
+        Returns
+        -------
+        None.
+
+        """
+        # Prepare data
         file_name = f'{camera_name}_{lens_name}.json'
         data = {"Sensor": camera_name, "Lens": lens_name, "Matrix": camera_matrix.tolist(), "Distortion": dist_coeffs.tolist()}
-
+    
+        # Write file
         with open(file_name, 'w') as json_file:
             json.dump(data, json_file, indent=4)
         print(f'Matrix and distortion coeffs saved to {file_name}')
+
+    # -------------------------------------------------------------------------
+    
+    def load_from_file(camera_name, lens_name, image_width, image_height):
+        """
+        Load camera matrix and distortion coefficients from a *.json file.
+
+        Parameters
+        ----------
+        camera_name : string
+            Camera name, used for file name storing calibrated parameters.
+        lens_name : string
+            Lens name, used for file name storing calibrated parameters.
+        image_width : int
+            Width of the images to undistort in pixel.
+        image_height : int
+            Height of the images to undistort in pixel.
+
+        Returns
+        -------
+        camera_matrix : numpy.ndarray
+            3x3 intrinsic camera matrix.
+        dist_coeffs : numpy.ndarray
+            1x5 distortion parameters (k1, k2, p1, p2, k3).
+        camera_matrix_new : numpy.ndarray
+            3x3 optimal new camera matrix for image width and height.
+
+        """
+        # Load data from file
+        file_name = f'{camera_name}_{lens_name}.json'
+        with open(file_name, 'r') as file:
+            data = json.load(file)
+        
+        # Extract matrix and coefficients
+        camera_matrix = np.array(data['Matrix'])
+        dist_coeffs = np.array(data['Distortion'])    
+
+        # Calculate optimal new camera matrix        
+        camera_matrix_new, roi = cv2.getOptimalNewCameraMatrix(camera_matrix, dist_coeffs, (image_width, image_height), 1, (image_width, image_height))
+        
+        return camera_matrix, dist_coeffs, camera_matrix_new
 
 # -----------------------------------------------------------------------------
 # Main (sample)
@@ -179,6 +249,14 @@ class CameraCalib():
 
 if __name__ == '__main__':
     from DahengVenus import DahengVenus
+    
+    # =========================================================================
+    # ========== Setup ========================================================
+    # =========================================================================
+    is_create_board = False
+    is_calibrate = False
+    is_demonstrate = True
+    # =========================================================================
     
     # Open camera
     camera = DahengVenus(camera_id=0)
@@ -197,10 +275,23 @@ if __name__ == '__main__':
     camera.set_auto_exposure('Off')
     camera.set_auto_white_balance('Once')
 
-    # Run calibration procedure
+    # Create calibration board and/or run calibration procedure
     camera_calib = CameraCalib()
-    camera_calib.save_board_image()
-    camera_calib.calibrate(camera, model_name, lens_name)
+    if is_create_board:
+        camera_calib.save_board_image()
+    if is_calibrate:
+        camera_calib.calibrate(camera, model_name, lens_name)
+    
+    # Undistort and display image (scaled down by 1/2)
+    if is_demonstrate:
+        camera_matrix, dist_coeffs, camera_matrix_new = CameraCalib.load_from_file(model_name, lens_name, width, height)
+        while True:
+            image = camera.get_frame()
+            image = cv2.undistort(image, camera_matrix, dist_coeffs, None, camera_matrix_new)
+            image = cv2.resize(image, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
+            cv2.imshow('Undistorted image (any key to close)', image)
+            if cv2.waitKey(int(1000.0 / 24.0)) > 0:
+                break
             
     # Release camera and close window
     print('Release camera')
