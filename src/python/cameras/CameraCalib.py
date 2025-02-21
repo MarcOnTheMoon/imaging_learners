@@ -7,9 +7,8 @@ Requires OpenCV library with contributions:
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
-
 @copyright: 2025
-@version: 2025.02.20
+@version: 2025.02.21
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -22,8 +21,6 @@ class CameraCalib():
     # ========== Constructor ==================================================
     
     # TODO Impact of field sizes on calibration data (i.e., calculating mm from pixels)?
-    # TODO Method to read data from JSON file
-    # TODO Method to undistort images
 
     def __init__(self, squares_x=7, squares_y=5, square_px=200, marker_px=150, margin=20):
         """
@@ -60,9 +57,14 @@ class CameraCalib():
 
     # ========== Save board to image file =====================================
 
-    def save_board_image(self):
+    def save_board_image(self, path='./calibration'):
         """
         Save ChArUco board to image file.
+
+        Parameters
+        ----------
+        path : string, optional
+            File path. The default is './calibration'.
 
         Returns
         -------
@@ -77,9 +79,11 @@ class CameraCalib():
         cv2.imshow('Board', image)
         
         # Save image to file
-        file_name = f'./CameraCalib_4x4-50_{self.__x}x{self.__y}.png'
+        if path == None:
+            path = '.'
+        file_name = f'{path}/ChArUco_4x4-50_{self.__x}x{self.__y}.png'
         cv2.imwrite(file_name, image)
-        print(f'Image saved to file: {file_name}')
+        print(f'Board image saved: {file_name}')
 
     # ========== Calibrate ====================================================
     
@@ -111,12 +115,13 @@ class CameraCalib():
         if ids is not None and len(corners) > 3:
             self.__charuco_corners.append(corners)
             self.__charuco_ids.append(ids)
+            print(f'Added {len(ids)} ChArUco corners')
         else:
             print('Not enough corners detected')
 
     # -------------------------------------------------------------------------
 
-    def calibrate(self, camera, camera_name, lens_name):
+    def calibrate(self, camera, camera_name, lens_name, path='./calibration'):
         """
         Interactively calibrate the camera using images of the ChArUco board.
         
@@ -133,18 +138,28 @@ class CameraCalib():
             Camera name, used for file name storing calibrated parameters.
         lens_name : string
             Lens name, used for file name storing calibrated parameters.
+        path : string, optional
+            Target file path. The default is './calibration'.
 
         Returns
         -------
         None.
 
         """
+        # Print usage hints
+        print('+-------------------------------------------+')
+        print('| Calibration procedure                     |')
+        print('+-------------------------------------------+')
+        print('| c     : Add frame showing ChArUco board   |')
+        print('| <Esc> : Save calibration to file          |')
+        print('+-------------------------------------------+')
+        
         # Init calibration data
         self.__charuco_ids = []
         self.__charuco_corners = []
 
         # Create image window
-        window_name = camera.get_name() + " (Press 'c' to add an image, <Esc> to stop acquisition)"
+        window_name = camera.get_name() + " ('c': add image, <Esc>: stop acquisition)"
         frame = camera.get_frame()
         cv2.imshow(window_name, frame)
         cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
@@ -169,16 +184,18 @@ class CameraCalib():
         result, camera_matrix, dist_coeffs, rvecs, tvecs = cv2.aruco.calibrateCameraCharuco(self.__charuco_corners, self.__charuco_ids, self.__board, image_size, None, None)
         
         # Write camera matrix and distortion coefficients to file
-        self.__save_to_file(camera_name, lens_name, camera_matrix, dist_coeffs)
+        self.__save_to_file(path, camera_name, lens_name, camera_matrix, dist_coeffs)
 
     # ========== File input/output ============================================
     
-    def __save_to_file(self, camera_name, lens_name, camera_matrix, dist_coeffs):
+    def __save_to_file(self, path, camera_name, lens_name, camera_matrix, dist_coeffs):
         """
         Save calibrated camera matrix and distortion coefficients in a *.json file.
 
         Parameters
         ----------
+        path : string
+            Target file path.
         camera_name : string
             Camera name, used for file name storing calibrated parameters.
         lens_name : string
@@ -194,17 +211,19 @@ class CameraCalib():
 
         """
         # Prepare data
-        file_name = f'{camera_name}_{lens_name}.json'
+        if path == None:
+            path = '.'
+        file_name = f'{path}/{camera_name}_{lens_name}.json'
         data = {"Sensor": camera_name, "Lens": lens_name, "Matrix": camera_matrix.tolist(), "Distortion": dist_coeffs.tolist()}
     
         # Write file
         with open(file_name, 'w') as json_file:
             json.dump(data, json_file, indent=4)
-        print(f'Matrix and distortion coeffs saved to {file_name}')
+        print(f'Calibration saved: {file_name}')
 
     # -------------------------------------------------------------------------
     
-    def load_from_file(camera_name, lens_name, image_width, image_height):
+    def load_from_file(camera_name, lens_name, image_width, image_height, path='./calibration'):
         """
         Load camera matrix and distortion coefficients from a *.json file.
 
@@ -218,6 +237,8 @@ class CameraCalib():
             Width of the images to undistort in pixel.
         image_height : int
             Height of the images to undistort in pixel.
+        path : string, optional
+            Target file path. The default is './calibration'.
 
         Returns
         -------
@@ -230,7 +251,9 @@ class CameraCalib():
 
         """
         # Load data from file
-        file_name = f'{camera_name}_{lens_name}.json'
+        if path == None:
+            path = '.'
+        file_name = f'{path}/{camera_name}_{lens_name}.json'
         with open(file_name, 'r') as file:
             data = json.load(file)
         
@@ -254,14 +277,14 @@ if __name__ == '__main__':
     # ========== Setup ========================================================
     # =========================================================================
     is_create_board = False
-    is_calibrate = False
+    is_calibrate = True
     is_demonstrate = True
     # =========================================================================
     
     # Open camera
     camera = DahengVenus(camera_id=0)
     model_name = 'VEN-161-61U3C'
-    lens_name = 'Raspi-f6mm-F1.2'
+    lens_name = 'Raspi-f6mm'
 
     # Print properties
     name = camera.get_name()
