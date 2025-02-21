@@ -5,9 +5,8 @@ Requires Daheng Imaging's gxipy library located in the respective sub folder.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
-
 @copyright: 2025
-@version: 2025.02.18
+@version: 2025.02.21
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -31,20 +30,24 @@ class DahengVenus(Camera):
     
     # ========== Constructor ==================================================
 
-    def __init__(self, camera_id=0, pixel_format='default'):
+    def __init__(self, camera_id=0, pixel_format='default', bin_x=1, bin_y=1):
         """
         Initialize the camera.
         
         Pixel formats as declared in Camera.pixel_formats:
-            'Default' - camera default (typically 24-bit BGR color)
-            'Mono8'   - 8-bit grayscale
+            'default' - camera default (24-bit BGR color)
+            'mono8'   - 8-bit grayscale
 
         Parameters
         ----------
         camera_id : int, optional
             Camera ID for all detected cameras of the given model. The default is 0.
         pixel_format : string, optional
-            Pixel format of grabbed frames. The default is 'default'.
+            Grab 24-bit BGR color or 8-bit gray frames. The default is color.
+        bin_x : int, optional
+            Number of pixels to bin horizontally (e.g., 2 will half the width). The default is 1.
+        bin_y : int, optional
+            Number of pixels to bin vertically (e.g., 2 will half the height). The default is 1.
 
         Returns
         -------
@@ -61,15 +64,16 @@ class DahengVenus(Camera):
         if camera_id < device_count:
             self.__camera = self.__device_manager.open_device_by_index(camera_id + 1)    # Indexing starts at 1!
         else:
-            print('WARNING: Camera not found.')
+            print('Warning: Camera not found.')
             return
 
         # Set model name
         vendor = info_list[camera_id].get('vendor_name')
         model = info_list[camera_id].get('model_name')
         self.__name = vendor + ' ' + model
+        print('Found camera : {}'.format(self.get_name()))
 
-        # Remember pixel format
+        # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
         self.__is_mono8 = (pixel_format == 'mono8')
 
@@ -77,9 +81,47 @@ class DahengVenus(Camera):
         sensor_width = self.__camera.SensorWidth.get()
         sensor_height = self.__camera.SensorHeight.get()
         self.set_resolution(width=sensor_width, height=sensor_height)
-        
+
+        # Set image size (binning)
+        if bin_x != 1 or bin_y != 1:
+            self._set_binning(x=bin_x, y=bin_y)
+        print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
+        print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
+        print(f'Frames / sec : {self.get_fps()}')
+                
+        # Set acquisition parameters
+        self.set_auto_exposure('Continuous')
+        self.set_auto_white_balance('Once')
+        self.set_auto_gain('Continuous')
+
         # Start acquisition
         self.__camera.stream_on()
+
+    # -------------------------------------------------------------------------
+
+    def _set_binning(self, x, y):
+        """
+        Set horizontal and vertical binning.
+
+        Parameters
+        ----------
+        x : int
+            Binning in x-direction.
+        y : int
+            Binning in y-direction.
+
+        Returns
+        -------
+        None.
+
+        """
+        is_supported = self.__camera.BinningHorizontal.is_writable() and self.__camera.BinningVertical.is_writable()
+        
+        if is_supported:
+            self.__camera.BinningHorizontal.set(x)
+            self.__camera.BinningVertical.set(y)
+        else:
+            print('Warning: Binning not supported')
 
     # ========== Destructor ===================================================
     
@@ -92,11 +134,12 @@ class DahengVenus(Camera):
         None.
 
         """
+        print('Release camera : {}'.format(self.__name))
         self.__camera.stream_off()
         self.__camera.DeviceReset.send_command()
         self.__camera.close_device()
 
-    # ========== Grab frames ==================================================
+    # ========== Frame grabbing ===============================================
     
     def get_frame(self):
         """
@@ -112,7 +155,7 @@ class DahengVenus(Camera):
         raw_image = self.__camera.data_stream[0].get_image()
         if raw_image == None:
             print('Warning: No frame grabbed')
-            return self.__last_frame
+            return np.copy(self.__last_frame)
         
         raw_image.defective_pixel_correct()
         
@@ -141,7 +184,7 @@ class DahengVenus(Camera):
         """
         return self.__name
 
-    # ========== Image format =================================================
+    # -------------------------------------------------------------------------
 
     def get_resolution(self):
         """
@@ -194,34 +237,6 @@ class DahengVenus(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_binning(self, x, y):
-        """
-        Set horizontal and vertical binning.
-
-        Parameters
-        ----------
-        x : int
-            Binning in x-direction.
-        y : int
-            Binning in y-direction.
-
-        Returns
-        -------
-        None.
-
-        """
-        is_supported = self.__camera.BinningHorizontal.is_writable() and self.__camera.BinningVertical.is_writable()
-        
-        if is_supported:
-            self.__camera.stream_off()
-            self.__camera.BinningHorizontal.set(x)
-            self.__camera.BinningVertical.set(y)
-            self.__camera.stream_on()
-        else:
-            print('WARNING: Binning not supported')
-
-    # ========== Frame rate ===================================================
-
     def get_fps(self):
         """
         Get the speed as frames per second.
@@ -264,7 +279,7 @@ class DahengVenus(Camera):
         This feature is not supported.
 
         """
-        print('WARNING: Autofocus not supported')
+        print('Warning: Autofocus not supported')
 
     # -------------------------------------------------------------------------
 
@@ -323,4 +338,12 @@ class DahengVenus(Camera):
         assert mode in Camera.modes
         self.__camera.BalanceWhiteAuto.set(DahengVenus.modes[mode])
             
-        
+# -----------------------------------------------------------------------------
+# Main (sample)
+# -----------------------------------------------------------------------------
+
+if __name__ == '__main__':
+    camera = DahengVenus(camera_id=0)
+    camera.show_stream()
+    camera.release()
+ 

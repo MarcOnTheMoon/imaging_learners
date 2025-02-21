@@ -271,32 +271,33 @@ class CameraCalib():
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
+    from AlliedAlvium import AlliedAlvium
     from DahengVenus import DahengVenus
     
     # =========================================================================
     # ========== Setup ========================================================
     # =========================================================================
+    is_allied_alvium = True
     is_create_board = False
-    is_calibrate = True
+    is_calibrate = False
     is_demonstrate = True
     # =========================================================================
     
     # Open camera
-    camera = DahengVenus(camera_id=0)
-    model_name = 'VEN-161-61U3C'
-    lens_name = 'Raspi-f6mm'
+    if is_allied_alvium:
+        camera = AlliedAlvium(camera_id=0)
+        model_name = 'Alvium1800-U319C'
+        lens_name = 'Kowa-f4.5'
+    else:
+        camera = DahengVenus(camera_id=0)
+        model_name = 'VEN-161-61U3C'
+        lens_name = 'Raspi-f6mm'
 
     # Print properties
     name = camera.get_name()
     width, height = camera.get_resolution()
     print(f'Name : {name}')
     print(f'Size : {width}x{height}')
-    
-    # Set properties
-    camera.set_autofocus('On')
-    camera.set_auto_gain('Continuous')
-    camera.set_auto_exposure('Off')
-    camera.set_auto_white_balance('Once')
 
     # Create calibration board and/or run calibration procedure
     camera_calib = CameraCalib()

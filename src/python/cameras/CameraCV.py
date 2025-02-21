@@ -3,9 +3,8 @@ Standard OpenCV camera based on class VideoCapture.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
-
 @copyright: 2025
-@version: 2025.02.18
+@version: 2025.02.21
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -16,7 +15,7 @@ class CameraCV(Camera):
 
     # ========== Constructor ==================================================
 
-    def __init__(self, camera_id=0, pixel_format='default'):
+    def __init__(self, camera_id=0, pixel_format='default', bin_x=1, bin_y=1):
         """
         Initialize the camera.
         
@@ -38,12 +37,31 @@ class CameraCV(Camera):
 
         # Is camera ready?        
         if not self.__camera.isOpened():
-            print('WARNING: Could not open camera.')
+            print('Warning: Could not open camera.')
             return
+        print('Found camera : {}'.format(self.get_name()))
                              
-        # Remember pixel format
+        # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
         self.__is_mono8 = (pixel_format == 'mono8')
+        
+        # Set image size (binning)
+        if bin_x != 1 or bin_y != 1:
+            self.__camera._set_binning(x=bin_x, y=bin_y)
+        width, height = self.get_resolution()
+        print(f'Image size   : {width} x {height} px')
+        print(f'Frames / sec : {self.get_fps()}')
+
+    # -------------------------------------------------------------------------
+
+    def _set_binning(self, x, y):
+        """
+        Set horizontal and vertical binning.
+
+        This feature is not supported.
+
+        """
+        print('Warning: Binning not supported')
 
     # ========== Destructor ===================================================
     
@@ -56,9 +74,10 @@ class CameraCV(Camera):
         None.
 
         """
+        print('Release camera : {}'.format(self.get_name()))
         self.__camera.release()
 
-    # ========== Grab frames ==================================================
+    # ========== Frame grabbing ===============================================
     
     def get_frame(self):
         """
@@ -72,13 +91,13 @@ class CameraCV(Camera):
         """
         # Is camera ready?
         if self.__camera.isOpened() is False:
-            print('WARNING: Camera not ready.')
+            print('Warning: Camera not ready.')
             return None
     
         # Read frame from camera
         is_success, frame = self.__camera.read()
         if is_success is False:
-            print('WARNING: Could not read frame from camera')
+            print('Warning: No frame grabbed')
             return None
         
         # Return frame in correct pixel format
@@ -101,7 +120,7 @@ class CameraCV(Camera):
         """
         return 'OpenCV video capture'
 
-    # ========== Image format =================================================
+    # -------------------------------------------------------------------------
 
     def get_resolution(self):
         """
@@ -151,17 +170,6 @@ class CameraCV(Camera):
             self.__camera.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
     # -------------------------------------------------------------------------
-
-    def set_binning(self, x, y):
-        """
-        Set horizontal and vertical binning.
-
-        This feature is not supported.
-
-        """
-        print('WARNING: Binning not supported')
-
-    # ========== Frame rate ===================================================
 
     def get_fps(self):
         """
@@ -217,7 +225,7 @@ class CameraCV(Camera):
         elif switch == 'On':
             self.__camera.set(cv2.CAP_PROP_AUTOFOCUS, 1.0)
         else:
-            print('WARNING: Unknown switch: {switch}')
+            print('Warning: Unknown switch: {switch}')
             
     # -------------------------------------------------------------------------
 
@@ -239,11 +247,11 @@ class CameraCV(Camera):
         if mode == 'Off':
             self.__camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0.0)
         elif mode == 'Once':
-            print('WARNING: Auto exposure once not implemented')
+            print('Warning: Auto exposure once not implemented')
         elif mode == 'Continuous':
             self.__camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1.0)
         else:
-            print('WARNING: Unknown mode: {mode}')
+            print('Warning: Unknown mode: {mode}')
 
     # -------------------------------------------------------------------------
     
@@ -254,7 +262,7 @@ class CameraCV(Camera):
         This feature is not supported.
 
         """
-        print('WARNING: Auto gain not supported')
+        print('Warning: Auto gain not supported')
 
     # -------------------------------------------------------------------------
     
@@ -276,8 +284,18 @@ class CameraCV(Camera):
         if mode == 'Off':
             self.__camera.set(cv2.CAP_PROP_AUTO_WB, 0.0)
         elif mode == 'Once':
-            print('WARNING: Auto white balance once not implemented')
+            print('Warning: Auto white balance once not implemented')
         elif mode == 'Continuous':
             self.__camera.set(cv2.CAP_PROP_AUTO_WB, 1.0)
         else:
-            print('WARNING: Unknown mode: {mode}')
+            print('Warning: Unknown mode: {mode}')
+
+# -----------------------------------------------------------------------------
+# Main (sample)
+# -----------------------------------------------------------------------------
+
+if __name__ == '__main__':
+    camera = CameraCV(camera_id=0)
+    camera.show_stream()
+    camera.release()
+ 
