@@ -1,7 +1,10 @@
 """
-Daheng Imaging Venus USB cameras for use with OpenCV.
+Basler Ace U USB cameras for use with OpenCV.
 
-Requires Daheng Imaging's gxipy library located in the respective sub folder.
+Requires Basler's pylon library:
+    
+    1. Download and install pylon (https://www.baslerweb.com/de-de/software/pylon/ )
+    2. Install pylon for Python by "pip3 install pypylon" (https://github.com/basler/pypylon )
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
@@ -11,22 +14,15 @@ Requires Daheng Imaging's gxipy library located in the respective sub folder.
 """
 
 from Camera import Camera
-import gxipy as gx
+from pypylon import pylon
 import numpy as np
-import cv2
 
-class DahengVenus(Camera):
+class BaslerAce(Camera):
     """
     Tested cameras:    
-        VEN-161-61U3C-M01 (1440x1080, 1/2.9", 61 fps)
-        VEN-505-36U3C-M01 (2592x1944, 1/2.8", 36.9 fps)
+        Basler ace U acA1920-40uc (1920×1200, 1/1.2", 41 fps)
 
     """
-    
-    modes = {
-        'Off'           : gx.GxAutoEntry.OFF,
-        'Once'          : gx.GxAutoEntry.ONCE,
-        'Continuous'    : gx.GxAutoEntry.CONTINUOUS}
     
     # ========== Constructor ==================================================
 
@@ -50,40 +46,38 @@ class DahengVenus(Camera):
         None.
 
         """
-        # Init device manager (must keep reference to keep API initialized)
-        self.__device_manager = gx.DeviceManager()
-        
         # Find and open camera
         print('Connecting to camera {}'.format(camera_id))
-        device_count, info_list = self.__device_manager.update_device_list()
+        devices = pylon.TlFactory.GetInstance().EnumerateDevices()
         
-        if camera_id < device_count:
-            self.__camera = self.__device_manager.open_device_by_index(camera_id + 1)    # Indexing starts at 1!
+        if camera_id < len(devices):
+            device = devices[camera_id]
+            self.__camera = pylon.InstantCamera(pylon.TlFactory.GetInstance().CreateDevice(device))
+            self.__camera.Open()
         else:
             print('Warning: Camera not found.')
             return
 
         # Set model name
-        vendor = info_list[camera_id].get('vendor_name')
-        model = info_list[camera_id].get('model_name')
-        self.__name = vendor + ' ' + model
+        self.__name = 'Basler ' + device.GetModelName()
         print('Found camera : {}'.format(self.get_name()))
 
         # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
-        self.__is_mono8 = (pixel_format == 'Mono8')
+        self.__camera.PixelFormat.SetValue(pixel_format)
 
-        # Reset camera to maximum resolution        
-        sensor_width = self.__camera.SensorWidth.get()
-        sensor_height = self.__camera.SensorHeight.get()
-        self.set_resolution(width=sensor_width, height=sensor_height)
+        # Init converter to OpenCV format
+        pixel_type = pylon.PixelType_BGR8packed if (pixel_format == 'BGR8') else pylon.PixelType_Mono8
+        self.__converter = pylon.ImageFormatConverter()
+        self.__converter.OutputPixelFormat = pixel_type
+        self.__converter.OutputBitAlignment = pylon.OutputBitAlignment_MsbAligned
 
         # Set image size (binning)
         if bin_x != 1 or bin_y != 1:
-            self.__set_binning(x=bin_x, y=bin_y)
-        print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
-        print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
-        print(f'Frames / sec : {self.get_frame_rate()}')
+            print('Warning: Binning not supported')
+        print(f'Sensor size : {self.__camera.SensorWidth.Value} x {self.__camera.SensorHeight.Value} px')
+        print(f'Image size  : {self.__camera.Width.Value} x {self.__camera.Height.Value} px')
+        print(f'Frames rate : {self.get_frame_rate()} fps')
                 
         # Set acquisition parameters
         self.set_auto_exposure('Continuous')
@@ -91,33 +85,8 @@ class DahengVenus(Camera):
         self.set_auto_gain('Continuous')
 
         # Start acquisition
-        self.__camera.stream_on()
-
-    # -------------------------------------------------------------------------
-
-    def __set_binning(self, x, y):
-        """
-        Set horizontal and vertical binning.
-
-        Parameters
-        ----------
-        x : int
-            Binning in x-direction.
-        y : int
-            Binning in y-direction.
-
-        Returns
-        -------
-        None.
-
-        """
-        is_supported = self.__camera.BinningHorizontal.is_writable() and self.__camera.BinningVertical.is_writable()
-        
-        if is_supported:
-            self.__camera.BinningHorizontal.set(x)
-            self.__camera.BinningVertical.set(y)
-        else:
-            print('Warning: Binning not supported')
+        self.__last_frame = None
+        self.__camera.StartGrabbing(pylon.GrabStrategy_LatestImageOnly) 
 
     # ========== Destructor ===================================================
     
@@ -131,9 +100,10 @@ class DahengVenus(Camera):
 
         """
         print('Release camera : {}'.format(self.__name))
-        self.__camera.stream_off()
-        self.__camera.DeviceReset.send_command()
-        self.__camera.close_device()
+        self.__camera.StopGrabbing()
+        self.__camera.UserSetSelector.SetValue('Default')
+        self.__camera.UserSetLoad.Execute()
+        self.__camera.Close()
 
     # ========== Frame grabbing ===============================================
     
@@ -147,23 +117,20 @@ class DahengVenus(Camera):
             Camera frame in OpenCV format (i.e., numpy array).
 
         """
-        # Grab frame and correct defective pixels
-        raw_image = self.__camera.data_stream[0].get_image()
-        if raw_image == None:
-            print('Warning: No frame grabbed')
-            return np.copy(self.__last_frame)
-        
-        raw_image.defective_pixel_correct()
-        
-        # Convert to numpy array
-        rgb_image = raw_image.convert("RGB")
-        numpy_image = rgb_image.get_numpy_array()
+        # Grab frame and convert to OpenCV / numpy
+        numpy_image = None
+        if self.__camera.IsGrabbing():
+            grab_result = self.__camera.RetrieveResult(5000, pylon.TimeoutHandling_ThrowException)
+            if grab_result.GrabSucceeded():
+                pylon_image = self.__converter.Convert(grab_result)
+                numpy_image = np.copy(pylon_image.GetArray())
+            grab_result.Release()
 
-        # Return frame in correct pixel format
-        if self.__is_mono8:
-            self.__last_frame = cv2.cvtColor(np.asarray(numpy_image), cv2.COLOR_RGB2GRAY)
-        else:
-            self.__last_frame = cv2.cvtColor(np.asarray(numpy_image), cv2.COLOR_RGB2BGR)
+        # Return frame
+        if numpy_image is None:
+            print('Warning: No frame grabbed')
+            return np.copy(self.__last_frame) if (self.__last_frame is not None) else None
+        self.__last_frame = numpy_image
         return np.copy(self.__last_frame)
 
     # ========== General properties ===========================================
@@ -194,7 +161,7 @@ class DahengVenus(Camera):
             Height.
 
         """
-        return int(self.__camera.Width.get()), int(self.__camera.Height.get())
+        return int(self.__camera.Width.Value), int(self.__camera.Height.Value)
 
     # -------------------------------------------------------------------------
 
@@ -215,10 +182,10 @@ class DahengVenus(Camera):
 
         """
         if width != None and height != None:
-            self.__camera.stream_off()
-            self.__camera.Width.set(width)
-            self.__camera.Height.set(height)
-            self.__camera.stream_on()
+            self.__camera.StopGrabbing()
+            self.__camera.Width.SetValue(width)
+            self.__camera.Height.SetValue(height)
+            self.__camera.StartGrabbing(pylon.GrabStrategy_LatestImageOnly) 
 
     # -------------------------------------------------------------------------
 
@@ -232,7 +199,7 @@ class DahengVenus(Camera):
             Frames per second.
 
         """
-        return self.__camera.AcquisitionFrameRate.get()
+        return self.__camera.AcquisitionFrameRate.Value
 
     # -------------------------------------------------------------------------
 
@@ -251,7 +218,7 @@ class DahengVenus(Camera):
             Returns True if the speed has been set, else False.
 
         """
-        self.__camera.AcquisitionFrameRate.set(fps)
+        self.__camera.AcquisitionFrameRate.SetValue(fps)
         return self.get_frame_rate() == fps
 
     # ========== Acquisition adjustments (image quality) ======================
@@ -281,11 +248,10 @@ class DahengVenus(Camera):
             Maximum valid exposure time in [us].
 
         """
-        param_range = self.__camera.ExposureTime.get_range()
-        return param_range['min'], param_range['max']
+        return self.__camera.ExposureTime.GetMin(), self.__camera.ExposureTime.GetMax()
 
     # -------------------------------------------------------------------------
-    
+        
     def set_exposure_time_us(self, time_us):
         """
         Set the exposure time in microseconds.
@@ -307,14 +273,14 @@ class DahengVenus(Camera):
         # Set parameter
         if min_us <= time_us <= max_us:
             self.set_auto_exposure('Off')
-            self.__camera.ExposureTime.set(time_us)
-            return self.__camera.ExposureTime.get() == time_us
+            self.__camera.ExposureTime.SetValue(time_us)
+            return self.__camera.ExposureTime.Value == time_us
         else:
             print(f'Warning: Exposure time not in range [{min_us}, {max_us}] us')
             return False
 
     # -------------------------------------------------------------------------
-        
+
     def set_auto_exposure(self, mode):
         """
         Enable/disable auto exposure.
@@ -330,7 +296,7 @@ class DahengVenus(Camera):
 
         """
         assert mode in Camera.modes
-        self.__camera.ExposureAuto.set(DahengVenus.modes[mode])
+        self.__camera.ExposureAuto.SetValue(mode)
 
     # ---------- Gain ---------------------------------------------------------
     
@@ -349,7 +315,7 @@ class DahengVenus(Camera):
 
         """
         assert mode in Camera.modes
-        self.__camera.GainAuto.set(DahengVenus.modes[mode])
+        self.__camera.GainAuto.SetValue(mode)
 
     # ---------- White balance ------------------------------------------------
     
@@ -368,14 +334,14 @@ class DahengVenus(Camera):
 
         """
         assert mode in Camera.modes
-        self.__camera.BalanceWhiteAuto.set(DahengVenus.modes[mode])
+        self.__camera.BalanceWhiteAuto.SetValue(mode)
             
 # -----------------------------------------------------------------------------
 # Main (sample)
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    camera = DahengVenus()
+    camera = BaslerAce()
     camera.show_stream()
     camera.release()
  

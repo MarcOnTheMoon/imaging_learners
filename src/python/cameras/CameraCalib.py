@@ -8,7 +8,7 @@ Requires OpenCV library with contributions:
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.02.21
+@version: 2025.03.06
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -272,26 +272,36 @@ class CameraCalib():
 
 if __name__ == '__main__':
     from AlliedAlvium import AlliedAlvium
+    from BaslerAce import BaslerAce
     from DahengVenus import DahengVenus
+    from CameraCV import CameraCV
     
     # =========================================================================
     # ========== Setup ========================================================
     # =========================================================================
-    is_allied_alvium = True
+    camera_type = 'Alvium'          # Valid: 'Alvium', 'Ace', 'Venus'
     is_create_board = False
     is_calibrate = False
     is_demonstrate = True
     # =========================================================================
     
     # Open camera
-    if is_allied_alvium:
-        camera = AlliedAlvium(camera_id=0)
+    if camera_type == 'Alvium':
+        camera = AlliedAlvium()
         model_name = 'Alvium1800-U319C'
         lens_name = 'Kowa-f4.5'
-    else:
-        camera = DahengVenus(camera_id=0)
+    if camera_type == 'Ace':
+        camera = BaslerAce()
+        model_name = 'Ace-acA1920-40uc'
+        lens_name = 'Kowa-f4.5'
+    if camera_type == 'Venus':
+        camera = DahengVenus()
         model_name = 'VEN-161-61U3C'
         lens_name = 'Raspi-f6mm'
+    else:
+        camera = CameraCV(camera_id=0)
+        model_name = 'OpenCV-VideoCapture'
+        lens_name = 'Standard'
 
     # Print properties
     name = camera.get_name()

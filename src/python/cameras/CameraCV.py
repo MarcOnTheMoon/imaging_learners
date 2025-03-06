@@ -47,21 +47,10 @@ class CameraCV(Camera):
         
         # Set image size (binning)
         if bin_x != 1 or bin_y != 1:
-            self.__camera._set_binning(x=bin_x, y=bin_y)
+            print('Warning: Binning not supported')            
         width, height = self.get_resolution()
         print(f'Image size   : {width} x {height} px')
         print(f'Frames / sec : {self.get_frame_rate()}')
-
-    # -------------------------------------------------------------------------
-
-    def _set_binning(self, x, y):
-        """
-        Set horizontal and vertical binning.
-
-        This feature is not supported.
-
-        """
-        print('Warning: Binning not supported')
 
     # ========== Destructor ===================================================
     

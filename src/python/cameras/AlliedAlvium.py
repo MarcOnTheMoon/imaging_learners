@@ -27,9 +27,9 @@ import cv2
 
 class AlliedAlvium(Camera):
     """
-    Selected specifications:    
-        'Alvium 1800 U-319': 2064×1544, 54 fps
-        'Alvium 1800 U-500': 2592×1944, 68 fps
+    Tested cameras:    
+        Alvium 1800 U-319 (2064×1544, 1/1.8", 54 fps)
+        Alvium 1800 U-500 (2592×1944, 1/2.5", 68 fps)
 
     """
 
@@ -65,11 +65,11 @@ class AlliedAlvium(Camera):
 
         # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
-        self._set_pixel_format('CV_BGR8' if pixel_format == 'BGR8' else 'CV_UINT8')
+        self.__set_pixel_format('CV_BGR8' if pixel_format == 'BGR8' else 'CV_UINT8')
 
         # Set image size (binning)
         if bin_x != 1 or bin_y != 1:
-            self._set_binning(x=bin_x, y=bin_y)
+            self.__set_binning(x=bin_x, y=bin_y)
         print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
         print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
         print(f'Frames / sec : {self.get_frame_rate()}')
@@ -126,7 +126,7 @@ class AlliedAlvium(Camera):
 
     # -------------------------------------------------------------------------
     
-    def _set_pixel_format(self, pixel_format):
+    def __set_pixel_format(self, pixel_format):
         """
         Sets the pixel format of grabbed images.
         
@@ -157,7 +157,7 @@ class AlliedAlvium(Camera):
 
     # -------------------------------------------------------------------------
     
-    def _set_binning(self, x=1, y=1):
+    def __set_binning(self, x=1, y=1):
         """
         Set the pixel binning.
         

@@ -17,7 +17,7 @@ import cv2
 
 # =============================================================================
 
-# TODO Methods should return a state indicating the success
+# TODO Should methods return one of the states indicating, for instance, success?
 
 class OpState(IntEnum):
     FAILED = -2
@@ -37,12 +37,6 @@ class Camera(ABC):
 
     @abstractmethod
     def __init__(self, camera_id, pixel_format, bin_x, bin_y):
-        raise NotImplementedError
-
-    # -------------------------------------------------------------------------
-
-    @abstractmethod
-    def _set_binning(self, x, y):
         raise NotImplementedError
 
     # ========== Destructor ===================================================
@@ -141,26 +135,13 @@ class Camera(ABC):
                 break
 
 # -----------------------------------------------------------------------------
-# Main (sample)
+# Main (sample):
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
+    from CameraCV import CameraCV
 
-    # Open camera
-#    from CameraCV import CameraCV
-#    camera = CameraCV(camera_id=0)
-
-    from AlliedAlvium import AlliedAlvium
-    camera = AlliedAlvium(camera_id=0, bin_x=2, bin_y=2)
-
-#    from DahengVenus import DahengVenus
-#    camera = DahengVenus(camera_id=0)
-#    camera.set_resolution(name='1080p')
-    
-    # Show frames
+    camera = CameraCV(camera_id=0)
     camera.show_stream()
-            
-    # Release camera and close window
     camera.release()
-    cv2.destroyAllWindows()
            
