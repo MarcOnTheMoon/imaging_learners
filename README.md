@@ -38,7 +38,7 @@ We work with different camera models, and unfortunately these are programmed wit
 Moreover, the Python sources contain a class to easily calibrate and undistort cameras based on a ChArUco marker board.
 
 ## Uploaded material
-- [X] Image data ([images](image_data/images), [videos](image_data/images))
+- [X] Image data ([images](image_data/images), [videos](image_data/videos))
 - [X] Sample codes used in the lecture ([C++](src/c++/lecture), Python)
 - [X] Sample solutions for the exercises ([C++](src/c++/exercises), Python)
 - [X] Camera classes and calibration (C++, [Python](src/python/cameras))
