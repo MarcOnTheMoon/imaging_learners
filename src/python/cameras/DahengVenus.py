@@ -6,7 +6,7 @@ Requires Daheng Imaging's gxipy library located in the respective sub folder.
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.02.21
+@version: 2025.03.06
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -30,20 +30,16 @@ class DahengVenus(Camera):
     
     # ========== Constructor ==================================================
 
-    def __init__(self, camera_id=0, pixel_format='default', bin_x=1, bin_y=1):
+    def __init__(self, camera_id=0, pixel_format='BGR8', bin_x=1, bin_y=1):
         """
         Initialize the camera.
-        
-        Pixel formats as declared in Camera.pixel_formats:
-            'default' - camera default (24-bit BGR color)
-            'mono8'   - 8-bit grayscale
 
         Parameters
         ----------
         camera_id : int, optional
             Camera ID for all detected cameras of the given model. The default is 0.
         pixel_format : string, optional
-            Grab 24-bit BGR color or 8-bit gray frames. The default is color.
+            Pixel format as declared in Camera.pixel_formats. The default is 'BGR8'.
         bin_x : int, optional
             Number of pixels to bin horizontally (e.g., 2 will half the width). The default is 1.
         bin_y : int, optional
@@ -75,7 +71,7 @@ class DahengVenus(Camera):
 
         # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
-        self.__is_mono8 = (pixel_format == 'mono8')
+        self.__is_mono8 = (pixel_format == 'Mono8')
 
         # Reset camera to maximum resolution        
         sensor_width = self.__camera.SensorWidth.get()
@@ -87,7 +83,7 @@ class DahengVenus(Camera):
             self._set_binning(x=bin_x, y=bin_y)
         print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
         print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
-        print(f'Frames / sec : {self.get_fps()}')
+        print(f'Frames / sec : {self.get_frame_rate()}')
                 
         # Set acquisition parameters
         self.set_auto_exposure('Continuous')
@@ -202,17 +198,12 @@ class DahengVenus(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_resolution(self, name=None, width=None, height=None):
+    def set_resolution(self, width=None, height=None):
         """
         Set width and height of grabbed frames.
-        
-        A valid name (e.g., '1080p') or width and height must be passed to the
-        method.
 
         Parameters
         ----------
-        name : string, optional
-            Resolution type as declared in Camera.resolutions. The default is None.
         width : int, optional
             Width. The default is None.
         height : int, optional
@@ -223,12 +214,6 @@ class DahengVenus(Camera):
         None.
 
         """
-        # Look-up standard resolution (e.g., '1080p')
-        if name != None:
-            width = Camera.resolutions[name]['width']
-            height = Camera.resolutions[name]['height']
-            
-        # Set resolution
         if width != None and height != None:
             self.__camera.stream_off()
             self.__camera.Width.set(width)
@@ -237,9 +222,9 @@ class DahengVenus(Camera):
 
     # -------------------------------------------------------------------------
 
-    def get_fps(self):
+    def get_frame_rate(self):
         """
-        Get the speed as frames per second.
+        Get the acquisition frame rate.
 
         Returns
         -------
@@ -251,9 +236,9 @@ class DahengVenus(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_fps(self, fps):
+    def set_frame_rate(self, fps):
         """
-        Set the speed as frames per second.
+        Set the acquisition frame rate.
 
         Parameters
         ----------
@@ -268,9 +253,11 @@ class DahengVenus(Camera):
         """
         print(self.__camera.AcquisitionFrameRate.get_range())
         self.__camera.AcquisitionFrameRate.set(fps)
-        return self.get_fps() == fps
+        return self.get_frame_rate() == fps
 
-    # ========== Auto acquisition adjustments =================================
+    # ========== Acquisition adjustments (image quality) ======================
+    
+    # ---------- Focus --------------------------------------------------------
     
     def set_autofocus(self, switch):
         """
@@ -281,8 +268,54 @@ class DahengVenus(Camera):
         """
         print('Warning: Autofocus not supported')
 
-    # -------------------------------------------------------------------------
+    # ---------- Exposure time ------------------------------------------------
 
+    def get_range_exposure_time_us(self):
+        """
+        Get parameter range of exposure time in microseconds.
+
+        Returns
+        -------
+        float
+            Minimum valid exposure time in [us].
+        float
+            Maximum valid exposure time in [us].
+
+        """
+        param_range = self.__camera.ExposureTime.get_range()
+        return param_range['min'], param_range['max']
+
+    # -------------------------------------------------------------------------
+    
+    def set_exposure_time_us(self, time_us):
+        """
+        Set the exposure time in microseconds.
+
+        Parameters
+        ----------
+        time_us : float
+            Exposure time in [us].
+
+        Returns
+        -------
+        bool
+            True on success, else False.
+
+        """
+        # Get supported parameter range
+        min_us, max_us = self.get_range_exposure_time_us()
+        
+        # Set parameter
+        if min_us <= time_us <= max_us:
+            self.set_auto_exposure('Off')
+            self.__camera.ExposureTime.set(time_us)
+            return self.__camera.ExposureTime.get() == time_us
+        else:
+            print(f'Warning: Exposure time not in range [{min_us}, {max_us}] us')
+            return False
+
+    # -------------------------------------------------------------------------
+        
     def set_auto_exposure(self, mode):
         """
         Enable/disable auto exposure.
@@ -300,7 +333,7 @@ class DahengVenus(Camera):
         assert mode in Camera.modes
         self.__camera.ExposureAuto.set(DahengVenus.modes[mode])
 
-    # -------------------------------------------------------------------------
+    # ---------- Gain ---------------------------------------------------------
     
     def set_auto_gain(self, mode):
         """
@@ -319,7 +352,7 @@ class DahengVenus(Camera):
         assert mode in Camera.modes
         self.__camera.GainAuto.set(DahengVenus.modes[mode])
 
-    # -------------------------------------------------------------------------
+    # ---------- White balance ------------------------------------------------
     
     def set_auto_white_balance(self, mode):
         """
@@ -343,7 +376,7 @@ class DahengVenus(Camera):
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    camera = DahengVenus(camera_id=0)
+    camera = DahengVenus()
     camera.show_stream()
     camera.release()
  

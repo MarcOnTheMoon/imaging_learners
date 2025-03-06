@@ -2,9 +2,10 @@
 Allied Vision Alvium 1800 cameras for use with OpenCV.
 
 Requires Allied Vision's Vimba for Python library (vmbpy). Download the
-installation file vmbpy-*.whl. If you have installed the Vimba X Viewer on your
-system, the file may already be present on your system. In my case it was
-located in following directory:
+installation file vmbpy-*.whl. If you have installed the Vimba X Viewer
+(https://www.alliedvision.com/de/produktportfolio/software/vimba-x-sdk/ ), the
+file may already be present on your system. In my case it was located in
+following directory:
     
     C:\Program Files\Allied Vision\Vimba X\api\python
     
@@ -15,7 +16,7 @@ For installation call pip with <x.y.z> being the Vimba version:
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.02.21
+@version: 2025.03.06
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -34,20 +35,16 @@ class AlliedAlvium(Camera):
 
     # ========== Constructor ==================================================
 
-    def __init__(self, camera_id=0, pixel_format='default', bin_x=1, bin_y=1):
+    def __init__(self, camera_id=0, pixel_format='BGR8', bin_x=1, bin_y=1):
         """
         Initialize the camera.
-        
-        Pixel formats as declared in Camera.pixel_formats:
-            'default' - camera default (24-bit BGR color)
-            'mono8'   - 8-bit grayscale
         
         Parameters
         ----------
         camera_id : int, optional
             Camera id within all detected Vimba cameras. The default is 0.
         pixel_format : string, optional
-            Grab 24-bit BGR color or 8-bit gray frames. The default is color ('CV_BGR8').
+            Pixel format as declared in Camera.pixel_formats. The default is 'BGR8'.
         bin_x : int, optional
             Number of pixels to bin horizontally (e.g., 2 will half the width). The default is 1.
         bin_y : int, optional
@@ -68,14 +65,14 @@ class AlliedAlvium(Camera):
 
         # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
-        self._set_pixel_format('CV_BGR8' if pixel_format == 'default' else 'CV_UINT8')
+        self._set_pixel_format('CV_BGR8' if pixel_format == 'BGR8' else 'CV_UINT8')
 
         # Set image size (binning)
         if bin_x != 1 or bin_y != 1:
             self._set_binning(x=bin_x, y=bin_y)
         print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
         print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
-        print(f'Frames / sec : {self.get_fps()}')
+        print(f'Frames / sec : {self.get_frame_rate()}')
         
         # Set acquisition parameters
         self.set_auto_exposure('Continuous')
@@ -84,6 +81,7 @@ class AlliedAlvium(Camera):
                                         
         # Start acquisition
         print('Start streaming ... ', end="")
+        self.__last_frame = None
         self.__handler = Handler()
         self.__camera.start_streaming(handler=self.__handler, buffer_count=10)
         while not self.__camera.is_streaming():
@@ -141,11 +139,6 @@ class AlliedAlvium(Camera):
         pixel_format : string
             Pixel format of grabbed frames. The default is color ('CV_BGR8').
 
-        Raises
-        ------
-        Exception
-            Raised if pixel format is not supported by the camera
-
         Returns
         -------
         None.
@@ -153,7 +146,7 @@ class AlliedAlvium(Camera):
         """
         assert pixel_format in ['CV_UINT8', 'CV_BGR8']
         
-        pixel_format = PixelFormat.Bgr8 if (pixel_format == 'CV_BGR8') else pixel_format.Mono8
+        pixel_format = PixelFormat.Bgr8 if (pixel_format == 'CV_BGR8') else PixelFormat.Mono8
         supported_formats = self.__camera.get_pixel_formats()
         
         if pixel_format in supported_formats:
@@ -265,17 +258,12 @@ class AlliedAlvium(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_resolution(self, name=None, width=None, height=None):
+    def set_resolution(self, width=None, height=None):
         """
         Set width and height of grabbed frames.
-        
-        A valid name (e.g., '1080p') or width and height must be passed to the
-        method.
 
         Parameters
         ----------
-        name : string, optional
-            Resolution type as declared in Camera.resolutions. The default is None.
         width : int, optional
             Width. The default is None.
         height : int, optional
@@ -286,12 +274,6 @@ class AlliedAlvium(Camera):
         None.
 
         """
-        # Look-up standard resolution (e.g., '1080p')
-        if name != None:
-            width = Camera.resolutions[name]['width']
-            height = Camera.resolutions[name]['height']
-            
-        # Set resolution
         if width != None and height != None:
             self.__camera.stop_streaming()
             self.__camera.Width.set(width)
@@ -300,9 +282,9 @@ class AlliedAlvium(Camera):
 
     # -------------------------------------------------------------------------
     
-    def get_fps(self):
+    def get_frame_rate(self):
         """
-        Get the speed as frames per second.
+        Get the acquisition frame rate.
 
         Returns
         -------
@@ -314,9 +296,9 @@ class AlliedAlvium(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_fps(self, fps):
+    def set_frame_rate(self, fps):
         """
-        Set the speed as frames per second.
+        Set the acquisition frame rate.
 
         Parameters
         ----------
@@ -330,10 +312,12 @@ class AlliedAlvium(Camera):
 
         """
         self.__camera.AcquisitionFrameRate.set(fps)
-        return self.get_fps() == fps
+        return self.get_frame_rate() == fps
 
 
-    # ========== Auto acquisition adjustments =================================
+    # ========== Acquisition adjustments (image quality) ======================
+    
+    # ---------- Focus --------------------------------------------------------
     
     def set_autofocus(self, switch):
         """
@@ -343,6 +327,52 @@ class AlliedAlvium(Camera):
 
         """
         print('WARNING: Autofocus not supported')
+
+    # ---------- Exposure time ------------------------------------------------
+
+    def get_range_exposure_time_us(self):
+        """
+        Get parameter range of exposure time in microseconds.
+
+        Returns
+        -------
+        float
+            Minimum valid exposure time in [us].
+        float
+            Maximum valid exposure time in [us].
+
+        """
+        param_range = self.__camera.ExposureTime.get_range()
+        return param_range[0], param_range[1]
+
+    # -------------------------------------------------------------------------
+        
+    def set_exposure_time_us(self, time_us):
+        """
+        Set the exposure time in microseconds.
+
+        Parameters
+        ----------
+        time_us : float
+            Exposure time in [us].
+
+        Returns
+        -------
+        bool
+            True on success, else False.
+
+        """
+        # Get supported parameter range
+        min_us, max_us = self.get_range_exposure_time_us()
+        
+        # Set parameter
+        if min_us <= time_us <= max_us:
+            self.set_auto_exposure('Off')
+            self.__camera.ExposureTime.set(time_us)
+            return self.__camera.ExposureTime.get() == time_us
+        else:
+            print(f'Warning: Exposure time not in range [{min_us}, {max_us}] us')
+            return False
 
     # -------------------------------------------------------------------------
 
@@ -363,7 +393,7 @@ class AlliedAlvium(Camera):
         assert mode in Camera.modes
         self.__camera.ExposureAuto.set(mode)
 
-    # -------------------------------------------------------------------------
+    # ---------- Gain ---------------------------------------------------------
     
     def set_auto_gain(self, mode):
         """
@@ -382,7 +412,7 @@ class AlliedAlvium(Camera):
         assert mode in Camera.modes
         self.__camera.GainAuto.set(mode)
 
-    # -------------------------------------------------------------------------
+    # ---------- White balance ------------------------------------------------
 
     def set_auto_white_balance(self, mode):
         """
@@ -424,6 +454,6 @@ class Handler():
 # -----------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    camera = AlliedAlvium(camera_id=0, bin_x=2, bin_y=2)
+    camera = AlliedAlvium(bin_x=2, bin_y=2)
     camera.show_stream()
     camera.release()

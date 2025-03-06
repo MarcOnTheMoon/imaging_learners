@@ -1,30 +1,35 @@
 """
 Abstract base class for cameras to be used with OpenCV.
 
+Concrete sub classes for specific camera types must inherit and implement the
+methods with the same parameters and return types.
+
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.02.21
+@version: 2025.03.06
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
 from abc import ABC, abstractmethod 
+from enum import IntEnum
 import cv2
+
+# =============================================================================
+
+# TODO Methods should return a state indicating the success
+
+class OpState(IntEnum):
+    FAILED = -2
+    NOT_SUPPORTED = -1
+    UNKNOWN = 0
+    SUCCESS = 1
+
+# =============================================================================
 
 class Camera(ABC):
 
-    """
-    Pixel formats of grabbed frames:
-        'default' - camera default (typically 24-bit BGR color)
-        'mono8'   - 8-bit grayscale    
-    """
-    pixel_formats = ['default', 'mono8']
-
-    resolutions = {
-        '720p'   : { 'width': 1280, 'height': 720 },    # HD
-        '1080p'  : { 'width': 1920, 'height': 1080 }    # Full HD
-        }
-    
+    pixel_formats = ['BGR8', 'Mono8']
     switches = ['Off', 'On']
     modes = ['Off', 'Once', 'Continuous']
     
@@ -65,25 +70,21 @@ class Camera(ABC):
     def get_resolution(self):
         raise NotImplementedError
 
-    # -------------------------------------------------------------------------
-
     @abstractmethod
-    def set_resolution(self, name, width, height):
+    def set_resolution(self, width, height):
         raise NotImplementedError
 
     # -------------------------------------------------------------------------
 
     @abstractmethod
-    def get_fps(self):
+    def get_frame_rate(self):
         raise NotImplementedError
-
-    # -------------------------------------------------------------------------
 
     @abstractmethod
-    def set_fps(self, fps):
+    def set_frame_rate(self, fps):
         raise NotImplementedError
 
-    # ========== Auto acquisition adjustments =================================
+    # ========== Acquisition adjustments (image quality) ======================
     
     @abstractmethod
     def set_autofocus(self, switch):
@@ -91,8 +92,14 @@ class Camera(ABC):
 
     # -------------------------------------------------------------------------
 
-    # TODO Set exposure time
-
+    @abstractmethod
+    def get_range_exposure_time_us(self):
+        raise NotImplementedError
+        
+    @abstractmethod
+    def set_exposure_time_us(self, time_us):
+        raise NotImplementedError
+    
     @abstractmethod
     def set_auto_exposure(self, mode):
         raise NotImplementedError

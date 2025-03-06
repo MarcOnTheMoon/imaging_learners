@@ -1,10 +1,10 @@
 """
-Standard OpenCV camera based on class VideoCapture.
+Standard OpenCV camera based on class cv2.VideoCapture.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.02.21
+@version: 2025.03.06
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -15,7 +15,7 @@ class CameraCV(Camera):
 
     # ========== Constructor ==================================================
 
-    def __init__(self, camera_id=0, pixel_format='default', bin_x=1, bin_y=1):
+    def __init__(self, camera_id=0, pixel_format='BGR8', bin_x=1, bin_y=1):
         """
         Initialize the camera.
         
@@ -24,7 +24,7 @@ class CameraCV(Camera):
         camera_id : int, optional
             Camera ID for all detected cameras of the given model. The default is 0.
         pixel_format : string, optional
-            Pixel format as declared in Camera.pixel_formats. The default is 'default'.
+            Pixel format as declared in Camera.pixel_formats. The default is 'BGR8'.
 
         Returns
         -------
@@ -43,14 +43,14 @@ class CameraCV(Camera):
                              
         # Set pixel format (color or grayscale)
         assert pixel_format in Camera.pixel_formats
-        self.__is_mono8 = (pixel_format == 'mono8')
+        self.__is_mono8 = (pixel_format == 'Mono8')
         
         # Set image size (binning)
         if bin_x != 1 or bin_y != 1:
             self.__camera._set_binning(x=bin_x, y=bin_y)
         width, height = self.get_resolution()
         print(f'Image size   : {width} x {height} px')
-        print(f'Frames / sec : {self.get_fps()}')
+        print(f'Frames / sec : {self.get_frame_rate()}')
 
     # -------------------------------------------------------------------------
 
@@ -138,17 +138,12 @@ class CameraCV(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_resolution(self, name=None, width=None, height=None):
+    def set_resolution(self, width=None, height=None):
         """
         Set width and height of grabbed frames.
-        
-        A valid name (e.g., '1080p') or width and height must be passed to the
-        method.
 
         Parameters
         ----------
-        name : string, optional
-            Resolution type as declared in Camera.resolutions. The default is None.
         width : int, optional
             Width. The default is None.
         height : int, optional
@@ -159,21 +154,15 @@ class CameraCV(Camera):
         None.
 
         """
-        # Look-up standard resolution (e.g., '1080p')
-        if name != None:
-            width = Camera.resolutions[name]['width']
-            height = Camera.resolutions[name]['height']
-            
-        # Set resolution
         if width != None and height != None:
             self.__camera.set(cv2.CAP_PROP_FRAME_WIDTH, width)
             self.__camera.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
     # -------------------------------------------------------------------------
 
-    def get_fps(self):
+    def get_frame_rate(self):
         """
-        Get the speed as frames per second.
+        Get the acquisition frame rate.
 
         Returns
         -------
@@ -185,9 +174,9 @@ class CameraCV(Camera):
 
     # -------------------------------------------------------------------------
 
-    def set_fps(self, fps):
+    def set_frame_rate(self, fps):
         """
-        Set the speed as frames per second.
+        Set the acquisition frame rate.
 
         Parameters
         ----------
@@ -201,9 +190,11 @@ class CameraCV(Camera):
 
         """
         self.__camera.set(cv2.CAP_PROP_FPS, fps)
-        return self.get_fps() == fps
+        return self.get_frame_rate() == fps
 
-    # ========== Auto acquisition adjustments =================================
+    # ========== Acquisition adjustments (image quality) ======================
+    
+    # ---------- Focus --------------------------------------------------------
     
     def set_autofocus(self, switch):
         """
@@ -227,6 +218,16 @@ class CameraCV(Camera):
         else:
             print('Warning: Unknown switch: {switch}')
             
+    # ---------- Exposure time ------------------------------------------------
+
+    def get_range_exposure_time_us(self):
+        print('Warning: Feature not implemented, yet')
+
+    # -------------------------------------------------------------------------
+        
+    def set_exposure_time_us(self, time_us):
+        print('Warning: Feature not implemented, yet')
+
     # -------------------------------------------------------------------------
 
     def set_auto_exposure(self, mode):
@@ -253,7 +254,7 @@ class CameraCV(Camera):
         else:
             print('Warning: Unknown mode: {mode}')
 
-    # -------------------------------------------------------------------------
+    # ---------- Gain ---------------------------------------------------------
     
     def set_auto_gain(self, mode):
         """
@@ -264,7 +265,7 @@ class CameraCV(Camera):
         """
         print('Warning: Auto gain not supported')
 
-    # -------------------------------------------------------------------------
+    # ---------- White balance ------------------------------------------------
     
     def set_auto_white_balance(self, mode):
         """
