@@ -41,7 +41,7 @@ Moreover, the Python sources contain a class to easily calibrate and undistort c
 - [X] Image data ([images](image_data/images), [videos](image_data/videos))
 - [X] Sample codes used in the lecture ([C++](src/c++/lecture), Python)
 - [X] Sample solutions for the exercises ([C++](src/c++/exercises), Python)
-- [X] Camera classes and calibration (C++, [Python](src/python/cameras))
+- [X] Camera classes and calibration ([C++](src/c++/cameras), [Python](src/python/cameras))
 - [ ] Imaging book (English, German)
 
 > [!NOTE]
