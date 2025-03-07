@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Abstract base class", "Abstract base class\Abstract base class.vcxitems", "{67F1BD36-2B35-492D-925C-3E4D744848A7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CameraCV", "CameraCV\CameraCV.vcxproj", "{9945C729-2741-4DB3-B8E2-09FD54FE8E03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Debug|x64.ActiveCfg = Debug|x64
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Debug|x64.Build.0 = Debug|x64
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Debug|x86.ActiveCfg = Debug|Win32
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Debug|x86.Build.0 = Debug|Win32
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x64.ActiveCfg = Release|x64
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x64.Build.0 = Release|x64
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x86.ActiveCfg = Release|Win32
+		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72AEA228-4584-4492-A7C9-97C7E5E8B16A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Abstract base class\Abstract base class.vcxitems*{67f1bd36-2b35-492d-925c-3e4d744848a7}*SharedItemsImports = 9
+		Abstract base class\Abstract base class.vcxitems*{9945c729-2741-4db3-b8e2-09fd54fe8e03}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal
