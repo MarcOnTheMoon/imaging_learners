@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Abstract base class", "Abst
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CameraCV", "CameraCV\CameraCV.vcxproj", "{9945C729-2741-4DB3-B8E2-09FD54FE8E03}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaslerAce", "BaslerAce\BaslerAce.vcxproj", "{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,6 +25,14 @@ Global
 		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x64.Build.0 = Release|x64
 		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x86.ActiveCfg = Release|Win32
 		{9945C729-2741-4DB3-B8E2-09FD54FE8E03}.Release|x86.Build.0 = Release|Win32
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Debug|x64.ActiveCfg = Debug|x64
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Debug|x64.Build.0 = Debug|x64
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Debug|x86.ActiveCfg = Debug|Win32
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Debug|x86.Build.0 = Debug|Win32
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x64.ActiveCfg = Release|x64
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x64.Build.0 = Release|x64
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x86.ActiveCfg = Release|Win32
+		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +42,7 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Abstract base class\Abstract base class.vcxitems*{67f1bd36-2b35-492d-925c-3e4d744848a7}*SharedItemsImports = 9
+		Abstract base class\Abstract base class.vcxitems*{8bdeb63d-9de9-410b-b526-f1230c8dee75}*SharedItemsImports = 4
 		Abstract base class\Abstract base class.vcxitems*{9945c729-2741-4db3-b8e2-09fd54fe8e03}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

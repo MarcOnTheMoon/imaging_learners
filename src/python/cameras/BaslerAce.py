@@ -9,7 +9,7 @@ Requires Basler's pylon library:
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.03.06
+@version: 2025.03.10
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -75,14 +75,14 @@ class BaslerAce(Camera):
         # Set image size (binning)
         if bin_x != 1 or bin_y != 1:
             print('Warning: Binning not supported')
-        print(f'Sensor size : {self.__camera.SensorWidth.Value} x {self.__camera.SensorHeight.Value} px')
-        print(f'Image size  : {self.__camera.Width.Value} x {self.__camera.Height.Value} px')
-        print(f'Frames rate : {self.get_frame_rate()} fps')
+        print(f'Sensor size  : {self.__camera.SensorWidth.Value} x {self.__camera.SensorHeight.Value} px')
+        print(f'Image size   : {self.__camera.Width.Value} x {self.__camera.Height.Value} px')
+        print(f'Frame rate   : {self.get_frame_rate()} fps')
                 
         # Set acquisition parameters
         self.set_auto_exposure('Continuous')
-        self.set_auto_white_balance('Once')
         self.set_auto_gain('Continuous')
+        self.set_auto_white_balance('Once')
 
         # Start acquisition
         self.__last_frame = None
@@ -142,7 +142,7 @@ class BaslerAce(Camera):
         Returns
         -------
         string
-            Model name and serial number.
+            Camera manufacturer and model name.
 
         """
         return self.__name

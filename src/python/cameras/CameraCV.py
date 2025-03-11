@@ -4,7 +4,7 @@ Standard OpenCV camera based on class cv2.VideoCapture.
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.03.06
+@version: 2025.03.07
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -25,6 +25,10 @@ class CameraCV(Camera):
             Camera ID for all detected cameras of the given model. The default is 0.
         pixel_format : string, optional
             Pixel format as declared in Camera.pixel_formats. The default is 'BGR8'.
+        bin_x : int, optional
+            Not used. Horizontal binning not supported.
+        bin_y : int, optional
+            Not used. Vertical binning not supported.
 
         Returns
         -------
@@ -50,7 +54,7 @@ class CameraCV(Camera):
             print('Warning: Binning not supported')            
         width, height = self.get_resolution()
         print(f'Image size   : {width} x {height} px')
-        print(f'Frames / sec : {self.get_frame_rate()}')
+        print(f'Frame rate   : {self.get_frame_rate()}')
 
     # ========== Destructor ===================================================
     

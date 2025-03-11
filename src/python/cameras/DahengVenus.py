@@ -6,7 +6,7 @@ Requires Daheng Imaging's gxipy library located in the respective sub folder.
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.03.06
+@version: 2025.03.11
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -83,7 +83,7 @@ class DahengVenus(Camera):
             self.__set_binning(x=bin_x, y=bin_y)
         print(f'Sensor size  : {self.__camera.SensorWidth.get()} x {self.__camera.SensorHeight.get()} px')
         print(f'Image size   : {self.__camera.Width.get()} x {self.__camera.Height.get()} px')
-        print(f'Frames / sec : {self.get_frame_rate()}')
+        print(f'Frame rate   : {self.get_frame_rate()}')
                 
         # Set acquisition parameters
         self.set_auto_exposure('Continuous')
@@ -175,7 +175,7 @@ class DahengVenus(Camera):
         Returns
         -------
         string
-            Model name and serial number.
+            Camera manufacturer and model name.
 
         """
         return self.__name

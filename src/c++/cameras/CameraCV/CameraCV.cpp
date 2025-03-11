@@ -4,9 +4,11 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.07
+ * Version: 2025.03.11
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
+
+// TODO: Review and add error handling
 
 /* Includes */
 #include "CameraCV.h"
@@ -29,8 +31,9 @@ CameraCV::CameraCV(int cameraId, PixelFormat pixelFormat, int binX, int binY) {
 
 	// Is camera ready?
 	if (!(this->capture.isOpened())) {
-		cout << "Warning: Could not open camera" << endl;
-		return;
+		String message = "Error: Could not open camera";
+		cout << message.c_str() << endl;
+		throw (message);
 	}
 	cout << "Found camera : " << getName() << endl;
 
@@ -42,9 +45,9 @@ CameraCV::CameraCV(int cameraId, PixelFormat pixelFormat, int binX, int binY) {
 		cout << "Warning: Binning not supported" << endl;
 
 	// Print properties
-	Resolution resolution = getResolution();
+	Size resolution = getResolution();
 	cout << "Image size   : " << resolution.width << " x " << resolution.height << " px" << endl;
-	cout << "Frame rate   : " << getFrameRate() << endl;
+	cout << "Frame rate   : " << getFrameRate() << " fps" << endl;
 }
 
 /*****************************************************************************************************
@@ -105,11 +108,11 @@ String CameraCV::getName(void) {
 * 
 * @return resolution containing width and height
 */
-Resolution CameraCV::getResolution(void) {
+Size CameraCV::getResolution(void) {
 	int width = (int)this->capture.get(CAP_PROP_FRAME_WIDTH);
 	int height = (int)this->capture.get(CAP_PROP_FRAME_HEIGHT);
 
-	return Resolution(width, height);
+	return Size(width, height);
 }
 
 /*! Set width and height of grabbed frames.
