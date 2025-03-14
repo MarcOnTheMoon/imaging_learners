@@ -8,6 +8,8 @@
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
+// TODO: Wait for next frame in getFrame()?
+
 /* Includes */
 #include <mutex>
 #include "AlliedAlvium.h"

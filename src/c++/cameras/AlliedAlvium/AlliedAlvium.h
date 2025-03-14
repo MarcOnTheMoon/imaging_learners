@@ -1,7 +1,7 @@
 /*****************************************************************************************************
  * Allied Vision Alvium 1800 USB cameras for use with OpenCV.
  *****************************************************************************************************
- * Setup the project for OpenCV and Basler API:
+ * Setup the project for OpenCV and Allied Vision API:
  * 1. Setup OpenCV according to documentation in Camera.h
  * 2. Install Vimba X on your system:
  *    - Download and install (https://www.alliedvision.com/de/produktportfolio/software/vimba-x-sdk/ , adds environment variabel VIMBA_X_HOME)
@@ -9,7 +9,7 @@
  * 3. Visual Studio project settings (Release, Debug):
  *    - Add include directory $(VIMBA_X_HOME)\api\include
  *    - Add library directories $(VIMBA_X_HOME)\api\lib
- *    - Add VmbCPP.lib;VmbImageTransform.lib to Linker\Input\Additional dependencies
+ *    - Add VmbCPP.lib to Linker\Input\Additional dependencies
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
@@ -22,7 +22,6 @@
 
 /* Include files */
 #include <VmbCPP/VmbCPP.h>
-#include <VmbImageTransform/VmbTransform.h>
 #include "Camera.h"
 
 /* Namespaces */
