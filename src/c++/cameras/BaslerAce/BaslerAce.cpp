@@ -35,7 +35,7 @@ BaslerAce::BaslerAce(int cameraId, PixelFormat pixelFormat, int binX, int binY) 
 		}
 	}
 	if (this->camera == NULL) {
-		String message = "Error: Could not open camera";
+		String message = "Error: Cannot open camera";
 		cout << message.c_str() << endl;
 		throw (message);
 	}
@@ -57,15 +57,15 @@ BaslerAce::BaslerAce(int cameraId, PixelFormat pixelFormat, int binX, int binY) 
 	if ((binX != 1) || (binY != 1))
 		cout << "Warning: Binning not supported" << endl;
 
-	// Print properties
-	Size resolution = getResolution();
-	cout << "Image size   : " << resolution.width << " x " << resolution.height << " px" << endl;
-	cout << "Frame rate   : " << getFrameRate() << " fps" << endl;
-
 	// Set acquisition parameters
 	setAutoExposure(Mode::CONTINUOUS);
 	setAutoGain(Mode::CONTINUOUS);
 	setAutoWhiteBalance(Mode::ONCE);
+
+	// Print properties (frame rate may depend on prior set parameters)
+	Size resolution = getResolution();
+	cout << "Image size   : " << resolution.width << " x " << resolution.height << " px" << endl;
+	cout << "Frame rate   : " << getFrameRate() << " fps" << endl;
 
 	// Start acquisition
 	camera->StartGrabbing(GrabStrategy_LatestImageOnly);

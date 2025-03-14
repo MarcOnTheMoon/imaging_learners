@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CameraCV", "CameraCV\Camera
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaslerAce", "BaslerAce\BaslerAce.vcxproj", "{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlliedAlvium", "AlliedAlvium\AlliedAlvium.vcxproj", "{3D97DF86-637C-4F6F-8714-89D867C70B91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +35,14 @@ Global
 		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x64.Build.0 = Release|x64
 		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x86.ActiveCfg = Release|Win32
 		{8BDEB63D-9DE9-410B-B526-F1230C8DEE75}.Release|x86.Build.0 = Release|Win32
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Debug|x64.ActiveCfg = Debug|x64
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Debug|x64.Build.0 = Debug|x64
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Debug|x86.ActiveCfg = Debug|Win32
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Debug|x86.Build.0 = Debug|Win32
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x64.ActiveCfg = Release|x64
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x64.Build.0 = Release|x64
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x86.ActiveCfg = Release|Win32
+		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +51,7 @@ Global
 		SolutionGuid = {72AEA228-4584-4492-A7C9-97C7E5E8B16A}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Abstract base class\Abstract base class.vcxitems*{3d97df86-637c-4f6f-8714-89d867c70b91}*SharedItemsImports = 4
 		Abstract base class\Abstract base class.vcxitems*{67f1bd36-2b35-492d-925c-3e4d744848a7}*SharedItemsImports = 9
 		Abstract base class\Abstract base class.vcxitems*{8bdeb63d-9de9-410b-b526-f1230c8dee75}*SharedItemsImports = 4
 		Abstract base class\Abstract base class.vcxitems*{9945c729-2741-4db3-b8e2-09fd54fe8e03}*SharedItemsImports = 4

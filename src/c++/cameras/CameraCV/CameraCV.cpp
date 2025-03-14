@@ -31,7 +31,7 @@ CameraCV::CameraCV(int cameraId, PixelFormat pixelFormat, int binX, int binY) {
 
 	// Is camera ready?
 	if (!(this->capture.isOpened())) {
-		String message = "Error: Could not open camera";
+		String message = "Error: Cannot open camera";
 		cout << message.c_str() << endl;
 		throw (message);
 	}

@@ -4,9 +4,9 @@
  * Setup the project for OpenCV and Basler API:
  * 1. Setup OpenCV according to documentation in Camera.h
  * 2. Download and install pylon (https://www.baslerweb.com/en/software/pylon/ , adds environment variabel PYLON_DEV_DIR)
- * 3. Visual Studio project settings:
- *    - Add include directory (Release, Debug) $(PYLON_DEV_DIR)\include
- *    - Add library directories (Release, Debug) $(PYLON_DEV_DIR)\lib\x64
+ * 3. Visual Studio project settings (Release, Debug):
+ *    - Add include directory $(PYLON_DEV_DIR)\include
+ *    - Add library directories $(PYLON_DEV_DIR)\lib\x64
  *    - Set "C/C++ -> Language -> Enable Runtime Type Info" to "yes"
  *    - Set "C/C++ -> Code Generation -> Enable C++ Exceptions" to "yes"
  *****************************************************************************************************
