@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.14
+ * Version: 2025.03.15
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -310,7 +310,7 @@ bool AlliedAlvium::setResolution(int width, int height) {
 
 	// Check success and return
 	Size size = getResolution();
-	isError = isError || (size.width != width) && (size.height != height);
+	isError = isError || (size.width != width) || (size.height != height);
 	if (isError) {
 		cout << "Warning: Cannot set resolution" << endl;
 	}
@@ -377,10 +377,11 @@ bool AlliedAlvium::setFrameRate(double fps) {
 	isError = isError || (feature->SetValue(fps) != VmbErrorSuccess);
 
 	// Check success and return
+	bool isError = abs(getFrameRate() - fps) > 1.0;
 	if (isError) {
 		cout << "Warning: Cannot set frame rate" << endl;
 	}
-	return abs(getFrameRate() - fps) < 0.1;
+	return !isError;
 }
 
 /*****************************************************************************************************

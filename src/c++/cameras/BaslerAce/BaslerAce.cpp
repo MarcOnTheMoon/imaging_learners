@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.11
+ * Version: 2025.03.15
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -196,6 +196,7 @@ Size BaslerAce::getResolution(void) {
 * @return true on success, else false
 */
 bool BaslerAce::setResolution(int width, int height) {
+	// Set values
 	camera->StopGrabbing();
 	try {
 		camera->Width.SetValue(width);
@@ -205,7 +206,14 @@ bool BaslerAce::setResolution(int width, int height) {
 		cout << "Warning: Cannot set resolution. " << e.GetDescription() << endl;
 	}
 	camera->StartGrabbing(GrabStrategy_LatestImageOnly);
-	return (camera->Width.GetValue() == width) && (camera->Height.GetValue() == height);
+
+	// Check success and return
+	Size size = getResolution();
+	bool isError = (size.width != width) || (size.height != height);
+	if (isError) {
+		cout << "Warning: Cannot set resolution" << endl;
+	}
+	return !isError;
 }
 
 /*! Get the acquisition frame rate.
@@ -230,6 +238,7 @@ double BaslerAce::getFrameRate(void) {
 * @return true on success, else false
 */
 bool BaslerAce::setFrameRate(double fps) {
+	// Set value
 	try {
 		camera->AcquisitionFrameRate.SetValue(fps);
 	}
@@ -237,7 +246,13 @@ bool BaslerAce::setFrameRate(double fps) {
 		cout << "Warning: Cannot set frame rate. " << e.GetDescription() << endl;
 		return false;
 	}
-	return abs(getFrameRate() - fps) < 0.1;
+
+	// Check success and return
+	bool isError = abs(getFrameRate() - fps) > 1.0;
+	if (isError) {
+		cout << "Warning: Cannot set frame rate" << endl;
+	}
+	return !isError;
 }
 
 /*****************************************************************************************************
@@ -301,6 +316,7 @@ bool BaslerAce::setExposureTimeMicroSecs(double exposureTime) {
 
 	// Set parameter
 	if ((exposureTime >= min) && (exposureTime <= max)) {
+		// Set value
 		setAutoExposure(Mode::OFF);
 		try {
 			camera->ExposureTime.SetValue(exposureTime);
@@ -308,7 +324,13 @@ bool BaslerAce::setExposureTimeMicroSecs(double exposureTime) {
 		catch (const GenericException& e) {
 			cout << "Warning: Cannot set exposure time. " << e.GetDescription() << endl;
 		}
-		return abs(camera->ExposureTime.GetValue() - exposureTime) < (exposureTime/100.0);		// Maximum accepted deviation is 1%
+
+		// Check success and return
+		bool isError = abs(camera->ExposureTime.GetValue() - exposureTime) > (0.05 * exposureTime);		// Maximum accepted deviation is 5%
+		if (isError) {
+			cout << "Warning: Cannot set exposure time" << endl;
+		}
+		return !isError;
 	} else {
 		cout << "Warning: Exposure time may not be in range [" << min << ", " << max << "] us" << endl;
 		return false;

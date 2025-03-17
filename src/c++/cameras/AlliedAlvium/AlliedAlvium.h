@@ -11,10 +11,14 @@
  *    - Add library directories $(VIMBA_X_HOME)\api\lib
  *    - Add VmbCPP.lib to Linker\Input\Additional dependencies
  *****************************************************************************************************
+ * Tested cameras:
+ * - Alvium 1800 U-319 (2064x1544, 1/1.8", 54 fps)
+ * - Alvium 1800 U-500 (2592x1944, 1/2.5", 68 fps)
+ *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.14
+ * Version: 2025.03.17
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
