@@ -16,7 +16,7 @@ For installation call pip with <x.y.z> being the Vimba version:
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.03.11
+@version: 2025.03.17
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
@@ -111,7 +111,7 @@ class AlliedAlvium(Camera):
 
         Returns
         -------
-        camera : Camera
+        camera : vmbpy.Camera
             Vimba camera that was found
 
         """

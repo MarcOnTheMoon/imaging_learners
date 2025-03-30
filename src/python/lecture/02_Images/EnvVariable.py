@@ -1,5 +1,5 @@
 """
-Open an image from file and display it.
+Access image data directory using environment variable 'ImagingData'.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
@@ -10,9 +10,13 @@ Open an image from file and display it.
 """
 
 import cv2
+import os
+
+# Configuration
+image_path = os.environ['ImagingData'] + '/images/misc/Docks.jpg'
 
 # Load image from file
-image = cv2.imread('D:/Docks.jpg', cv2.IMREAD_ANYCOLOR)
+image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
 # Display image in named window
 cv2.imshow('Image [Press any key to quit]', image)
