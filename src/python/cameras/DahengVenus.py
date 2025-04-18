@@ -1,12 +1,15 @@
 """
 Daheng Imaging Venus USB cameras for use with OpenCV.
 
-Requires Daheng Imaging's gxipy library located in the respective sub folder.
+Requires Daheng Imaging's Galaxy SDK and gxipy library:
+    
+    1. Download and install Galaxy SDK (https://va-imaging.com/pages/customerdownloads )
+    2. Copy "<program files>\Daheng Imaging\GalaxySDK\Development\Samples\Python\gxipy" to be a sub folder of your Python script.
 
 @author: Marc Hensel
 @contact: http://www.haw-hamburg.de/marc-hensel
 @copyright: 2025
-@version: 2025.03.11
+@version: 2025.04.18
 @license: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
 """
 
