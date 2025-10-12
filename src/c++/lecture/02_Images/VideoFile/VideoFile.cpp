@@ -4,8 +4,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.10.09
+ * Copyright: 2025, Marc Hensel
+ * Version: 2025.10.12
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -37,15 +37,17 @@ int main()
 		return 0;
 	}
 
-	// Get speed (fps)
+	// Get frame count and speed (fps)
+	int numberFrames = (int)video.get(CAP_PROP_FRAME_COUNT);
 	double fps = video.get(CAP_PROP_FPS);
 	int waitTimeMs = (fps > 0.0) ? (int)(1000.0 / fps) : (int)(1000.0 / 30.0);
-	cout << "Frame rate: " << fps << " fps" << endl;
+	cout << "Frame count: " << numberFrames << endl;
+	cout << "Frame rate : " << fps << " fps" << endl;
 
 	// Loop through frames
 	Mat frame;
 
-	while (true) {
+	for (int i = 0; i < numberFrames; i++) {
 		// Get next frame from file
 		video >> frame;
 
