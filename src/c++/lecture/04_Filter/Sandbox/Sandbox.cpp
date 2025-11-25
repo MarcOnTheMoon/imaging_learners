@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.27
+ * Copyright: 2025, Marc Hensel
+ * Version: 2025.11.25
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -16,7 +16,7 @@
 #include <opencv2/opencv.hpp>
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")			// Read environment variable ImagingData
+#define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
 #define INPUT_IMAGE_RELATIVE_PATH "/images/misc/PCB.jpg"	// Image file including relative path
 
 /* Namespaces */
@@ -34,7 +34,7 @@ int main()
 		cout << "[ERROR] Cannot open image: " << inputImagePath << endl;
 		return 0;
 	}
-	
+
 	// Display image
 	imshow("Image", image);
 

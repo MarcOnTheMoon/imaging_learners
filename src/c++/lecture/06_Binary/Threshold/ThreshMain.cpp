@@ -18,7 +18,7 @@
 #include "Thresholding.h"
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
+#define IMAGE_DATA_PATH getenv("ImagingData")					// Read environment variable ImagingData
 #define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Cologne.jpg"	// Image file including relative path
 
 #define WINDOW_NAME_THRESHOLD "Threshold"

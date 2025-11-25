@@ -10,9 +10,11 @@
 
  /* Compiler settings */
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
+#define _USE_MATH_DEFINES			// Enable M_PI
 
 /* Include files */
 #include <iostream>
+#include <cmath>
 #include <opencv2/opencv.hpp>
 
 /* Defines */
