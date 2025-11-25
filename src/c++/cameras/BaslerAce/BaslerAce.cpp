@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.15
+ * Version: 2025.11.25
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -271,8 +271,13 @@ bool BaslerAce::setAutofocus(Switch state) {
 	switch (state) {
 	case Switch::OFF:
 		value = FocusAutoEnums::FocusAuto_Off;
+		break;
 	case Switch::ON:
 		value = FocusAutoEnums::FocusAuto_Continuous;
+		break;
+	default:
+		cout << "Warning: Invalid state (autofocus)." << endl;
+		return false;
 	}
 
 	// Try to set value
@@ -349,10 +354,16 @@ bool BaslerAce::setAutoExposure(Mode mode) {
 	switch (mode) {
 	case Mode::OFF:
 		value = ExposureAutoEnums::ExposureAuto_Off;
+		break;
 	case Mode::ONCE:
 		value = ExposureAutoEnums::ExposureAuto_Once;
+		break;
 	case Mode::CONTINUOUS:
 		value = ExposureAutoEnums::ExposureAuto_Continuous;
+		break;
+	default:
+		cout << "Warning: Invalid mode (auto exposure)." << endl;
+		return false;
 	}
 
 	// Try to set value
@@ -378,10 +389,16 @@ bool BaslerAce::setAutoGain(Mode mode) {
 	switch (mode) {
 	case Mode::OFF:
 		value = GainAutoEnums::GainAuto_Off;
+		break;
 	case Mode::ONCE:
 		value = GainAutoEnums::GainAuto_Once;
+		break;
 	case Mode::CONTINUOUS:
 		value = GainAutoEnums::GainAuto_Continuous;
+		break;
+	default:
+		cout << "Warning: Invalid mode (auto gain)." << endl;
+		return false;
 	}
 
 	// Try to set value
@@ -407,10 +424,16 @@ bool BaslerAce::setAutoWhiteBalance(Mode mode) {
 	switch (mode) {
 	case Mode::OFF:
 		value = BalanceWhiteAutoEnums::BalanceWhiteAuto_Off;
+		break;
 	case Mode::ONCE:
 		value = BalanceWhiteAutoEnums::BalanceWhiteAuto_Once;
+		break;
 	case Mode::CONTINUOUS:
 		value = BalanceWhiteAutoEnums::BalanceWhiteAuto_Continuous;
+		break;
+	default:
+		cout << "Warning: Invalid mode (auto white balance)." << endl;
+		return false;
 	}
 
 	// Try to set value

@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.15
+ * Version: 2025.11.25
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -377,7 +377,7 @@ bool AlliedAlvium::setFrameRate(double fps) {
 	isError = isError || (feature->SetValue(fps) != VmbErrorSuccess);
 
 	// Check success and return
-	bool isError = abs(getFrameRate() - fps) > 1.0;
+	isError = abs(getFrameRate() - fps) > 1.0;
 	if (isError) {
 		cout << "Warning: Cannot set frame rate" << endl;
 	}
