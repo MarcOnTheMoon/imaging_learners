@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaslerAce", "BaslerAce\Basl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlliedAlvium", "AlliedAlvium\AlliedAlvium.vcxproj", "{3D97DF86-637C-4F6F-8714-89D867C70B91}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DahengVenus", "DahengVenus\DahengVenus.vcxproj", "{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DahengVision", "DahengVision\DahengVision.vcxproj", "{D09905F0-FF3D-4098-994B-FFFEC5213A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,14 +45,14 @@ Global
 		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x64.Build.0 = Release|x64
 		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x86.ActiveCfg = Release|Win32
 		{3D97DF86-637C-4F6F-8714-89D867C70B91}.Release|x86.Build.0 = Release|Win32
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Debug|x64.ActiveCfg = Debug|x64
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Debug|x64.Build.0 = Debug|x64
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Debug|x86.ActiveCfg = Debug|Win32
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Debug|x86.Build.0 = Debug|Win32
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Release|x64.ActiveCfg = Release|x64
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Release|x64.Build.0 = Release|x64
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Release|x86.ActiveCfg = Release|Win32
-		{9965B72D-5A8D-4685-8D31-97CC8B8B07FF}.Release|x86.Build.0 = Release|Win32
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Debug|x64.ActiveCfg = Debug|x64
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Debug|x64.Build.0 = Debug|x64
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Debug|x86.ActiveCfg = Debug|Win32
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Debug|x86.Build.0 = Debug|Win32
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Release|x64.ActiveCfg = Release|x64
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Release|x64.Build.0 = Release|x64
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Release|x86.ActiveCfg = Release|Win32
+		{D09905F0-FF3D-4098-994B-FFFEC5213A1A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +65,6 @@ Global
 		Abstract base class\Abstract base class.vcxitems*{67f1bd36-2b35-492d-925c-3e4d744848a7}*SharedItemsImports = 9
 		Abstract base class\Abstract base class.vcxitems*{8bdeb63d-9de9-410b-b526-f1230c8dee75}*SharedItemsImports = 4
 		Abstract base class\Abstract base class.vcxitems*{9945c729-2741-4db3-b8e2-09fd54fe8e03}*SharedItemsImports = 4
-		Abstract base class\Abstract base class.vcxitems*{9965b72d-5a8d-4685-8d31-97cc8b8b07ff}*SharedItemsImports = 4
+		Abstract base class\Abstract base class.vcxitems*{d09905f0-ff3d-4098-994b-fffec5213a1a}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

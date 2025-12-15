@@ -1,5 +1,5 @@
 /*****************************************************************************************************
- * Daheng Imaging Venus USB cameras for use with OpenCV.
+ * Daheng Imaging cameras with USB3 Vision interface for use with OpenCV.
  *****************************************************************************************************
  * Setup the project for OpenCV and Daheng Imaging API:
  * 1. Setup OpenCV according to documentation in Camera.h
@@ -9,20 +9,21 @@
  *    - Add library directories $(GALAXY_SDK_DEVELOPMENT)\C++ SDK\lib\x64
  *    - Add GxIAPICPPEx.lib to Linker\Input\Additional dependencies
  *****************************************************************************************************
- * Tested cameras:    
- * - VEN-161-61U3C-M01 (1440x1080, 1/2.9", 61 fps)
- * - VEN-505-36U3C-M01 (2592x1944, 1/2.8", 36.9 fps)
+ * Tested cameras:
+ * - Mercurey2 MER2-160-227U3C   (1440x1080, 1/2.9", 227 fps)
+ * - Venus     VEN-161-61U3C-M01 (1440x1080, 1/2.9", 61 fps)
+ * - Venus     VEN-505-36U3C-M01 (2592x1944, 1/2.8", 36.9 fps)
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2025, Marc Hensel
- * Version: 2025.03.17
+ * Version: 2025.12.15
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
 #pragma once
 
-/* Include files */
+ /* Include files */
 #include <GalaxyIncludes.h>		// Must be before OpenCV (else: ACCESS_MASK is ambiguous symbol)
 #include "Camera.h"
 
@@ -30,7 +31,7 @@
 using namespace ip;
 using namespace GxIAPICPP;
 
-class DahengVenus : public ip::Camera {
+class DahengVision : public ip::Camera {
 private:
 	CGXDevicePointer camera;
 	CGXStreamPointer acquisitionStream;
@@ -40,7 +41,7 @@ private:
 
 public:
 	// Constructor and release camera
-	DahengVenus(int cameraId = 0, PixelFormat pixelFormat = PixelFormat::BGR8, int binX = 1, int binY = 1);
+	DahengVision(int cameraId = 0, PixelFormat pixelFormat = PixelFormat::BGR8, int binX = 1, int binY = 1);
 	void release(void);
 
 	// Grab frame

@@ -18,12 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="DahengVenus.cpp">
+    <ClCompile Include="DahengVision.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DahengVenus.h">
+    <ClInclude Include="DahengVision.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

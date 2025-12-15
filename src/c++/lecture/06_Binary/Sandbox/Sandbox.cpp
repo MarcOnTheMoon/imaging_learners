@@ -36,7 +36,7 @@ int main()
 		return 0;
 	}
 
-	// Display images
+	// Display image
 	imshow("Image", image);
 
 	// Wait for keypress and terminate

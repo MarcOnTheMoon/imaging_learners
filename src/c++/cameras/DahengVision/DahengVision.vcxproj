@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9965b72d-5a8d-4685-8d31-97cc8b8b07ff}</ProjectGuid>
-    <RootNamespace>DahengVenus</RootNamespace>
+    <ProjectGuid>{d09905f0-ff3d-4098-994b-fffec5213a1a}</ProjectGuid>
+    <RootNamespace>DahengVision</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -138,11 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DahengVenus.cpp" />
+    <ClCompile Include="DahengVision.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DahengVenus.h" />
+    <ClInclude Include="DahengVision.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
