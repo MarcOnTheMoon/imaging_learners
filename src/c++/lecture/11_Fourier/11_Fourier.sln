@@ -15,6 +15,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Linear filters", "Linear fi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Swap phase", "Swap phase\Swap phase.vcxproj", "{7B1290ED-A3E6-41A5-A264-066D811BAACE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 DFT", "1 DFT", "{301B930F-17C0-4644-AC04-98B9DBAA0725}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Applications", "2 Applications", "{6C51C288-4DBA-406A-B5F9-52062E158944}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample DFTs", "Sample DFTs\Sample DFTs.vcxproj", "{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -63,9 +69,24 @@ Global
 		{7B1290ED-A3E6-41A5-A264-066D811BAACE}.Release|x64.Build.0 = Release|x64
 		{7B1290ED-A3E6-41A5-A264-066D811BAACE}.Release|x86.ActiveCfg = Release|Win32
 		{7B1290ED-A3E6-41A5-A264-066D811BAACE}.Release|x86.Build.0 = Release|Win32
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Debug|x64.ActiveCfg = Debug|x64
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Debug|x64.Build.0 = Debug|x64
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Debug|x86.ActiveCfg = Debug|Win32
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Debug|x86.Build.0 = Debug|Win32
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Release|x64.ActiveCfg = Release|x64
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Release|x64.Build.0 = Release|x64
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Release|x86.ActiveCfg = Release|Win32
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6E19600-7D57-4D27-8A51-B136F19235DB} = {301B930F-17C0-4644-AC04-98B9DBAA0725}
+		{5DDB149A-E344-4170-8559-031AF9805179} = {6C51C288-4DBA-406A-B5F9-52062E158944}
+		{05AFCB7D-685A-4602-9DB7-1216DC25E603} = {6C51C288-4DBA-406A-B5F9-52062E158944}
+		{7B1290ED-A3E6-41A5-A264-066D811BAACE} = {301B930F-17C0-4644-AC04-98B9DBAA0725}
+		{77C2B46C-2DC1-463C-8EF5-68BDE6BD806E} = {301B930F-17C0-4644-AC04-98B9DBAA0725}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5BE2B746-52A1-4576-A9D1-26C2A1D35A21}
@@ -74,6 +95,7 @@ Global
 		Shared\Shared.vcxitems*{05afcb7d-685a-4602-9db7-1216dc25e603}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{0b532272-2756-41bc-9f42-8bc59b4080cd}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{5ddb149a-e344-4170-8559-031af9805179}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{77c2b46c-2dc1-463c-8ef5-68bde6bd806e}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{7b1290ed-a3e6-41a5-a264-066d811baace}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{b6e19600-7d57-4d27-8a51-b136f19235db}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{e9430c2c-27ca-49cc-a0b9-5129bbab5b68}*SharedItemsImports = 9

@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.11.02
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.01.11
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -20,8 +20,8 @@
 #define INPUT_IMAGE_RELATIVE_PATH "/images/misc/LandingPad.jpg"	// Image file including relative path
 
 /* Namespaces */
-using namespace std;
 using namespace cv;
+using namespace std;
 
 /* Main function */
 int main()
@@ -29,11 +29,6 @@ int main()
 	// Load image from file
 	string inputImagePath = string(IMAGE_DATA_PATH).append(INPUT_IMAGE_RELATIVE_PATH);
 	Mat image = imread(inputImagePath, IMREAD_GRAYSCALE);
-
-	if (image.empty()) {
-		cout << "[ERROR] Cannot open image: " << inputImagePath << endl;
-		return 0;
-	}
 
 	// Display images
 	imshow("Image", image);
