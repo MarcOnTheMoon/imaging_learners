@@ -10,9 +10,9 @@
  *    - Add GxIAPICPPEx.lib to Linker\Input\Additional dependencies
  *****************************************************************************************************
  * Tested cameras:
- * - Mercurey2 MER2-160-227U3C   (1440x1080, 1/2.9", 227 fps)
- * - Venus     VEN-161-61U3C-M01 (1440x1080, 1/2.9", 61 fps)
- * - Venus     VEN-505-36U3C-M01 (2592x1944, 1/2.8", 36.9 fps)
+ * - Mercury2 MER2-160-227U3C   (1440x1080, 1/2.9", 227 fps)
+ * - Venus    VEN-161-61U3C-M01 (1440x1080, 1/2.9", 61 fps)
+ * - Venus    VEN-505-36U3C-M01 (2592x1944, 1/2.8", 36.9 fps)
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
