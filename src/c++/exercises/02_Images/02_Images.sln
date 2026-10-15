@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CameraLineCapture", "Camera
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CameraCopyROI", "CameraCopyROI\CameraCopyROI.vcxproj", "{39F8A4C0-C7A4-4C44-BB96-4C86C6B868E7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Checkerboard", "Checkerboard\Checkerboard.vcxproj", "{E9A517FB-DA22-44C7-8B74-48A225E57C85}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvertToGrayFormula", "ConvertToGrayFormula\ConvertToGrayFormula.vcxproj", "{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +75,22 @@ Global
 		{39F8A4C0-C7A4-4C44-BB96-4C86C6B868E7}.Release|x64.Build.0 = Release|x64
 		{39F8A4C0-C7A4-4C44-BB96-4C86C6B868E7}.Release|x86.ActiveCfg = Release|Win32
 		{39F8A4C0-C7A4-4C44-BB96-4C86C6B868E7}.Release|x86.Build.0 = Release|Win32
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Debug|x64.ActiveCfg = Debug|x64
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Debug|x64.Build.0 = Debug|x64
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Debug|x86.ActiveCfg = Debug|Win32
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Debug|x86.Build.0 = Debug|Win32
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Release|x64.ActiveCfg = Release|x64
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Release|x64.Build.0 = Release|x64
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Release|x86.ActiveCfg = Release|Win32
+		{E9A517FB-DA22-44C7-8B74-48A225E57C85}.Release|x86.Build.0 = Release|Win32
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Debug|x64.ActiveCfg = Debug|x64
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Debug|x64.Build.0 = Debug|x64
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Debug|x86.ActiveCfg = Debug|Win32
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Debug|x86.Build.0 = Debug|Win32
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Release|x64.ActiveCfg = Release|x64
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Release|x64.Build.0 = Release|x64
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Release|x86.ActiveCfg = Release|Win32
+		{FE9709C6-393A-4E44-B3B7-B907B8DCB46E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
