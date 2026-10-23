@@ -4,8 +4,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.10.31
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.10.19
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -57,7 +57,7 @@ int main()
 		uchar* dstRow = edges.ptr<uchar>(y);
 
 		for (int x = 1; x < laplace.cols; x++) {
-			dstRow[x] = 255 * ((srcRow[x-1] * srcRow[x] < 0) + (lastSrcRow[x] * srcRow[x] < 0));
+			dstRow[x] = 255 * ((srcRow[x-1] * srcRow[x] < 0) || (lastSrcRow[x] * srcRow[x] < 0));
 		}
 	}
 

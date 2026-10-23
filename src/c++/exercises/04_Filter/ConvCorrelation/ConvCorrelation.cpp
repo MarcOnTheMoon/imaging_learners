@@ -4,8 +4,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.10.23
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.10.18
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -44,7 +44,7 @@ int main()
 	imshow("Filtered", filtered);
 
 	// Console output
-	cout << "Applied filter is gradient [-1/2, 0, 1/2] in x- and in y-direction." << endl;
+	cout << "Applied kernel is [-1/2, 0, 1/2] in x- and in y-direction." << endl;
 	cout << "Result is > 0 for step from black (0) to white (255)." << endl;
 	cout << "Result is < 0 for step from white (255) to black (0)." << endl;
 	cout << "=> Method filter2D() applies mathematical correlation, not convolution." << endl;

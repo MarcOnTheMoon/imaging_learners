@@ -14,10 +14,11 @@
 /* Include files */
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include "Histograms.h"
 
 /* Defines */
 #define IMAGE_DATA_PATH getenv("ImagingData")						// Read environment variable ImagingData
-#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/LandingPad.jpg"		// Image file including relative path
+#define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Cologne.jpg"		// Image file including relative path
 
 /* Namespaces */
 using namespace std;
@@ -35,7 +36,7 @@ int main()
 		return 0;
 	}
 
-	// Display images and histograms in named windows
+	// Display image
 	imshow("Image", image);
 
 	// Wait for keypress and terminate

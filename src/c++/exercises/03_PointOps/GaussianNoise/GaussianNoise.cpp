@@ -4,8 +4,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2024.10.22
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.10.16
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -24,26 +24,29 @@ using namespace cv;
 /* Main function */
 int main()
 {
-	// Create homogeneous image
-	Mat image(Size(800, 600), CV_8U, Scalar(0));
+	// Create homogeneous images
+	Mat image8U(Size(800, 600), CV_8U, Scalar(0));
+	Mat image8S(Size(800, 600), CV_8S, Scalar(0));
 
-	// Add Gaussian noise
-	Mat noiseImage = image.clone();
-	randn(noiseImage, MEAN, SIGMA);
-	cout << "Gaussian noise added (negative values clamped for mean = 0):" << endl;
+	// Create Gaussian noise
+	Mat noiseImage8U = image8U.clone();
+	Mat noiseImage8S = image8S.clone();
+	randn(noiseImage8U, MEAN, SIGMA);
+	randn(noiseImage8S, MEAN, SIGMA);
+	cout << "Gaussian noise added:" << endl;
 	cout << "Mean  : " << MEAN << endl;
 	cout << "Sigma : " << SIGMA << endl;
 
 	// Measure mean and standard deviation
-	Scalar mean, sigma;
-	meanStdDev(noiseImage, mean, sigma);
-	cout << "\nNoise measured:" << endl;
-	cout << "Mean  : " << mean[0] << endl;
-	cout << "Sigma : " << sigma[0] << endl;
+	Scalar mean8U, sigma8U, mean8S, sigma8S;
+	meanStdDev(noiseImage8U, mean8U, sigma8U);
+	meanStdDev(noiseImage8S, mean8S, sigma8S);
+	printf("\nNoise measured (CV_8U, unsigned):\nMean  : %.1f\nSigma : %.1f\n", mean8U[0], sigma8U[0]);
+	printf("\nNoise measured (CV_8S, signed):\nMean  : %.1f\nSigma : %.1f\n", mean8S[0], sigma8S[0]);
 
-	// Display images in named window
-	imshow("Image", image);
-	imshow("Gaussian noise", noiseImage);
+	// Display images in named windows
+	imshow("Gaussian noise (CV_8U, unsigned)", noiseImage8U);
+	imshow("Gaussian noise (CV_8S, signed)", noiseImage8S);
 
 	// Wait for keypress and terminate
 	waitKey(0);

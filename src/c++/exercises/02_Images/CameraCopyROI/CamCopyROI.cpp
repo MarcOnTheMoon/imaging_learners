@@ -28,7 +28,7 @@ using namespace std;
 int main()
 {
 	// Open the first conencted camera found
-	VideoCapture camera(1);
+	VideoCapture camera(0);
 
 	if (!camera.isOpened()) {
 		cout << "ERROR: Cannot open camera" << endl;
