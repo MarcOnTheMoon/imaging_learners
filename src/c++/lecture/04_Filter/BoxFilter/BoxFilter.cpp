@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.27
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.10.25
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -70,7 +70,7 @@ int main()
 void boxFilter(const Mat& image, Mat& filtered, int kernelSize)
 {
 	int k = kernelSize / 2;
-	double kernelSum = (double)kernelSize * kernelSize;
+	int kernelSum = kernelSize * kernelSize;
 
 	// Init filtered image as clone
 	filtered = image.clone();
@@ -96,9 +96,8 @@ void boxFilter(const Mat& image, Mat& filtered, int kernelSize)
 			for (int n = y - k; n <= y + k; n++) {
 				const uchar* srcRow = image.ptr<uchar>(n);
 
-				for (int m = x - k; m <= x + k; m++) {
+				for (int m = x - k; m <= x + k; m++)
 					sum += srcRow[m];
-				}
 			}
 			dstRow[x] = (uchar)(sum / kernelSum);
 		}
