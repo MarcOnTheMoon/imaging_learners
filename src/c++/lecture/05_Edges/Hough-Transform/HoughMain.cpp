@@ -1,10 +1,10 @@
 /*****************************************************************************************************
  * Lecture sample code.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.27
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.01
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -43,7 +43,7 @@ int main()
 
 	// Calculate edge image
 	Mat edgeImage;
-	sobelFilter(image, edgeImage);
+	sobel(image, edgeImage);
 	threshold(edgeImage, edgeImage, EDGE_IMAGE_THRESHOLD, 255, THRESH_BINARY);
 
 	// Calculate Hough transform

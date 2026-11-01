@@ -1,7 +1,7 @@
 /*****************************************************************************************************
  * Lecture sample code.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
  * Version: 2023.09.27

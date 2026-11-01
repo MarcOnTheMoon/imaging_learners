@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SobelMain.cpp">
+    <ClCompile Include="Sobel.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

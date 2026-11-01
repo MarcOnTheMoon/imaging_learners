@@ -1,10 +1,10 @@
 /*****************************************************************************************************
  * Lecture sample code.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.11.03
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.01
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -19,6 +19,7 @@
 #define INPUT_IMAGE "/images/misc/Sauna.jpg"
 
 #define WINDOW_NAME_CANNY "Canny edge image"
+#define MAX_THRESH 600
 #define INITIAL_THRESH_1 300
 #define INITIAL_THRESH_2 65
 #define SAVE_INITIAL_IMAGES false
@@ -29,6 +30,7 @@ using namespace cv;
 
 /* Prototypes */
 void onTrackbarThresh(int notUsed, void* data);
+void sobel(const Mat& image, Mat& sobel);
 
 /* Global variables */
 Mat image, gaussianImage, sobelImage, cannyEdges;
@@ -48,7 +50,7 @@ int main()
 	// Some sample steps of the Canny edge detector
 	double maxValue;
 	GaussianBlur(image, gaussianImage, Size(5, 5), -1.0);
-	Sobel(gaussianImage, sobelImage, CV_8U, 1, 1, 3);
+	sobel(gaussianImage, sobelImage);
 	minMaxLoc(sobelImage, NULL, &maxValue);
 	sobelImage *= 255.0 / maxValue;
 
@@ -70,8 +72,8 @@ int main()
 #endif
 
 	// Add window sliders ("trackbars") for thresholds
-	createTrackbar("t1", WINDOW_NAME_CANNY, NULL, 1000, onTrackbarThresh, NULL);
-	createTrackbar("t2", WINDOW_NAME_CANNY, NULL, 1000, onTrackbarThresh, NULL);
+	createTrackbar("t1", WINDOW_NAME_CANNY, NULL, MAX_THRESH, onTrackbarThresh, NULL);
+	createTrackbar("t2", WINDOW_NAME_CANNY, NULL, MAX_THRESH, onTrackbarThresh, NULL);
 	setTrackbarPos("t1", WINDOW_NAME_CANNY, INITIAL_THRESH_1);
 	setTrackbarPos("t2", WINDOW_NAME_CANNY, INITIAL_THRESH_2);
 
@@ -95,4 +97,39 @@ void onTrackbarThresh(int notUsed, void* data) {
 
 	Canny(image, cannyEdges, thresh1, thresh2);
 	imshow(WINDOW_NAME_CANNY, cannyEdges);
+}
+
+/*! Calculate scaled Sobel edge image.
+*
+* In contrast to the formal definition of the Sobel operator, the result
+* is scaled by 1/8 to stay within the range of 8-bit grayscale images.
+*
+* \param image Source image to calculate Sobel edge images for
+* \param sobel (CV_8U) Sobel edge image in [0, sqrt(2) * 127]
+*/
+void sobel(const Mat& image, Mat& sobel) {
+	// Signed sobel edge images in x and y (method does not accept target type CV_8S)
+	Mat sobelX, sobelY;
+	Mat kernelGradient = (Mat_<double>(1, 3) << -1, 0, 1) / 2.0;	// Flipped (correlation instead of convolution)
+	Mat kernelBinomial = (Mat_<double>(1, 3) << 1, 2, 1) / 4.0;
+
+	sepFilter2D(image, sobelX, CV_16S, kernelGradient, kernelBinomial);
+	sepFilter2D(image, sobelY, CV_16S, kernelBinomial, kernelGradient);
+
+	// Convert 16-bit to 8-bit
+	sobelX.convertTo(sobelX, CV_8S);
+	sobelY.convertTo(sobelY, CV_8S);
+
+	// Absolute Sobel edge image
+	sobel = Mat::zeros(Size(image.cols, image.rows), CV_8U);
+	for (int y = 0; y < image.rows; y++) {
+		char* rowX = sobelX.ptr<char>(y);
+		char* rowY = sobelY.ptr<char>(y);
+		uchar* rowAbs = sobel.ptr<uchar>(y);
+
+		for (int x = 0; x < image.cols; x++) {
+			int gx = (int)rowX[x], gy = (int)rowY[x];
+			rowAbs[x] = (uchar)(sqrt(gx * gx + gy * gy));
+		}
+	}
 }

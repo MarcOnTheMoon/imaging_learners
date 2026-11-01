@@ -1,7 +1,7 @@
 /*****************************************************************************************************
  * Lecture sample code.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2023, Marc Hensel
  * Version: 2023.09.27
@@ -16,7 +16,7 @@
 #include <opencv2/opencv.hpp>
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")			// Read environment variable ImagingData
+#define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
 #define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Ton12.jpg"	// Image file including relative path
 #define IS_WRITE_IMAGES false
 

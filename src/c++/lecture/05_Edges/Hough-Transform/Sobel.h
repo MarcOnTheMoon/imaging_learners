@@ -3,8 +3,8 @@
  *****************************************************************************************************
  * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.08
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.01
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -17,7 +17,7 @@
 
 namespace ip
 {
-	void sobelFilter(const cv::Mat& image, cv::Mat& sobel);
+	void sobel(const cv::Mat& image, cv::Mat& sobel);
 }
 
 #endif /* IP_SOBEL_H */
