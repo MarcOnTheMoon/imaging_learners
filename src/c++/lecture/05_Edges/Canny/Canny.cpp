@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2026, Marc Hensel
- * Version: 2026.11.01
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -16,7 +16,7 @@
 
 /* Defines */
 #define DATA_ROOT_PATH getenv("ImagingData")  // Read environment variable
-#define INPUT_IMAGE "/images/misc/Sauna.jpg"
+#define INPUT_IMAGE "/images/misc/Ton12.jpg"
 
 #define WINDOW_NAME_CANNY "Canny edge image"
 #define MAX_THRESH 600
@@ -47,27 +47,16 @@ int main()
 		return 0;
 	}
 
-	// Some sample steps of the Canny edge detector
-	double maxValue;
-	GaussianBlur(image, gaussianImage, Size(5, 5), -1.0);
-	sobel(gaussianImage, sobelImage);
-	minMaxLoc(sobelImage, NULL, &maxValue);
-	sobelImage *= 255.0 / maxValue;
-
 	// Canny edge detector
 	Canny(image, cannyEdges, INITIAL_THRESH_1, INITIAL_THRESH_2);
 
 	// Display images
 	imshow("Image", image);
-	imshow("Step 1: Gaussian filter", gaussianImage);
-	imshow("Step 2: Sobel filter (max. contrast)", sobelImage);
 	imshow(WINDOW_NAME_CANNY, cannyEdges);
 
 	// Save images to file
 #if SAVE_INITIAL_IMAGES == true
 	imwrite("D:/CannyInput.jpg", image);
-	imwrite("D:/CannyGaussian_5x5.jpg", gaussianImage);
-	imwrite("D:/CannySobel_3x3.jpg", sobelImage);
 	imwrite(string("D:/Canny_t").append(to_string(INITIAL_THRESH_1)).append("_t").append(to_string(INITIAL_THRESH_2)).append(".jpg"), cannyEdges);
 #endif
 
@@ -97,39 +86,4 @@ void onTrackbarThresh(int notUsed, void* data) {
 
 	Canny(image, cannyEdges, thresh1, thresh2);
 	imshow(WINDOW_NAME_CANNY, cannyEdges);
-}
-
-/*! Calculate scaled Sobel edge image.
-*
-* In contrast to the formal definition of the Sobel operator, the result
-* is scaled by 1/8 to stay within the range of 8-bit grayscale images.
-*
-* \param image Source image to calculate Sobel edge images for
-* \param sobel (CV_8U) Sobel edge image in [0, sqrt(2) * 127]
-*/
-void sobel(const Mat& image, Mat& sobel) {
-	// Signed sobel edge images in x and y (method does not accept target type CV_8S)
-	Mat sobelX, sobelY;
-	Mat kernelGradient = (Mat_<double>(1, 3) << -1, 0, 1) / 2.0;	// Flipped (correlation instead of convolution)
-	Mat kernelBinomial = (Mat_<double>(1, 3) << 1, 2, 1) / 4.0;
-
-	sepFilter2D(image, sobelX, CV_16S, kernelGradient, kernelBinomial);
-	sepFilter2D(image, sobelY, CV_16S, kernelBinomial, kernelGradient);
-
-	// Convert 16-bit to 8-bit
-	sobelX.convertTo(sobelX, CV_8S);
-	sobelY.convertTo(sobelY, CV_8S);
-
-	// Absolute Sobel edge image
-	sobel = Mat::zeros(Size(image.cols, image.rows), CV_8U);
-	for (int y = 0; y < image.rows; y++) {
-		char* rowX = sobelX.ptr<char>(y);
-		char* rowY = sobelY.ptr<char>(y);
-		uchar* rowAbs = sobel.ptr<uchar>(y);
-
-		for (int x = 0; x < image.cols; x++) {
-			int gx = (int)rowX[x], gy = (int)rowY[x];
-			rowAbs[x] = (uchar)(sqrt(gx * gx + gy * gy));
-		}
-	}
 }
