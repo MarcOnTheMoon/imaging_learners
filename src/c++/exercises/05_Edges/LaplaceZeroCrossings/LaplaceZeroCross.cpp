@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Detect edge pixels as zero-crossings of Laplacian.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2026, Marc Hensel
- * Version: 2026.10.19
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -44,7 +44,7 @@ int main()
 
 	// Apply Laplacian operator L4
 	Mat laplace;
-	Mat kernel = (Mat_<double>(3, 3) << 0, 1, 0, 1, -4, 1, 0, 1, 0);
+	Mat kernel = Mat_<double>({ 0, 1, 0, 1, -4, 1, 0, 1, 0 }).reshape(1, 3);	// 1 channel, 3 rows
 	filter2D(image16S, laplace, CV_16S, kernel);
 	laplace.convertTo(laplace, CV_8S, 1.0 / 128.0);
 

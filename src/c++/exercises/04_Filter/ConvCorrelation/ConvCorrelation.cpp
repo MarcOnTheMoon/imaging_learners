@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Demonstrate that OpenCV's filter2D() method computes the correlation, not the convolution.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2026, Marc Hensel
- * Version: 2026.10.18
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -32,7 +32,7 @@ int main()
 	image(Rect2i(0, 128, 128, 128)) = 255;
 
 	// Create kernel and filter
-	Mat kernel = (Mat_<double>(3, 3) << 0, -0.5, 0, -0.5, 0, 0.5, 0, 0.5, 0);
+	Mat kernel = Mat_<double>({ 0, -0.5, 0, -0.5, 0, 0.5, 0, 0.5, 0 }).reshape(1, 3);	// 1 channel, 3 rows
 	Mat image16S, filtered;
 
 	image.convertTo(image16S, CV_16S, 128);		// CV_8U -> CV_16S

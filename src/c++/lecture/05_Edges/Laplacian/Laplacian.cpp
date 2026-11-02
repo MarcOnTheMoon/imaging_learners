@@ -37,21 +37,19 @@ int main()
 	}
 
 	// Calculate Laplacian image
-	GaussianBlur(image, image, Size(0, 0), 1.5);
-	Mat image16S, laplace4, laplace8, laplace12;;
-	Mat kernelL4 = (Mat_<double>(3, 3) << 0, 1, 0, 1, -4, 1, 0, 1, 0);
-	Mat kernelL8 = (Mat_<double>(3, 3) << 1, 1, 1, 1, -8, 1, 1, 1, 1);
-	Mat kernelL12 = (Mat_<double>(3, 3) << 1, 2, 1, 2, -12, 2, 1, 2, 1);
+	Mat laplace4, laplace8, laplace12;
+	Mat kernelL4 = Mat_<double>({ 0, 1, 0, 1, -4, 1, 0, 1, 0 }).reshape(1, 3);		// Reshape 1D data to 1 channel and 3 rows
+	Mat kernelL8 = Mat_<double>({ 1, 1, 1, 1, -8, 1, 1, 1, 1 }).reshape(1, 3);
+	Mat kernelL12 = Mat_<double>({ 1, 2, 1, 2, -12, 2, 1, 2, 1 }).reshape(1, 3);
 
-	image.convertTo(image16S, CV_16S, 128);		// CV_8U -> CV_16S
-	filter2D(image16S, laplace4, CV_16S, kernelL4);
-	filter2D(image16S, laplace8, CV_16S, kernelL8);
-	filter2D(image16S, laplace12, CV_16S, kernelL12);
+	filter2D(image, laplace4, CV_16S, kernelL4);
+	filter2D(image, laplace8, CV_16S, kernelL8);
+	filter2D(image, laplace12, CV_16S, kernelL12);
 
 	// Convert CV_16S -> CV_8U
-	laplace4.convertTo(laplace4, CV_8U, 1.0 / 128, 127);
-	laplace8.convertTo(laplace8, CV_8U, 1.0 / 128, 127);
-	laplace12.convertTo(laplace12, CV_8U, 1.0 / 128, 127);
+	laplace4.convertTo(laplace4, CV_8S);
+	laplace8.convertTo(laplace8, CV_8S);
+	laplace12.convertTo(laplace12, CV_8S);
 
 	// Display images
 	imshow("Image", image);

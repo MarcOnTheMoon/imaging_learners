@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Edge-preserving smoothing controlled by mask of edge pixels.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.11.01
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -16,7 +16,7 @@
 #include <opencv2/opencv.hpp>
 
 /* Defines */
-#define DATA_ROOT_PATH getenv("ImagingData")  // Read environment variable
+#define DATA_ROOT_PATH getenv("ImagingData")	// Read environment variable
 #define INPUT_IMAGE "/images/misc/Parrot.jpg"
 
 #define INITIAL_THRESH_1 300

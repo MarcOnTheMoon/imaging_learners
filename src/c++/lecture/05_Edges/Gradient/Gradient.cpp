@@ -71,7 +71,7 @@ int main()
 */
 void gradient(const Mat& image, Mat& gradAbs, Mat& gradX, Mat& gradY) {
 	// Apply filters for gradients in x and y (method does not accept target type CV_8S)
-	Mat kernelX = (Mat_<double>(Size(3, 1)) << -1, 0, 1) / 2.0;
+	Mat kernelX = Mat_<double>({ -1, 0, 1 }) / 2.0;
 	filter2D(image, gradX, CV_16S, kernelX);
 	filter2D(image, gradY, CV_16S, kernelX.t());
 

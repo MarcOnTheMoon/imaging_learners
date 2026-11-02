@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Implement gradient filter using OpenCV methods.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.11.01
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -18,7 +18,7 @@
 #include <opencv2/opencv.hpp>
 
 /* Defines */
-#define DATA_ROOT_PATH getenv("ImagingData")  // Read environment variable
+#define DATA_ROOT_PATH getenv("ImagingData")	// Read environment variable
 #define INPUT_IMAGE "/images/misc/Crane.jpg"
 
 /* Namespaces */
@@ -38,22 +38,21 @@ int main()
 	}
 
 	// Partial derivatives gradient_x and gradient_y
-	Mat image16S, gradX, gradY;
-	Mat kernel = (Mat_<double>(1, 3) << -1, 0, 1) / 2.0;
-	image.convertTo(image16S, CV_16S, 128);
-	filter2D(image16S, gradX, CV_16S, kernel);
-	filter2D(image16S, gradY, CV_16S, kernel.t());
+	Mat gradX, gradY;
+	Mat kernel = Mat_<double>({ -1, 0, 1 }) / 2.0;
+	filter2D(image, gradX, CV_16S, kernel);
+	filter2D(image, gradY, CV_16S, kernel.t());
 
 	// Approximate gradient by L1 norm: grad = |grad_x| + |grad_y|
 	Mat gradL1 = abs(gradX) + abs(gradY);
-	gradL1.convertTo(gradL1, CV_8U, 1.0 / 128.0);
+	gradL1.convertTo(gradL1, CV_8U);
 
 	// Gradient using L2 norm: grad = sqrt((grad_x)^2 + (grad_y)^2)
 	Mat gradX32, gradY32, gradL2, gradAngle;
 	gradX.convertTo(gradX32, CV_32F);
 	gradY.convertTo(gradY32, CV_32F);
 	cartToPolar(gradX32, gradY32, gradL2, gradAngle);
-	gradL2.convertTo(gradL2, CV_8U, 1.0 / 128.0);
+	gradL2.convertTo(gradL2, CV_8U);
 
 	// Print max. absolute difference between L1 and L2
 	double maxDiff;
@@ -63,8 +62,8 @@ int main()
 	cout << "Max. absolute difference between L1 and L2 gradient: " << maxDiff << endl;
 
 	// Display images in named window
-	gradX.convertTo(gradX, CV_8S, 1.0 / 128.0);
-	gradY.convertTo(gradY, CV_8S, 1.0 / 128.0);
+	gradX.convertTo(gradX, CV_8S);
+	gradY.convertTo(gradY, CV_8S);
 
 	imshow("Image", image);
 	imshow("Gradient x", gradX);

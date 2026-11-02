@@ -67,7 +67,7 @@ int main()
 * \param gradY Gradient in y direction [-127, 127]
 */
 void gradient(const Mat& image, Mat& gradX, Mat& gradY) {
-	Mat kernelX = (Mat_<double>(Size(3, 1)) << -1, 0, 1) / 2.0;		// Mask [1,0,-1] flipped to [-1,0,1] because OpenCV applies correlation
+	Mat kernelX = Mat_<double>({ -1, 0, 1 }) / 2.0;		// Mask [1,0,-1] flipped to [-1,0,1] because OpenCV applies correlation
 
 	// Apply filters (method does not accept target type CV_8S)
 	filter2D(image, gradX, CV_16S, kernelX);

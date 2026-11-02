@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Demonstrate OpenCV's shape descriptors for bounding boxes and convex hulls.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.11.30
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -14,6 +14,7 @@
 
 /* Include files */
 #include <iostream>
+#include <opencv2/geometry.hpp>
 #include <opencv2/opencv.hpp>
 
 /* Defines */

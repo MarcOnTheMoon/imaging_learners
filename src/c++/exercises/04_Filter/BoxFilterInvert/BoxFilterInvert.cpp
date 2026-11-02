@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Demonstrate drawback of box filter by locally inverted stripe pattern.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.10.31
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -33,13 +33,10 @@ int main()
 	}
 
 	// Filter lower image half
-	Mat kernel = (Mat_<double>(1, 5) << 1./5., 1./5., 1./5., 1./5., 1./5.);
-	Mat image16S, roi, filtered;
-
-	image.convertTo(image16S, CV_16S, 128);		// CV_8U -> CV_16S
-	roi = image16S.rowRange(image16S.rows / 2, image16S.rows);
-	filter2D(roi, roi, CV_16S, kernel);
-	image16S.convertTo(filtered, CV_8U, 1.0 / 128, 0);
+	Mat kernel = Mat_<double>({ 1, 1, 1, 1, 1 }) / 5.0;
+	Mat filtered = image.clone();
+	Mat roi = filtered.rowRange(filtered.rows / 2, filtered.rows);
+	filter2D(roi, roi, CV_8U, kernel);
 
 	// Display images in named windows
 	imshow("Image", image);
@@ -47,7 +44,7 @@ int main()
 
 	// Console output
 	cout << "Stripes are 2 pixels thick in original image." << endl;
-	cout << "Applied 1x5 box filter to lower image half." << endl;
+	cout << "Applied 5x1 box filter to lower image half." << endl;
 	cout << "=> Stripe pattern is inverted." << endl;
 
 #if SAVE_IMAGES == true

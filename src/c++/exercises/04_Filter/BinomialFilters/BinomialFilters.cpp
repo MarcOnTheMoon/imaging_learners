@@ -2,10 +2,10 @@
  * Lecture sample code.
  * Implement linear filter in different ways using OpenCV methods.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.10.31
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.02
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -39,8 +39,8 @@ int main()
 
 	// Apply sepFilter2D() and filter2D()
 	Mat sepFiltered, filtered2D;
-	Mat kernel1D = (Mat_<double>(1, 3) << 1, 2, 1);
-	Mat kernel2D = (Mat_<double>(3, 3) << 1, 2, 1, 2, 4, 2, 1, 2, 1);
+	Mat kernel1D = Mat_<double>({ 1, 2, 1 });
+	Mat kernel2D = Mat_<double>({ 1, 2, 1, 2, 4, 2, 1, 2, 1 }).reshape(1, 3);	// Reshape 1D data to 1 channel and 3 rows
 	kernel1D /= sum(kernel1D);
 	kernel2D /= sum(kernel2D);
 
@@ -56,8 +56,8 @@ int main()
 
 	// Apply seperated filter by calling filter2D() twice
 	Mat filteredXY;
-	Mat kernelX = (Mat_<double>(1, 3) << 1, 2, 1);
-	Mat kernelY = (Mat_<double>(3, 1) << 1, 2, 1);
+	Mat kernelX = Mat_<double>({ 1, 2, 1 });					// 1 row  => 3x1
+	Mat kernelY = Mat_<double>({ 1, 2, 1 }).reshape(1, 3);		// 3 rows => 1x3
 	kernelX /= sum(kernelX);
 	kernelY /= sum(kernelY);
 

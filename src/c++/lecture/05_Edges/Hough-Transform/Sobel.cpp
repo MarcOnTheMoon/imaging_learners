@@ -27,8 +27,8 @@ namespace ip {
 	void sobel(const Mat& image, Mat& sobel) {
 		// Signed sobel edge images in x and y (method does not accept target type CV_8S)
 		Mat sobelX, sobelY;
-		Mat kernelGradient = (Mat_<double>(1, 3) << -1, 0, 1) / 2.0;	// Flipped (correlation instead of convolution)
-		Mat kernelBinomial = (Mat_<double>(1, 3) << 1, 2, 1) / 4.0;
+		Mat kernelGradient = Mat_<double>({ -1, 0, 1 }) / 2.0;		// Flipped (correlation instead of convolution)
+		Mat kernelBinomial = Mat_<double>({ 1, 2, 1 }) / 4.0;
 
 		sepFilter2D(image, sobelX, CV_16S, kernelGradient, kernelBinomial);
 		sepFilter2D(image, sobelY, CV_16S, kernelBinomial, kernelGradient);
