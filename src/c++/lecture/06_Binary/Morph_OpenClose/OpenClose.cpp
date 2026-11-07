@@ -1,14 +1,14 @@
 /*****************************************************************************************************
  * Lecture sample code.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2024, Marc Hensel
- * Version: 2024.11.25
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.07
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
-/* Compiler settings */
+ /* Compiler settings */
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */
@@ -18,14 +18,13 @@
 #include "Thresholding.h"
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")				// Read environment variable ImagingData
+#define IMAGE_DATA_PATH getenv("ImagingData")					// Read environment variable ImagingData
 #define INPUT_IMAGE_RELATIVE_PATH "/images/misc/Resistors.jpg"	// Image file including relative path
 
 #define TRACKBAR_NAME_THRESHOLD "Threshold"
 #define TRACKBAR_NAME_MORPH_SIZE "Morph size"
 #define IS_INVERT_BINARY_IMAGE true
 #define INITIAL_MORPH_SIZE 3
-#define IS_SAVE_IMAGE_FILES false
 
 /* Namespaces */
 using namespace std;
@@ -37,8 +36,7 @@ void processAndDisplay(uchar thresh, int morphSize);
 
 /* Global variables */
 string windowNameThreshold;
-Mat histogramImage;
-Mat image, binImageThresh, binEroded, binDilated, binClosed, binOpened, binClosedOpened, binOpenedClosed;
+Mat image, binary;
 
 /* Main function */
 int main()
@@ -53,34 +51,25 @@ int main()
 	}
 
 	// Calculate histogram
-	ip::createHistogramImage(image, histogramImage);
+	Mat histogram;
+	ip::createHistogramImage(image, histogram);
 
 	// Initialize with adaptive global thresholding (Isodata algorithm)
 	uchar thresh = 0;
-	ip::isodataThreshold(image, binImageThresh, &thresh);
+	ip::isodataThreshold(image, binary, &thresh);
 
-	thresh = 132;
-	
 	// Display images
-	windowNameThreshold = string("Threshold (Isodata: t = ").append(to_string(thresh)).append(")");
 	imshow("Image", image);
-	imshow("Histogram", histogramImage);
-	imshow(windowNameThreshold, binImageThresh);
+	imshow("Histogram", histogram);
 
 	// Add window sliders ("trackbars")
-	int initialMorphSize = INITIAL_MORPH_SIZE;
+	windowNameThreshold = string("Threshold (Isodata: t = ").append(to_string(thresh)).append(")");
+	namedWindow(windowNameThreshold);
+	resizeWindow(windowNameThreshold, image.size());
 	createTrackbar(TRACKBAR_NAME_THRESHOLD, windowNameThreshold, NULL, 255, onTrackbars);
-	createTrackbar(TRACKBAR_NAME_MORPH_SIZE, windowNameThreshold, &initialMorphSize, 15, onTrackbars);
+	createTrackbar(TRACKBAR_NAME_MORPH_SIZE, windowNameThreshold, NULL, 15, onTrackbars);
 	setTrackbarPos(TRACKBAR_NAME_THRESHOLD, windowNameThreshold, thresh);
-
-	// Save images to file
-#if IS_SAVE_IMAGE_FILES == true
-	int morphSize = cv::getTrackbarPos(TRACKBAR_NAME_MORPH_SIZE, windowNameThreshold);
-	thresh = getTrackbarPos(TRACKBAR_NAME_THRESHOLD, windowNameThreshold);
-	string suffix = string("_t").append(to_string(thresh)).append("_k").append(to_string(morphSize)).append(".jpg");
-
-	imwrite(string("D:/CloseOpen").append(suffix), binClosedOpened);
-#endif
+	setTrackbarPos(TRACKBAR_NAME_MORPH_SIZE, windowNameThreshold, INITIAL_MORPH_SIZE);
 
 	// Wait for keypress and terminate
 	waitKey(0);
@@ -102,18 +91,19 @@ void onTrackbars(int valueNotUsed, void* pointerNotUsed) {
 }
 
 /*! Process images and update image displays.
-* 
+*
 * \param thresh Threshold to apply to original gray-values image
 * \param morphSize Size of rectangular structure elements for morphological operations
 */
 void processAndDisplay(uchar thresh, int morphSize) {
+	Mat closed, opened, closedOpened, openedClosed;
 	static int lastThresh = -1;
 	static int lastMorphSize = -1;
 
 	// Threshold gray-values input image and update image display
 	if (thresh != lastThresh) {
-		ip::threshold(image, binImageThresh, thresh, IS_INVERT_BINARY_IMAGE);
-		imshow(windowNameThreshold, binImageThresh);
+		ip::threshold(image, binary, thresh, IS_INVERT_BINARY_IMAGE);
+		imshow(windowNameThreshold, binary);
 	}
 
 	// Apply morphological operations (dilate, erode, close, open) and update image displays
@@ -121,30 +111,23 @@ void processAndDisplay(uchar thresh, int morphSize) {
 		// Apply operations
 		if (morphSize >= 1) {
 			Mat structure = getStructuringElement(MORPH_RECT, Size(morphSize, morphSize));
-
-			dilate(binImageThresh, binDilated, structure);
-			erode(binImageThresh, binEroded, structure);
-			morphologyEx(binImageThresh, binClosed, MORPH_CLOSE, structure);
-			morphologyEx(binImageThresh, binOpened, MORPH_OPEN, structure);
-			morphologyEx(binClosed, binClosedOpened, MORPH_OPEN, structure);
-			morphologyEx(binOpened, binOpenedClosed, MORPH_CLOSE, structure);
+			morphologyEx(binary, closed, MORPH_CLOSE, structure);
+			morphologyEx(binary, opened, MORPH_OPEN, structure);
+			morphologyEx(closed, closedOpened, MORPH_OPEN, structure);
+			morphologyEx(opened, openedClosed, MORPH_CLOSE, structure);
 		}
 		else {
-			binDilated = binImageThresh.clone();
-			binEroded = binImageThresh.clone();
-			binClosed = binImageThresh.clone();
-			binOpened = binImageThresh.clone();
-			binClosedOpened = binImageThresh.clone();
-			binOpenedClosed = binImageThresh.clone();
+			closed = binary.clone();
+			opened = binary.clone();
+			closedOpened = binary.clone();
+			openedClosed = binary.clone();
 		}
 
 		// Update image displays
-		imshow("Dilated", binDilated);
-		imshow("Eroded", binEroded);
-		imshow("Closed", binClosed);
-		imshow("Opened", binOpened);
-		imshow("Closed / opened", binClosedOpened);
-		imshow("Opened / closed", binOpenedClosed);
+		imshow("Closed", closed);
+		imshow("Opened", opened);
+		imshow("Closed / opened", closedOpened);
+		imshow("Opened / closed", openedClosed);
 	}
 
 	// Remember last values to detect parameter changes

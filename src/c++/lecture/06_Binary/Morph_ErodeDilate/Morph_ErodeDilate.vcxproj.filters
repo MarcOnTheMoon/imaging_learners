@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ThreshMain.cpp">
+    <ClCompile Include="ErodeDilate.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

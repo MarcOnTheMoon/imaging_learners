@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MorphOps.cpp">
+    <ClCompile Include="ThresholdGlobal.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{dff2aa7a-576c-44b2-99d3-bf5d8fd348cc}</ProjectGuid>
-    <RootNamespace>Threshold</RootNamespace>
+    <ProjectGuid>{c1a5b061-04f0-4f9d-b704-4ed8a9e6960a}</ProjectGuid>
+    <RootNamespace>Morph_ErodeDilate</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ThreshMain.cpp" />
+    <ClCompile Include="ErodeDilate.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
