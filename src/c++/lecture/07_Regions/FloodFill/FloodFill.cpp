@@ -5,7 +5,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2026, Marc Hensel
- * Version: 2026.11.02
+ * Version: 2026.11.08
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -18,7 +18,7 @@
 #include "BinaryRegions.h"
 
 /* Defines */
-#define IMAGE_DATA_PATH getenv("ImagingData")			// Read environment variable ImagingData
+#define IMAGE_DATA_PATH getenv("ImagingData")					// Read environment variable ImagingData
 #define INPUT_IMAGE_RELATIVE_PATH "/images/misc/LandingPad.jpg"	// Image file including relative path
 
 #define BINARY_THRESHOLD 205

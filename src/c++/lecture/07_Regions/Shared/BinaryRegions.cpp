@@ -95,26 +95,26 @@ namespace ip
 	* \param rgbImage [out] Image with regions having different colors
 	*/
 	void labels2RGB(const Mat& labelImage, Mat& rgbImage) {
-		const uchar deltaHue = 30;
-		const uchar deltaValue = -50;
+		const uchar deltaHue = 30;			// Change of hue from region to region
+		const uchar deltaValue = -50;		// Reduced intensity after each full hue circle
 		Mat colors(Size(256, 1), CV_8UC3);
 		Vec3b* colorsPtr = colors.ptr<Vec3b>(0);
 
-		// Init HSV colors and convert to RGB
+		// Init HSV color map for regions and convert them to RGB
 		uchar hue = 0, saturation = 255, value = 200;
 
 		colorsPtr[0] = Vec3b(0, 0, 255);	// White
 		for (int i = 1; i < 256; i++) {
 			colorsPtr[i] = Vec3b(hue, saturation, value);
 
-			hue += deltaHue;
-			if (i % (255 / deltaHue) == 0)
+			hue = (hue + deltaHue) % 180;	// Hue in [0, 179]
+			if (i % (180 / deltaHue) == 0)
 				value -= deltaValue;
 		}
-		cvtColor(colors, colors, cv::COLOR_HSV2BGR);
+		cvtColor(colors, colors, COLOR_HSV2BGR);
 
 		// Create colored copy
-		rgbImage = Mat(Size(labelImage.cols, labelImage.rows), CV_8UC3);
+		rgbImage = Mat(labelImage.size(), CV_8UC3);
 
 		for (int y = 0; y < labelImage.rows; y++) {
 			const uchar* srcRow = labelImage.ptr<uchar>(y);
