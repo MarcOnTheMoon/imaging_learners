@@ -4,16 +4,15 @@
  * Utility to write only a specific area (region of interest) of a video file
  * to a new video file.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.09.08
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.12
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
 /* Include files */
 #include <iostream>
-#include <string>
 #include <opencv2/opencv.hpp>
 #include "VideoStream.h"
 

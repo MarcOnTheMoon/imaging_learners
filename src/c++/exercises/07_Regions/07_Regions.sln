@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.6.33815.320
+# Visual Studio Version 18
+VisualStudioVersion = 18.12.12405.243
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Circularity", "Circularity\Circularity.vcxproj", "{D1A17CE3-45E1-461D-97A3-84465EBFC066}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FloodFill_Sequence", "FloodFill_Sequence\FloodFill_Sequence.vcxproj", "{724329E9-BCD2-4A5A-B411-011359B76E99}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagicWand_Gray", "MagicWand_Gray\MagicWand_Gray.vcxproj", "{006F1A8A-0250-4E57-8452-6B038FC97074}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagicWand_RGB", "MagicWand_RGB\MagicWand_RGB.vcxproj", "{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagicWand_Mask", "MagicWand_Mask\MagicWand_Mask.vcxproj", "{6AB98025-5693-4C2B-8DFC-90D205578065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +37,30 @@ Global
 		{724329E9-BCD2-4A5A-B411-011359B76E99}.Release|x64.Build.0 = Release|x64
 		{724329E9-BCD2-4A5A-B411-011359B76E99}.Release|x86.ActiveCfg = Release|Win32
 		{724329E9-BCD2-4A5A-B411-011359B76E99}.Release|x86.Build.0 = Release|Win32
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Debug|x64.ActiveCfg = Debug|x64
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Debug|x64.Build.0 = Debug|x64
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Debug|x86.ActiveCfg = Debug|Win32
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Debug|x86.Build.0 = Debug|Win32
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Release|x64.ActiveCfg = Release|x64
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Release|x64.Build.0 = Release|x64
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Release|x86.ActiveCfg = Release|Win32
+		{006F1A8A-0250-4E57-8452-6B038FC97074}.Release|x86.Build.0 = Release|Win32
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Debug|x64.ActiveCfg = Debug|x64
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Debug|x64.Build.0 = Debug|x64
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Debug|x86.ActiveCfg = Debug|Win32
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Debug|x86.Build.0 = Debug|Win32
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Release|x64.ActiveCfg = Release|x64
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Release|x64.Build.0 = Release|x64
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Release|x86.ActiveCfg = Release|Win32
+		{8BE8360A-384E-44D6-AD0F-BB19DE54CB90}.Release|x86.Build.0 = Release|Win32
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Debug|x64.ActiveCfg = Debug|x64
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Debug|x64.Build.0 = Debug|x64
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Debug|x86.ActiveCfg = Debug|Win32
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Debug|x86.Build.0 = Debug|Win32
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Release|x64.ActiveCfg = Release|x64
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Release|x64.Build.0 = Release|x64
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Release|x86.ActiveCfg = Release|Win32
+		{6AB98025-5693-4C2B-8DFC-90D205578065}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

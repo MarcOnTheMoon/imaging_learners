@@ -1,10 +1,10 @@
 /*****************************************************************************************************
  * Lecture sample code.
  *****************************************************************************************************
- * Author: Marc Hensel, http://www.haw-hamburg.de/marc-hensel
+ * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
- * Copyright: 2023, Marc Hensel
- * Version: 2023.12.15
+ * Copyright: 2026, Marc Hensel
+ * Version: 2026.11.12
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -12,7 +12,6 @@
 #define _CRT_SECURE_NO_WARNINGS		// Enable getenv()
 
 /* Include files */
-#include <iostream>
 #include <opencv2/opencv.hpp>
 #include "VideoStream.h"
 #include "TemplateMatcher.h"
