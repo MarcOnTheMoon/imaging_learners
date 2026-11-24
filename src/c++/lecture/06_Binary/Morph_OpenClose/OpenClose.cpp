@@ -4,7 +4,7 @@
  * Author: Marc Hensel, http://www.haw-hamburg.de/person/marc-hensel
  * Project: https://github.com/MarcOnTheMoon/imaging_learners/
  * Copyright: 2026, Marc Hensel
- * Version: 2026.11.07
+ * Version: 2026.11.23
  * License: CC BY-NC-SA 4.0, see https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
  *****************************************************************************************************/
 
@@ -36,7 +36,7 @@ void processAndDisplay(uchar thresh, int morphSize);
 
 /* Global variables */
 string windowNameThreshold;
-Mat image, binary;
+Mat image, binary, histogram;
 
 /* Main function */
 int main()
@@ -51,16 +51,14 @@ int main()
 	}
 
 	// Calculate histogram
-	Mat histogram;
 	ip::createHistogramImage(image, histogram);
 
 	// Initialize with adaptive global thresholding (Isodata algorithm)
 	uchar thresh = 0;
 	ip::isodataThreshold(image, binary, &thresh);
 
-	// Display images
+	// Display image
 	imshow("Image", image);
-	imshow("Histogram", histogram);
 
 	// Add window sliders ("trackbars")
 	windowNameThreshold = string("Threshold (Isodata: t = ").append(to_string(thresh)).append(")");
@@ -102,8 +100,14 @@ void processAndDisplay(uchar thresh, int morphSize) {
 
 	// Threshold gray-values input image and update image display
 	if (thresh != lastThresh) {
+		// Thresholding
 		ip::threshold(image, binary, thresh, IS_INVERT_BINARY_IMAGE);
 		imshow(windowNameThreshold, binary);
+
+		// Histogram image
+		Mat histoImage = histogram.clone();
+		ip::addLineToHistogramImage(histoImage, thresh);
+		imshow("Histogram", histoImage);
 	}
 
 	// Apply morphological operations (dilate, erode, close, open) and update image displays
