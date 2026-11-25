@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.12.12405.243
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shared", "Shared\Shared.vcxitems", "{803EA8BD-E480-47A3-B997-EC0728FBE120}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DenoiseAdaptive", "DenoiseAdaptive\DenoiseAdaptive.vcxproj", "{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Debug|x64.ActiveCfg = Debug|x64
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Debug|x64.Build.0 = Debug|x64
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Debug|x86.ActiveCfg = Debug|Win32
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Debug|x86.Build.0 = Debug|Win32
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Release|x64.ActiveCfg = Release|x64
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Release|x64.Build.0 = Release|x64
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Release|x86.ActiveCfg = Release|Win32
+		{418B5EAE-5C3F-44B4-BB3C-2FDB32A98CB0}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE892812-C98F-42AD-BF31-335CB21D45F2}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.vcxitems*{418b5eae-5c3f-44b4-bb3c-2fdb32a98cb0}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{803ea8bd-e480-47a3-b997-ec0728fbe120}*SharedItemsImports = 9
+	EndGlobalSection
+EndGlobal
